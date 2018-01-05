@@ -21,21 +21,25 @@ import com.bluecast.bluevigil.utils.Utils;
 import kafka.serializer.StringDecoder;
 import scala.Tuple2;
 
+/**
+ * Consumer class to condume data from Kafka topic
+ * @author asif
+ *
+ */
 public class BluevigilConsumer implements Serializable {
 
-	private static String BOOTSTRAP_SERVERS = "localhost:9092";
-	private static String ZOOKEEPER_SERVER = "localhost:2181";
-
-	public void consumeDataFromSource(String soureTopic, final String destTopic, JavaStreamingContext jssc) {
+	public void consumeDataFromSource(String soureTopic, final String destTopic, 
+			final String bootstrapServers, String zookeeperServer, JavaStreamingContext jssc) {
 		HashSet<String> topicsSet = new HashSet<String>(Arrays.asList(soureTopic.split(",")));
 		HashMap<String, String> kafkaParams = new HashMap<String, String>();
-		kafkaParams.put("metadata.broker.list", BOOTSTRAP_SERVERS);
-		kafkaParams.put("zookeeper.connect", ZOOKEEPER_SERVER);
+		kafkaParams.put("metadata.broker.list", bootstrapServers);
+		kafkaParams.put("zookeeper.connect", zookeeperServer);
 
 		// Create direct Kafka stream with brokers and topics
 		JavaPairInputDStream<String, String> messages = KafkaUtils.createDirectStream(jssc, String.class, String.class,
 				StringDecoder.class, StringDecoder.class, kafkaParams, topicsSet);
-
+		
+		// Filter the 
 		// Get the lines, split them into words, count the words and print
 		JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
 			public String call(Tuple2<String, String> line) throws Exception {
@@ -50,7 +54,7 @@ public class BluevigilConsumer implements Serializable {
 			public void call(JavaRDD<String> rdd) throws Exception {
 				rdd.foreach(new VoidFunction<String>() {
 					public void call(String s) throws Exception {
-						Producer<String, String> producer = utils.createProducer();
+						Producer<String, String> producer = utils.createProducer(bootstrapServers);
 						ProducerRecord<String, String> record = new ProducerRecord<String, String>(destTopic, "key", s);
 						RecordMetadata metadata = producer.send(record).get();
 					}
