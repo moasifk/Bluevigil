@@ -1,0 +1,3 @@
+{
+"SqlQuery":"",
+"QueryFields":[{"tableName":"HttpLogData","columnQualifierName":"name","sqlConstructs":"=","columnQualifierValue":"yassar","joinConstruct":"And"}]}
