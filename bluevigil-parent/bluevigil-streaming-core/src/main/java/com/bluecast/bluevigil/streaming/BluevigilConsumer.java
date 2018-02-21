@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,7 +16,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Connection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
@@ -107,15 +109,15 @@ public class BluevigilConsumer implements Serializable {
 	@SuppressWarnings("deprecation")
 	public void insertToHbase(String line,FieldMapping mappingData) throws IOException, ServiceException {
 		Connection con=Utils.getHbaseConnection();
-		TableName tn=TableName.valueOf(mappingData.getHbaseTable());
-		
-		Utils.isHbaseTableExists(mappingData.getHbaseTable(),mappingData.getHbaseColumnFamily());
+		//TableName tn=TableName.valueOf(mappingData.getHbaseTable());
+		System.out.println("Ging to create hbase table");
+		//Utils.isHbaseTableExists(mappingData.getHbaseTable(),mappingData.getHbaseColumnFamily());
 	
 		
-		Table tbl=con.getTable(tn);
+		//Table tbl=con.getTable(tn);
 		System.out.println("Hbase table created successfully");
 		
-		String backEndField,fieldValue,fieldLabel=null,rowKey,hbaseField,multipleFieldValues;
+		String backEndField,fieldValue,fieldLabel=null,rowKey,hbaseField,fieldMultipleValues,multipleValueField;
 		String[] arr,elements;
 		String delimiter=mappingData.getDelimitter();
 		List<Mapping> fieldMappingList=mappingData.getMapping();
@@ -126,109 +128,221 @@ public class BluevigilConsumer implements Serializable {
 		//Row Key creation using User id and Time Stamp
 		rowKey=createHbaseRowKey(mappingData.getKeyFields(),elements);
 		System.out.println("Key ="+rowKey);
-		Put p = new Put(Bytes.toBytes(rowKey));
+		//Put p = new Put(Bytes.toBytes(rowKey));
 		
 		
 		
 		//System.out.println("Key="+rowKeyElmnt1+"|"+rowKeyElmnt2);
-		Iterator<Mapping> it=fieldMappingList.iterator();
-		while(it.hasNext()) {
-			Mapping mappingObj=it.next();
-			backEndField=mappingObj.getBackEndField();
-			hbaseField=mappingObj.getHbaseField();
-			for(int i=0;i<elements.length;i++) {
-				if(elements[i].contains(":"))
-				{
-					 arr=elements[i].split("\":");
-					//System.out.println("Element ="+elements[i]);
-					 
-					if(arr[0].startsWith("\"") ) 
+		try {
+			Statement smt=con.createStatement();
+			
+			String sqlQuery="upsert into "+mappingData.getHbaseTable();
+			String sqlColumnNames="(";
+			String sqlColumnValues="(";
+			Iterator<Mapping> it=fieldMappingList.iterator();
+			while(it.hasNext()) {
+				Mapping mappingObj=it.next();
+				backEndField=mappingObj.getBackEndField();
+				hbaseField=mappingObj.getHbaseField();
+				fieldMultipleValues=null;
+				multipleValueField=null;
+				for(int i=0;i<elements.length;i++) {
+					if(elements[i].contains(":"))
 					{
-						fieldLabel=arr[0].substring(1,arr[0].length());
+						 arr=elements[i].split("\":");
+						//System.out.println("Element ="+elements[i]);
+						 
+						if(arr[0].startsWith("\"") ) 
+						{
+							fieldLabel=arr[0].substring(1,arr[0].length());
+						}
+						else
+						{
+							fieldLabel=arr[0].substring(arr[0].length());
+						}
+						
+						if(arr[1].startsWith("[\"") && arr[1].endsWith("\"]")) 
+						{
+							fieldValue=arr[1].substring(2,arr[1].length()-2);
+						}
+						else if (arr[1].startsWith("[\"") && arr[1].endsWith("\"")) 
+						{
+							fieldValue=arr[1].substring(2,arr[1].length()-1);
+							fieldMultipleValues=fieldValue;
+							multipleValueField=fieldLabel;
+							if(fieldLabel.equals(backEndField) && fieldValue!=null)
+							{
+								multipleValueField=mappingObj.getHbaseField();
+								
+							}
+							break;
+						}
+						else if(arr[1].startsWith("\"") && arr[1].endsWith("\""))
+						{
+							fieldValue=arr[1].substring(1,arr[1].length()-1);
+						}
+						else if(arr[1].startsWith("[") && arr[1].endsWith("]")&& arr[1].length()>2)
+						{
+							fieldValue=arr[1].substring(1,arr[1].length()-1);
+						}
+						else if(arr[1].startsWith("[") && arr[1].endsWith("]")&& arr[1].length()==2) 
+						{
+							fieldValue=null;
+						}
+						else if(arr[1].startsWith("\"") && !arr[1].endsWith("\"")) 
+						{
+							fieldValue=arr[1].substring(1,arr[1].length());;
+						}
+						else
+						{
+							fieldValue=arr[1];
+						}
+					
+						if(fieldLabel.equals(backEndField) && fieldValue!=null) 
+						{
+							if(mappingObj.getHbaseField().equals("LOG_TIMESTAMP") ||mappingObj.getHbaseField()=="LOG_TIMESTAMP")  
+							{
+								
+								String dateTime=Utils.getDateTime((long)Double.parseDouble(fieldValue));
+								if(sqlColumnNames.equals("(") || sqlColumnNames=="(")
+								{
+									sqlColumnNames=sqlColumnNames+mappingObj.getHbaseField();
+									sqlColumnNames=sqlColumnNames+",LOG_DATE,LOG_TIME";
+									
+									sqlColumnValues=sqlColumnValues+"'"+fieldValue+"'"+dateTime.substring(0,dateTime.indexOf(","))+",'"+dateTime.substring(dateTime.indexOf(",")+1,dateTime.length())+"'";
+									
+								}else
+								{
+									sqlColumnNames=sqlColumnNames+","+mappingObj.getHbaseField();
+									sqlColumnNames=sqlColumnNames+",LOG_DATE,LOG_TIME";
+									
+									sqlColumnValues=sqlColumnValues+",'"+fieldValue+"',"+dateTime.substring(0,dateTime.indexOf(","))+",'"+dateTime.substring(dateTime.indexOf(",")+1,dateTime.length())+"'";
+									
+								}
+								
+								//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("LOG_DATE"),Bytes.toBytes(dateTime.substring(0,dateTime.indexOf(","))));
+								//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("LOG_TIME"),Bytes.toBytes(dateTime.substring(dateTime.indexOf(",")+1,dateTime.length())));
+							}
+							else if(fieldValue!= null &&isIpValid(fieldValue))
+							{
+								if(mappingObj.getHbaseField().equals("DEST_IP") ||mappingObj.getHbaseField()=="DEST_IP")  
+								{
+									if(sqlColumnNames.equals("(") || sqlColumnNames=="(")
+									{
+										sqlColumnNames=sqlColumnNames+mappingObj.getHbaseField();
+										sqlColumnNames=sqlColumnNames+",DEST_COUNTRY,DEST_CITY";
+										
+										sqlColumnValues=sqlColumnValues+"'"+fieldValue+"','"+Utils.getIpResolveCountry(fieldValue)+"','"+Utils.getIpResolveCity(fieldValue)+"'";
+										
+									}else
+									{
+										sqlColumnNames=sqlColumnNames+","+mappingObj.getHbaseField();
+										sqlColumnNames=sqlColumnNames+",DEST_COUNTRY,DEST_CITY";
+										
+										sqlColumnValues=sqlColumnValues+",'"+fieldValue+"','"+Utils.getIpResolveCountry(fieldValue)+"','"+Utils.getIpResolveCity(fieldValue)+"'";
+									}
+									//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("DEST_COUNTRY"),Bytes.toBytes(Utils.getIpResolveCountry(fieldValue)));
+									//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("DEST_CITY"),Bytes.toBytes(Utils.getIpResolveCity(fieldValue)));
+								}
+								else if (mappingObj.getLabel().equals("SOURCE_IP") ||mappingObj.getLabel()=="SOURCE_IP")  
+								{
+									if(sqlColumnNames.equals("(") || sqlColumnNames=="(")
+									{
+										sqlColumnNames=sqlColumnNames+mappingObj.getHbaseField();
+										sqlColumnNames=sqlColumnNames+",SOURCE_COUNTRY,SOURCE_CITY";
+										
+										sqlColumnValues=sqlColumnValues+"'"+fieldValue+"','"+Utils.getIpResolveCountry(fieldValue)+"','"+Utils.getIpResolveCity(fieldValue)+"'";
+										
+									}else
+									{
+										sqlColumnNames=sqlColumnNames+","+mappingObj.getHbaseField();
+										sqlColumnNames=sqlColumnNames+",SOURCE_COUNTRY,SOURCE_CITY";
+										
+										sqlColumnValues=sqlColumnValues+",'"+fieldValue+"','"+Utils.getIpResolveCountry(fieldValue)+"','"+Utils.getIpResolveCity(fieldValue)+"'";
+									}
+									
+									//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("SOURCE_COUNTRY"),Bytes.toBytes(Utils.getIpResolveCountry(fieldValue)));
+									//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("SOURCE_CITY"),Bytes.toBytes(Utils.getIpResolveCity(fieldValue)));
+								}
+							}
+							System.out.println("Field Value="+fieldValue);
+							
+							if(sqlColumnNames.equals("(") || sqlColumnNames=="(")
+							{
+								sqlColumnNames=sqlColumnNames+mappingObj.getHbaseField();
+								if(mappingObj.getType().equals("String"))
+								{
+									sqlColumnValues=sqlColumnValues+"'"+fieldValue+"'";
+								}
+								else
+								{
+									sqlColumnValues=sqlColumnValues+fieldValue;
+								}
+							}else
+							{
+								sqlColumnNames=sqlColumnNames+","+mappingObj.getHbaseField();
+								if(mappingObj.getType().equals("String"))
+								{
+									sqlColumnValues=sqlColumnValues+",'"+fieldValue+"'";
+								}
+								else
+								{
+									sqlColumnValues=sqlColumnValues+","+fieldValue;
+								}
+							}
+							
+						}
 					}
-					else
+					else if(elements[i].startsWith("\"") && elements[i].endsWith("\""))
 					{
-						fieldLabel=arr[0].substring(arr[0].length());
+						//System.out.println("field label is ="+fieldLabel);
+						fieldValue=elements[i].substring(1,elements[i].length()-1);
+						fieldMultipleValues=fieldMultipleValues+","+fieldValue;
+						//System.out.println("field value is ="+fieldValue);
+						System.out.println("Field Value="+fieldValue);
+						break;
+						//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes(mappingObj.getHbaseField()),Bytes.toBytes(fieldValue));
+					}
+					else if(elements[i].startsWith("\"") && elements[i].endsWith("\"]"))
+					{
+						fieldValue=elements[i].substring(1,elements[i].length()-2);
+						fieldMultipleValues=fieldMultipleValues+","+fieldValue;
+						System.out.println("Field Value="+fieldValue);
+						if(sqlColumnNames.equals("(") || sqlColumnNames=="(")
+						{
+							sqlColumnNames=sqlColumnNames+multipleValueField;
+							
+							sqlColumnValues=sqlColumnValues+"'"+fieldMultipleValues+"'";
+							
+						}else
+						{
+							sqlColumnNames=sqlColumnNames+","+multipleValueField;
+							
+							sqlColumnValues=sqlColumnValues+",'"+fieldMultipleValues+"'";
+							
+						}
+						
+						//p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes(mappingObj.getHbaseField()),Bytes.toBytes(fieldValue));
 					}
 					
-					if(arr[1].startsWith("[\"") && arr[1].endsWith("\"]")) 
-					{
-						fieldValue=arr[1].substring(2,arr[1].length()-2);
-					}
-					else if (arr[1].startsWith("[\"") && arr[1].endsWith("\"")) 
-					{
-						fieldValue=arr[1].substring(2,arr[1].length()-1);
-					}
-					else if(arr[1].startsWith("\"") && arr[1].endsWith("\""))
-					{
-						fieldValue=arr[1].substring(1,arr[1].length()-1);
-					}
-					else if(arr[1].startsWith("[") && arr[1].endsWith("]")&& arr[1].length()>2)
-					{
-						fieldValue=arr[1].substring(1,arr[1].length()-1);
-					}
-					else if(arr[1].startsWith("[") && arr[1].endsWith("]")&& arr[1].length()==2) 
-					{
-						fieldValue=null;
-					}
-					else if(arr[1].startsWith("\"") && !arr[1].endsWith("\"")) 
-					{
-						fieldValue=arr[1].substring(1,arr[1].length());;
-					}
-					else
-					{
-						fieldValue=arr[1];
-					}
-				
-					if(fieldLabel.equals(backEndField) && fieldValue!=null) 
-					{
-						if(mappingObj.getLabel().equals("Timestamp") ||mappingObj.getLabel()=="Timestamp")  
-						{
-							String dateTime=Utils.getDateTime((long)Double.parseDouble(fieldValue));
-							p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("LOG_DATE"),Bytes.toBytes(dateTime.substring(0,dateTime.indexOf(","))));
-							p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("LOG_TIME"),Bytes.toBytes(dateTime.substring(dateTime.indexOf(",")+1,dateTime.length())));
-						}
-						else if(fieldValue!= null &&isIpValid(fieldValue))
-						{
-							if(mappingObj.getLabel().equals("DestinationIP") ||mappingObj.getLabel()=="DestinationIP")  
-							{
-								p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("DEST_COUNTRY"),Bytes.toBytes(Utils.getIpResolveCountry(fieldValue)));
-								p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("DEST_CITY"),Bytes.toBytes(Utils.getIpResolveCity(fieldValue)));
-							}
-							else if (mappingObj.getLabel().equals("SourceIP") ||mappingObj.getLabel()=="SourceIP")  
-							{
-								p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("SOURCE_COUNTRY"),Bytes.toBytes(Utils.getIpResolveCountry(fieldValue)));
-								p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("SOURCE_CITY"),Bytes.toBytes(Utils.getIpResolveCity(fieldValue)));
-							}
-						}
-						System.out.println("Field Value="+fieldValue);
-						
-						p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes(mappingObj.getHbaseField()),Bytes.toBytes(fieldValue));
-						
-					}
-				}
-				else if(elements[i].startsWith("\"") && elements[i].endsWith("\""))
-				{
-					//System.out.println("field label is ="+fieldLabel);
-					fieldValue=elements[i].substring(1,elements[i].length()-1);
-					//System.out.println("field value is ="+fieldValue);
-					System.out.println("Field Value="+fieldValue);
-					p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes(mappingObj.getHbaseField()),Bytes.toBytes(fieldValue));
-				}
-				else if(elements[i].startsWith("\"") && elements[i].endsWith("\"]"))
-				{
-					fieldValue=elements[i].substring(1,elements[i].length()-2);
-					System.out.println("Field Value="+fieldValue);
-					p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes(mappingObj.getHbaseField()),Bytes.toBytes(fieldValue));
 				}
 				
 			}
-			
+		System.out.println("upsert query="+sqlQuery+sqlColumnNames+") "+sqlColumnValues+")");
+		smt.executeUpdate(sqlQuery+sqlColumnNames+") "+sqlColumnValues+")");
+		con.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println("Going to insert into hbase");
-		if(!p.isEmpty()) {
-			tbl.put(p);
-		}
+		
+		
+		
+		/*if(!p.isEmpty()) {
+			p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("INSERT_DATE_TIME"),Bytes.toBytes(Utils.getCurrentTime()));
+			p.add(Bytes.toBytes(mappingData.getHbaseColumnFamily()),Bytes.toBytes("FILE_HANDLE"),Bytes.toBytes(mappingData.getLogFileName()+"_"+Utils.timeConversion()));
+			//tbl.put(p);
+		}*/
 	}
 	public String createHbaseRowKey(List<KeyField> keyFieldsList,String[] elements) {
 		String keyValue=null,keyField,fieldLabel=null,fieldValue=null;

@@ -36,7 +36,7 @@ public class BluevigilStreamingProcessor {//implements Runnable  {
 	private static String BOOTSTRAP_SERVERS;
 	private static String ZOOKEEPER_SERVER;
 
-	public static void main(String args[]) throws IOException, ServiceException {
+	public static void main(String args[]){
 		SOURCE_TOPIC ="Yassar060Blue"; //args[0]; // Source topic - Flume ingest logs to this topic
 		DEST_TOPIC = "Yassar060BlueOutput";//args[1]; // The spark processed data kept in this topic
 		BOOTSTRAP_SERVERS = "localhost:9092";//args[2]; // Bootstrap server details, comma seperated
@@ -57,13 +57,14 @@ public class BluevigilStreamingProcessor {//implements Runnable  {
 				
 			}
 		}*/
-		JsonReader reader = new JsonReader(new FileReader("./properties/httpFields.json"));
+		JsonReader reader;
+		try {
+			reader = new JsonReader(new FileReader("./properties/fileHashFields.json"));
+		
 		FieldMapping mappingData = gson.fromJson(reader,FieldMapping.class); 
 		System.out.println("going to call h-base scan method");
 		consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, BOOTSTRAP_SERVERS, ZOOKEEPER_SERVER, jssc,mappingData);
-		try {
-			consumer.getHbaseData();
-		} catch (SQLException e) {
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
