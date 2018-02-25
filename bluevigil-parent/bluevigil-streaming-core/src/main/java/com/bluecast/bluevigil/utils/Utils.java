@@ -8,7 +8,7 @@ import java.util.Date;
 
 import java.util.Properties;
 
-import java.sql.Connection;
+//import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.util.TimeZone;
@@ -24,8 +24,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
-
-
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 
 public class Utils implements Serializable{
@@ -38,7 +38,7 @@ public class Utils implements Serializable{
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		return new KafkaProducer<String, String>(props);
 	}
-	/*public static  Connection getHbaseConnection() {
+	public static  Connection getHbaseConnection() {
 		//Connection con=new Conne
 		Configuration conf=HBaseConfiguration.create();
 		///*conf.set("hbase.zookeeper.quorum", "nn02.itversity.com,nn01.itversity.com");
@@ -56,7 +56,8 @@ public class Utils implements Serializable{
 		}
 		
 		
-	}*/
+	}
+	/*
 	public static Connection getHbaseConnection() 
 	{
 		
@@ -81,7 +82,7 @@ public class Utils implements Serializable{
 			System.out.println(e.getMessage());
 			return null;
 		}
-	}
+	}*/
 	public static  boolean isHbaseTableExists(String hbaseTableName,String hbaseTableColumnFamily) {
 		//Connection con=new Conne
 		Configuration conf=HBaseConfiguration.create();
@@ -125,23 +126,23 @@ public class Utils implements Serializable{
 		//System.out.println(mydate.get(Calendar.YEAR)+"-"+mydate.get(Calendar.MONTH)+"-"+mydate.get(Calendar.DAY_OF_MONTH));
 		return date+","+time;
 	}
-	public static  long timeConversion() {
+	public static  long getUnixTime() {
         long unixTime = 0;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+5:30")); //Specify your timezone
         unixTime = date.getTime();
 		//unixTime = unixTime / 1000;
-		System.out.println("Unix time="+unixTime);
+		//System.out.println("Unix time="+unixTime);
         return unixTime;
     }
 	public static  String getCurrentTime() {
         long unixTime = 0;
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         DateTime date = new DateTime();
        // dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+5:30")); //Specify your timezone
         
-		System.out.println("Unix time="+unixTime);
+		//System.out.println("Unix time="+unixTime);
         return date.toString();
     }
 	public static String getIpResolveCountry(String  ipAddress) throws IOException {

@@ -28,14 +28,14 @@ import com.google.protobuf.ServiceException;
 			bhp.getHbaseData();
 		}*/
 
-	public  void getHbaseData() throws IOException, ServiceException{
-		Connection con=Utils.getHbaseConnection();
+		/*public  void getHbaseData() throws IOException, ServiceException{
+		Connection con=Utils.getHbaseDirectConnection();
 		
-		/*Configuration conf=HBaseConfiguration.create();
-		conf.set("hbase.zookeeper.quorum", "nn02.itversity.com,nn01.itversity.com");
-		conf.set("hbase.zookeeper.property.clientPort", "2181");
-		conf.set("zookeeper.znode.parent","/hbase-unsecure");		
-		Connection con=ConnectionFactory.createConnection(conf);*/
+		//Configuration conf=HBaseConfiguration.create();
+		//conf.set("hbase.zookeeper.quorum", "nn02.itversity.com,nn01.itversity.com");
+		//conf.set("hbase.zookeeper.property.clientPort", "2181");
+		//conf.set("zookeeper.znode.parent","/hbase-unsecure");		
+		//Connection con=ConnectionFactory.createConnection(conf);
 		TableName tn=TableName.valueOf("BlueVigilHistory");
 		Table tbl=con.getTable(tn);
 		Scan scan=new Scan();
@@ -60,6 +60,6 @@ import com.google.protobuf.ServiceException;
 	
 
 	            
-	}
+	}*/
 	
 }

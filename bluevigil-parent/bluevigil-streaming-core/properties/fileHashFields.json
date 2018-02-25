@@ -7,8 +7,8 @@
   	"kafkaDestinationTopic":"FileHashLogOutput",
 
 	"keyFields":[{"backEndField":"ts","hbaseField":"LOG_TIMESTAMP"},
-		   {"backEndField":"host","hbaseField":"HOST"},
-		   {"backEndField":"id","hbaseField":"id"}],		
+		   {"backEndField":"rx_host","hbaseField":"RX_HOSTS"},
+		   {"backEndField":"fuid","hbaseField":"FUID"}],		
 	
 	"mapping":[{"backEndField":"ts","hbaseField":"LOG_TIMESTAMP","type":"String","label":"LogTimeStamp"},
 		   {"backEndField":"version","hbaseField":"VERSION","type":"String","label":"Version"},		   
