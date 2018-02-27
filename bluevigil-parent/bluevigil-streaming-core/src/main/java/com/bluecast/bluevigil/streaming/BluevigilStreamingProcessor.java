@@ -59,7 +59,7 @@ public class BluevigilStreamingProcessor {//implements Runnable  {
 		}*/
 		JsonReader reader;
 		try {
-			reader = new JsonReader(new FileReader("./properties/connectionFields.json"));
+			reader = new JsonReader(new FileReader("./properties/httpFields.json"));
 		
 		FieldMapping mappingData = gson.fromJson(reader,FieldMapping.class); 
 		System.out.println("going to call h-base scan method");

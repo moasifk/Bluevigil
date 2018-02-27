@@ -13,12 +13,22 @@ public class KeyField implements Serializable{
 @Expose
 private String backEndField;
 
+@SerializedName("hbaseField")
+@Expose
+private String hbaseField;
 public String getBackEndField() {
 return backEndField;
 }
 
 public void setBackEndField(String backEndField) {
 this.backEndField = backEndField;
+}
+public String getHbaseField() {
+return hbaseField;
+}
+
+public void setHbaseField(String hbaseField) {
+this.hbaseField = hbaseField;
 }
 
 }

@@ -14,7 +14,7 @@
 
 	"mapping":[{"backEndField":"uid","hbaseField":"UID","type":"String","label":"UserId"},
 		   {"backEndField":"id.resp_h","hbaseField":"DEST_IP","type":"String","label":"DestinationIP"},
-		   {"backEndField":"Id.resp_p","hbaseField":"DEST_PORT","type":"int","label":"DestinationPort"},
+		   {"backEndField":"id.resp_p","hbaseField":"DEST_PORT","type":"int","label":"DestinationPort"},
 		   {"backEndField":"id.orig_h","hbaseField":"SOURCE_IP","type":"String","label":"SourceIP"},
 		   {"backEndField":"id.orig_p","hbaseField":"SOURCE_PORT","type":"int","label":"SourcePort"},
 		   {"backEndField":"ts","hbaseField":"LOG_TIMESTAMP","type":"String","label":"Timestamp"},
@@ -32,7 +32,7 @@
 		   {"backEndField":"orig_pkts","hbaseField":"ORIG_PKTS","type":"int","label":"OrigPkts"},
 		   {"backEndField":"proto","hbaseField":"PROTO","type":"String","label":"Proto"},
 		   {"backEndField":"resp_bytes","hbaseField":"RESP_BYTES","type":"int","label":"RespBytes"},
-		   {"backEndField":"resp_ip_bytes","hbaseField":"PROXIED","type":"int","label":"RespIpBytes"},
+		   {"backEndField":"resp_ip_bytes","hbaseField":"RESP_IP_BYTES","type":"int","label":"RespIpBytes"},
 		   {"backEndField":"resp_pkts","hbaseField":"RESP_PKTS","type":"int","label":"RespPkts"},
 		   {"backEndField":"tunnel_parents","hbaseField":"TUNNEL_PARENTS","type":"String","label":"TunnelParents"},
 		   {"backEndField":"service","hbaseField":"SERVICE","type":"String","label":"Service"}]}

@@ -8,7 +8,7 @@ import java.util.Date;
 
 import java.util.Properties;
 
-//import java.sql.Connection;
+import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.util.TimeZone;
@@ -24,7 +24,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.client.Connection;
+//import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 
@@ -38,7 +38,7 @@ public class Utils implements Serializable{
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		return new KafkaProducer<String, String>(props);
 	}
-	public static  Connection getHbaseConnection() {
+	/*public static  Connection getHbaseConnection() {
 		//Connection con=new Conne
 		Configuration conf=HBaseConfiguration.create();
 		///*conf.set("hbase.zookeeper.quorum", "nn02.itversity.com,nn01.itversity.com");
@@ -56,11 +56,10 @@ public class Utils implements Serializable{
 		}
 		
 		
-	}
-	/*
+	}*/
+	
 	public static Connection getHbaseConnection() 
 	{
-		
 		
 		try 
 		{
@@ -75,6 +74,7 @@ public class Utils implements Serializable{
 		try
 		{
 			Connection con = DriverManager.getConnection("jdbc:phoenix:localhost:2181");  //172.31.124.43 is the adress of VM, not needed if ur running the program from vm itself
+			System.out.println("Connection Established");
 			return con;
 		}
 		catch(Exception e)
@@ -82,7 +82,7 @@ public class Utils implements Serializable{
 			System.out.println(e.getMessage());
 			return null;
 		}
-	}*/
+	}
 	public static  boolean isHbaseTableExists(String hbaseTableName,String hbaseTableColumnFamily) {
 		//Connection con=new Conne
 		Configuration conf=HBaseConfiguration.create();
@@ -112,19 +112,20 @@ public class Utils implements Serializable{
 		return true;
 		
 	}
-	public static String getDateTime(long ts) {
+	public static String getTime(long ts) {
 		Date dateTime = new Date(ts*1000L); 
 		String date,time;
-		SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd");
-		//jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
-		date = jdf.format(dateTime);
-		jdf = new SimpleDateFormat("hh:mm");
+		SimpleDateFormat jdf = new SimpleDateFormat("hh:mm");
 		time = jdf.format(dateTime);
-		//System.out.println("\n"+java_date.trim()+"\n");
-		//Calendar  mydate = Calendar.getInstance();
-		//mydate.setTimeInMillis(unix_seconds*1000L);
-		//System.out.println(mydate.get(Calendar.YEAR)+"-"+mydate.get(Calendar.MONTH)+"-"+mydate.get(Calendar.DAY_OF_MONTH));
-		return date+","+time;
+		//System.out.println("Time="+time);
+		return time;
+	}
+	public static java.sql.Date getDate(long ts) {
+		
+		java.sql.Date sqlDate = new java.sql.Date(ts*1000L);
+		//System.out.println("SQL Date="+sqlDate);   
+		
+		return sqlDate;
 	}
 	public static  long getUnixTime() {
         long unixTime = 0;
@@ -133,7 +134,7 @@ public class Utils implements Serializable{
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+5:30")); //Specify your timezone
         unixTime = date.getTime();
 		//unixTime = unixTime / 1000;
-		//System.out.println("Unix time="+unixTime);
+		System.out.println("Unix time="+unixTime);
         return unixTime;
     }
 	public static  String getCurrentTime() {

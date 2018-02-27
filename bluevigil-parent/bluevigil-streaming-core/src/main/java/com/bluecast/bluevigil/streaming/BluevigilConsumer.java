@@ -3,15 +3,13 @@ package com.bluecast.bluevigil.streaming;
 import java.io.FileNotFoundException;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,14 +18,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-
-
-
-import java.sql.PreparedStatement;
-
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Connection;
+//import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -43,7 +37,7 @@ import org.apache.spark.streaming.kafka.KafkaUtils;
 import org.json.JSONObject;
 
 import com.bluecast.bluevigil.model.FieldMapping;
-
+import com.bluecast.bluevigil.model.KeyField;
 import com.bluecast.bluevigil.model.Mapping;
 
 import com.bluecast.bluevigil.utils.Utils;
@@ -53,6 +47,7 @@ import com.bluecast.bluevigil.utils.phoenix_hbase;
 import kafka.serializer.StringDecoder;
 
 import scala.Tuple2;
+import scala.annotation.meta.field;
 
 /**
  * Consumer class to condume data from Kafka topic
@@ -121,7 +116,7 @@ public class BluevigilConsumer implements Serializable {
 	public void insertToHbase(String line,FieldMapping mappingData) {
 		System.out.println("In InsertIntoHbaseTable method");	
 		String backEndField,key,str;	
-		List<Mapping> fieldMappingList=mappingData.getMapping();
+		
 		
 		try {	
 			
@@ -141,10 +136,11 @@ public class BluevigilConsumer implements Serializable {
 		    Object fieldValue;
 		    //connection to hbase table
 		    Table hbaseTable = null;
-		    Connection con=Utils.getHbaseConnection();
-		    hbaseTable=con.getTable(TableName.valueOf(mappingData.getHbaseTable()));
+		    //Connection con=Utils.getHbaseConnection();
+		    //hbaseTable=con.getTable(TableName.valueOf(mappingData.getHbaseTable()));
 		    
 			Set<String> mapKeySet = rawObjectMap.keySet();
+			List<Mapping> fieldMappingList=mappingData.getMapping();
 			Iterator<Mapping> it=fieldMappingList.iterator();
 			while(it.hasNext()) {
 				Mapping mappingObj=it.next();
@@ -152,15 +148,16 @@ public class BluevigilConsumer implements Serializable {
 				//hbaseField=mappingObj.getHbaseField();
 				if(mapKeySet.contains(backEndField))
 				{
-					fieldValue=rawObjectMap.get(backEndField.toString());
+					fieldValue=rawObjectMap.get(backEndField);
 					//System.out.println("field is="+backEndField);
 					if(mappingObj.getHbaseField()=="LOG_TIMESTAMP" ||mappingObj.getHbaseField().equals("LOG_TIMESTAMP"))
 					{
-						//System.out.println("In Time stamp if condition");					
-						String dateTime=Utils.getDateTime((long)Double.parseDouble(fieldValue.toString()));						
-						queryMap.put(mappingObj.getHbaseField(),rawObjectMap.get(backEndField));
-						queryMap.put("LOG_DATE",dateTime.substring(0,dateTime.indexOf(",")));
-						queryMap.put("LOG_TIME",dateTime.substring(dateTime.indexOf(",")+1,dateTime.length()));
+						Double a=Double.parseDouble(fieldValue.toString());
+						DecimalFormat formatter = new DecimalFormat("0.000000");
+						String ts=formatter.format(a);
+						queryMap.put(mappingObj.getHbaseField(),ts);
+						queryMap.put("LOG_DATE",ts);
+						queryMap.put("LOG_TIME",Utils.getTime((long)Double.parseDouble(ts)));
 					}
 					else if(fieldValue!= null &&isIpValid(fieldValue.toString()))
 					{
@@ -174,7 +171,7 @@ public class BluevigilConsumer implements Serializable {
 								queryMap.put("DEST_CITY", Utils.getIpResolveCity(fieldValue.toString()));
 							}
 						}
-						else if (mappingObj.getLabel().equals("SOURCE_IP") ||mappingObj.getLabel()=="SOURCE_IP")
+						else if (mappingObj.getHbaseField().equals("SOURCE_IP") ||mappingObj.getHbaseField()=="SOURCE_IP")
 						{
 							queryMap.put(mappingObj.getHbaseField(), fieldValue);
 							queryMap.put("SOURCE_COUNTRY", Utils.getIpResolveCountry(fieldValue.toString()));
@@ -222,14 +219,14 @@ public class BluevigilConsumer implements Serializable {
 			System.out.println("Current date and time="+Utils.getCurrentTime());
 			queryMap.put("FILE_HANDLE",mappingData.getLogFileName()+"_"+Utils.getUnixTime());
 			System.out.println("File handle value="+mappingData.getLogFileName()+"_"+Utils.getUnixTime());
-			//insertQuery(mappingData.getHbaseTable(),fieldMappingList,queryMap);
+			insertQuery(mappingData.getHbaseTable(),fieldMappingList,queryMap);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
 	}
-	/*public void insertQuery(String hbaseTableName,List<Mapping> fieldMappingList,Map<String,Object> queryMap)
+	public void insertQuery(String hbaseTableName,List<Mapping> fieldMappingList,Map<String,Object> queryMap)
 	{
 		try {
 			System.out.println("In InsertQuery Method");
@@ -254,15 +251,13 @@ public class BluevigilConsumer implements Serializable {
 					
 					valueFields=valueFields+",?";
 				}
-			}
-			queryFields=queryFields+",INSERT_DATE_TIME,FILE_HANDLE";
-			valueFields=valueFields+",?,?";
+			}			
 			
 			String sqlQuery="upsert into "+hbaseTableName+" ("+queryFields+") values("+valueFields+")";
 			System.out.println("Sql Query ="+sqlQuery);
 		
-			//PreparedStatement stmt = con.prepareStatement(sqlQuery);
-			Statement stmt=con.createStatement();
+			PreparedStatement stmt = con.prepareStatement(sqlQuery);
+			//Statement stmt=con.createStatement();
 			
 			Iterator<String> fieldIt=queryFieldSet.iterator();
 			Iterator<Object> valueIt=objCollection.iterator();
@@ -280,27 +275,32 @@ public class BluevigilConsumer implements Serializable {
 						if(mappingObj.getType().equals("int")|| mappingObj.getType()=="int")
 						{
 							int fieldVal=(int)valueIt.next();
+							System.out.println("Field value="+fieldVal);
 							stmt.setInt(i,fieldVal );
 							
 						}
 						else if(mappingObj.getType().equals("String")|| mappingObj.getType()=="String")
 						{
 							String fieldVal=valueIt.next().toString();
+							System.out.println("Field value="+fieldVal);
 							stmt.setString(i,fieldVal);
 						}
 						else if(mappingObj.getType().equals("boolean")|| mappingObj.getType()=="boolean")
 						{
 							boolean fieldVal=(boolean)valueIt.next();
+							System.out.println("Field value="+fieldVal);
 							stmt.setBoolean(i, fieldVal);
 						}
 						else if(mappingObj.getType().equals("double")|| mappingObj.getType()=="double")
 						{
 							double fieldVal=(double)valueIt.next();
+							System.out.println("Field value="+fieldVal);
 							stmt.setDouble(i, fieldVal);
 						}
 						else if(mappingObj.getType().equals("long")|| mappingObj.getType()=="long")
 						{
 							long fieldVal=(long)valueIt.next();
+							System.out.println("Field value="+fieldVal);
 							stmt.setLong(i, fieldVal);
 						}
 						
@@ -311,25 +311,16 @@ public class BluevigilConsumer implements Serializable {
 					
 					else if(field.equals("LOG_DATE")|| field=="LOG_DATE")
 					{
-						//System.out.println("Date value="+valueIt.next());
-						//DateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
-						//try {
-						//	Date dutyDay =  simpleDateFormat.parse(valueIt.next().toString());
-						//	System.out.println("date valueafter conversion="+dutyDay);
-					//	} catch (ParseException e) {
-							// TODO Auto-generated catch block
-						//	e.printStackTrace();
-						}
-						//stmt.setDate(i,Timestamp.valueOf(valueIt.next()));
-						//stmt.setDate(i,(Date)valueIt.next());Timestamp.valueOf(String)
 						String fieldVal=valueIt.next().toString();
-						stmt.setString(i,fieldVal);
+						System.out.println("Field value="+fieldVal);
+						stmt.setDate(i,Utils.getDate((long)Double.parseDouble(fieldVal)));
 						i++;
 						break;
 					}
 					else if(field.equals("LOG_TIME")|| field=="LOG_TIME")
 					{
 						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
 						stmt.setString(i, fieldVal);
 						i++;
 						break;
@@ -337,6 +328,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("DEST_COUNTRY")|| field=="DEST_COUNTRY")
 					{
 						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -344,6 +336,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("DEST_CITY")|| field=="DEST_CITY")
 					{
 						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -352,6 +345,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("SOURCE_COUNTRY")|| field=="SOURCE_COUNTRY")
 					{
 						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -359,6 +353,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("SOURCE_CITY")|| field=="SOURCE_CITY")
 					{
 						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -367,6 +362,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("INSERT_DATE_TIME")|| field=="INSERT_DATE_TIME")
 					{
 						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -375,6 +371,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("FILE_HANDLE")|| field=="FILE_HANDLE")
 					{
 						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -396,93 +393,9 @@ public class BluevigilConsumer implements Serializable {
 			e.printStackTrace();
 		}
 		
-	}*/
-	
-	/*public String createHbaseRowKey(List<KeyField> keyFieldsList,Map<String,Object> rawObjectMap) {
-		String key=null,keyField,fieldLabel=null,fieldValue=null;
-		String[] arr;		
-		Iterator<KeyField> it=keyFieldsList.iterator();
-		while(it.hasNext()) {
-			keyField=it.next().getBackEndField();
-			
-			for(int i=0;i<elements.length;i++) 
-			{
-				//System.out.println("Element ="+elements[i]); 
-				if(elements[i].contains(":"))
-				{
-					arr=elements[i].split("\":");
-					
-					//System.out.println("Elemnts in arra[i]"+arr[0]+" and "+arr[1]);
-					
-					if(arr[0].startsWith("\"") )
-					{
-						fieldLabel=arr[0].substring(1,arr[0].length());
-					}
-					else
-					{
-						fieldLabel=arr[0].substring(arr[0].length());
-					}
-					if(arr[1].startsWith("[\"") && arr[1].endsWith("\"]")) 
-					{
-						fieldValue=arr[1].substring(2,arr[1].length()-2);
-					}
-					else if (arr[1].startsWith("[\"") && arr[1].endsWith("\""))  
-					{
-						fieldValue=arr[1].substring(2,arr[1].length()-1);
-					}
-					else if(arr[1].startsWith("\"") && arr[1].endsWith("\""))
-					{
-						fieldValue=arr[1].substring(1,arr[1].length()-1);
-					}
-					else if(arr[1].startsWith("[") && arr[1].endsWith("]")&& arr[1].length()>2) {
-						fieldValue=arr[1].substring(1,arr[1].length()-1);
-					}
-					else if(arr[1].startsWith("[") && arr[1].endsWith("]")&& arr[1].length()==2) {
-						fieldValue=null;
-					}
-					else if(arr[1].startsWith("\"") && !arr[1].endsWith("\"")) 
-					{
-						fieldValue=arr[1].substring(1,arr[1].length());;
-					}
-					else
-					{
-						fieldValue=arr[1];
-					}
-				//fieldMap.put(fieldLabel, fieldValue);
-				}
-				else if(elements[i].startsWith("\"") && elements[i].endsWith("\""))
-				{
-					fieldValue=elements[i].substring(1,elements[i].length()-1);
-					System.out.println("value without :="+fieldValue);
-					
-				}
-				else if(elements[i].startsWith("\"") && elements[i].endsWith("\"]"))
-				{
-					fieldValue=elements[i].substring(1,elements[i].length()-2);
-					System.out.println("value without :="+fieldValue);
-				}
-				
-				
-				if(fieldLabel.equals(keyField))
-				{
-					if(keyValue==null || keyValue.equals("") )
-					{
-						keyValue=fieldValue;
-						break;
-					}
-					else
-					{
-						keyValue=keyValue+"|"+fieldValue;
-						break;
-					}
-				}
-			
-		}
-		
 	}
-		return keyValue;
-
-}*/
+	
+	
 	public boolean isIpValid(final String ip){
 		final Pattern pattern;
 	    final Matcher matcher;

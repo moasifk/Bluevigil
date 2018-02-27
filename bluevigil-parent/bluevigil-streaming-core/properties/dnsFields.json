@@ -7,10 +7,10 @@
   	"kafkaDestinationTopic":"DnsLogOutput",
 
 
-	"keyFields":[{"backEndField":"ts"},
-		        {"backEndField":"id.resp_h"},
-		        {"backEndField":"id.resp_p"},
-		        {"backEndField":"uid"}],
+	"keyFields":[{"backEndField":"ts","hbaseField":"LOG_TIMESTAMP"},
+		        {"backEndField":"id.resp_h","hbaseField":"DEST_IP"},
+		        {"backEndField":"id.resp_p","hbaseField":"DEST_PORT"},
+		        {"backEndField":"uid","hbaseField":"UID"}],
 
 	    "mapping":[{"backEndField":"ts","hbaseField":"LOG_TIMESTAMP","type":"String","label":"Timestamp"},
 		       {"backEndField":"version","hbaseField":"VERSION","type":"String","label":"Version"},
@@ -33,7 +33,7 @@
 		       {"backEndField":"TC","hbaseField":"TC","type":"boolean","label":"TC"},	       	       
 		       {"backEndField":"trans_id","hbaseField":"TRANS_ID","type":"int","label":"TransId"},
 		       {"backEndField":"AA","hbaseField":"AA","type":"boolean","label":"AA"},
-		       {"backEndField":"rejected","hbaseField":"REJECTED","boolean":"int","label":"Rejected"},
+		       {"backEndField":"rejected","hbaseField":"REJECTED","type":"boolean","label":"Rejected"},
 		       {"backEndField":"answers","hbaseField":"ANSWERS","type":"String","label":"Answers"},
    		       {"backEndField":"Z","hbaseField":"Z","type":"int","label":"Z"}, 
 		       {"backEndField":"rtt","hbaseField":"RTT","type":"double","label":"Rtt"}, 		       
