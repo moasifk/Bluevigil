@@ -22,7 +22,7 @@
 		   	   {"backEndField":"uid","hbaseField":"UID","type":"String","label":"UserId"},
 		       {"backEndField":"method","hbaseField":"METHOD","type":"String","label":"Method"},
 		       {"backEndField":"proxied","hbaseField":"PROXIED","type":"String","label":"Proxied"},
-		       {"backEndField":"referrer","hbaseField":"REFERRER","type":"String","label":"Referrer"},
+		       {"backEndField":"referrer","hbaseField":"REFERER","type":"String","label":"Referrer"},
 		       {"backEndField":"request_body_len","hbaseField":"REQUEST_BODY_LEN","type":"int","label":"RequestBodyLength"},	
 		       {"backEndField":"resp_fuids","hbaseField":"DEST_FUIDS","type":"String","label":"DestinationFileUniqueIds"},		       
 		       {"backEndField":"resp_mime_types","hbaseField":"DEST_MIME_TYPES","type":"String","label":"DestinationMIMETypes"},

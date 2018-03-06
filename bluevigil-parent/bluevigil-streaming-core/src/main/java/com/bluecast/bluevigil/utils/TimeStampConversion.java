@@ -1,48 +1,36 @@
 package com.bluecast.bluevigil.utils;
 import java.util.*;
 import java.io.File;
+import java.io.IOException;
 import java.text.*;
 import java.math.*;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.DriverManager;
 
 
 
 public class TimeStampConversion {
-
-	public static void main(String[] args)
+	private static String driverName = "org.apache.hive.jdbc.HiveDriver";
+	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
-		getTime((long)1510665254.454436);
-		Double a=Double.parseDouble("1.510665254454436E9");
-		DecimalFormat formatter = new DecimalFormat("0.000000");
-		String date=formatter .format(a);
-		//System.out.println("Date value="+date);
-		//System.out.println(Long.parseLong(date));
-		//1510665254.454436
-		//1510665254.454436
-		//1510665254.454436
-		//long  ts=(long)Double.parseDouble("1510665261.593545");
-		//String date,time,str;
-		//String[] date_time = null;
-		//Date dateTime = new Date(ts*1000L); 
-		//DateFormat jdf = new SimpleDateFormat("yyyy-MM-dd");
-		//jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
-		//date = jdf.format(dateTime);
-		//jdf = new SimpleDateFormat("hh.mm aa");
-		//time = jdf.format(dateTime);
-		//System.out.println("\n"+java_date.trim()+"\n");
-		//Calendar  mydate = Calendar.getInstance();
-		//mydate.setTimeInMillis(unix_seconds*1000L);
-		//System.out.println(mydate.get(Calendar.YEAR)+"-"+mydate.get(Calendar.MONTH)+"-"+mydate.get(Calendar.DAY_OF_MONTH));
-		//System.out.println(date+" and "+time);
+		try {
+			String country=Utils.getIpResolveCountry("93.184.220.29");
+			System.out.println("Country="+country);
+			String city=Utils.getIpResolveCity("93.184.220.29");
+			System.out.println("City="+city);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//hiveConnection();
+		//getTime((long)1510665254.454436);
+		//Double a=Double.parseDouble("1.510665254454436E9");
+		//DecimalFormat formatter = new DecimalFormat("0.000000");
+		//String date=formatter .format(a);
 		
-		//str=date+","+time;
-		//System.out.println("date="+str.substring(0, str.indexOf(",")));
-		//System.out.println("time="+str.substring(str.indexOf(",")+1,str.length() ));
-		/*long ts=(long)1510665261.593545;
-		Date date = new Date(ts*1000L); 
-		SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd hh.mm aa z");
-		//jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
-		string java_date = jdf.format(date);
-		System.out.println("\n"+java_date.trim()+"\n");*/
 	}
 	public static String getTime(long ts) {
 		Date dateTime = new Date(ts*1000L); 
@@ -58,6 +46,19 @@ public class TimeStampConversion {
 		System.out.println("SQL Date="+sqlDate);   
 		
 		return sqlDate;
+	}
+	public static void hiveConnection() throws ClassNotFoundException, SQLException {
+		
+	      // get connection
+	      System.out.println("In HiveConnectiion");
+	      Class.forName(driverName);
+	      Connection con = DriverManager.getConnection("jdbc:hive2://localhost:10000/default", "yassar", "");
+	      Statement stmt = con.createStatement();
+	      
+	      stmt.executeQuery("CREATE DATABASE userTestDb");
+	      System.out.println("Database userdb created successfully.");
+	      
+	      con.close();
 	}
 	
 	

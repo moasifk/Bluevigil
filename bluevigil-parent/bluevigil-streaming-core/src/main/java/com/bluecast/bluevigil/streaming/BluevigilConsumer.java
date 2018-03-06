@@ -165,19 +165,29 @@ public class BluevigilConsumer implements Serializable {
 						{
 							
 							queryMap.put(mappingObj.getHbaseField(), fieldValue);
-							queryMap.put("DEST_COUNTRY", Utils.getIpResolveCountry(fieldValue.toString()));
+							
 							if(!mappingData.getLogFileName().equals("conn"))
 							{
+								queryMap.put("DEST_COUNTRY", Utils.getIpResolveCountry(fieldValue.toString()));
 								queryMap.put("DEST_CITY", Utils.getIpResolveCity(fieldValue.toString()));
+							}
+							else if (mappingData.getLogFileName().equals("conn"))
+							{
+								queryMap.put("DEST_LOCATION", Utils.getIpResolveCountry(fieldValue.toString()));
 							}
 						}
 						else if (mappingObj.getHbaseField().equals("SOURCE_IP") ||mappingObj.getHbaseField()=="SOURCE_IP")
 						{
 							queryMap.put(mappingObj.getHbaseField(), fieldValue);
-							queryMap.put("SOURCE_COUNTRY", Utils.getIpResolveCountry(fieldValue.toString()));
+							
 							if(!mappingData.getLogFileName().equals("conn"))
 							{
+								queryMap.put("SOURCE_COUNTRY", Utils.getIpResolveCountry(fieldValue.toString()));
 								queryMap.put("SOURCE_CITY", Utils.getIpResolveCity(fieldValue.toString()));
+							}
+							else if (mappingData.getLogFileName().equals("conn"))
+							{
+								queryMap.put("SOURCE_LOCATION", Utils.getIpResolveCountry(fieldValue.toString()));
 							}
 						}
 						
@@ -239,7 +249,7 @@ public class BluevigilConsumer implements Serializable {
 			while(it.hasNext())
 			{
 				String field=it.next();
-				//System.out.println("query field value="+field);
+				System.out.println("query field value="+field);
 				if(queryFields=="")
 				{
 					queryFields=queryFields+field;
@@ -327,6 +337,16 @@ public class BluevigilConsumer implements Serializable {
 					}
 					else if(field.equals("DEST_COUNTRY")|| field=="DEST_COUNTRY")
 					{
+						System.out.println("dest_country=");
+						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
+						stmt.setString(i,fieldVal);
+						i++;
+						break;
+					}
+					else if(field.equals("DEST_LOCATION")|| field=="DEST_LOCATION")
+					{
+						System.out.println("DEST_LOCATION=");
 						String fieldVal=valueIt.next().toString();
 						System.out.println("Field value="+fieldVal);
 						stmt.setString(i,fieldVal);
@@ -343,6 +363,14 @@ public class BluevigilConsumer implements Serializable {
 						
 					}
 					else if(field.equals("SOURCE_COUNTRY")|| field=="SOURCE_COUNTRY")
+					{
+						String fieldVal=valueIt.next().toString();
+						System.out.println("Field value="+fieldVal);
+						stmt.setString(i,fieldVal);
+						i++;
+						break;
+					}
+					else if(field.equals("SOURCE_LOCATION")|| field=="SOURCE_LOCATION")
 					{
 						String fieldVal=valueIt.next().toString();
 						System.out.println("Field value="+fieldVal);

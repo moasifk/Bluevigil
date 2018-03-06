@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
@@ -30,7 +31,7 @@ import com.bluecast.bluevigil.model.Mapping;
  * 
  */
 public class BluevigilStreamingProcessor {//implements Runnable  {
-
+	Logger LOGGER = Logger.getLogger(BluevigilStreamingProcessor.class);
 	private static String SOURCE_TOPIC;
 	private static String DEST_TOPIC;
 	private static String BOOTSTRAP_SERVERS;

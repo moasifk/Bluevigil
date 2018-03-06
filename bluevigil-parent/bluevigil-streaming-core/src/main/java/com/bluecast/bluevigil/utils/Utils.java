@@ -150,8 +150,9 @@ public class Utils implements Serializable{
 		IpResolveCountry ipc=new IpResolveCountry("./properties/GeoLite2-Country.mmdb");
 		Tuple tuple= TupleFactory.getInstance().newTuple();//("162.168.1.1");
 		tuple.append(ipAddress);
-		return ipc.exec(tuple);
-		//System.out.println("Country ="+country);
+		String country= ipc.exec(tuple);
+		System.out.println("Country ="+country);
+		return country;
 	}
 	public static String getIpResolveCity(String  ipAddress) throws IOException {
 		IpResolveCity ipCity=new IpResolveCity("./properties/GeoLite2-City.mmdb");
