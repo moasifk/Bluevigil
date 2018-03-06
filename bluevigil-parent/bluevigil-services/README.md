@@ -1,0 +1,1 @@
+# Bluevigil rest webservice for adhoc querying
