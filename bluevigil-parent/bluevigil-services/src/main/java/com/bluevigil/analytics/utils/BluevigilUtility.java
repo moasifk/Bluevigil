@@ -11,30 +11,31 @@ import org.apache.log4j.Logger;
 
 public class BluevigilUtility {
 	static Logger LOGGER = Logger.getLogger(BluevigilUtility.class);
-	
-	public static Connection getHbaseConnection() throws SQLException 
+	private static Properties props=new Properties();
+	public static Connection getHbaseConnection() 
 	{
-		@SuppressWarnings("unused")
-		Statement stmt = null;
+		props=getProperties();
 		try 
 		{
-			Class.forName("org.apache.phoenix.jdbc.PhoenixDriver");
+			Class.forName(props.getProperty("phoenix.jdbc.driver"));
 		} 
 		catch (ClassNotFoundException e1) 
 		{
 			System.out.println("Exception Loading Driver");
 			e1.printStackTrace();
+			LOGGER.error(e1.getMessage());
 			return null;
 		}
 		try
 		{
-			Connection con = DriverManager.getConnection("jdbc:phoenix:localhost:2181");  //172.31.124.43 is the adress of VM, not needed if ur running the program from vm itself
-			
+			Connection con = DriverManager.getConnection(props.getProperty("phoenix.jdbc.url"));  //172.31.124.43 is the adress of VM, not needed if ur running the program from vm itself
+			System.out.println("Hbase Connection Established");
 			return con;
 		}
-		catch(Exception e)
+		catch(SQLException e)
 		{
 			System.out.println(e.getMessage());
+			LOGGER.error(e.getMessage());
 			return null;
 		}
 	}

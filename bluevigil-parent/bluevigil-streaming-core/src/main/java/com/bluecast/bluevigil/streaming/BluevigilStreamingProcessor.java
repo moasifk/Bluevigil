@@ -32,6 +32,7 @@ import com.bluecast.bluevigil.model.Mapping;
  */
 public class BluevigilStreamingProcessor {//implements Runnable  {
 	Logger LOGGER = Logger.getLogger(BluevigilStreamingProcessor.class);
+	private static Properties props=new Properties();
 	private static String SOURCE_TOPIC;
 	private static String DEST_TOPIC;
 	private static String BOOTSTRAP_SERVERS;
@@ -70,41 +71,9 @@ public class BluevigilStreamingProcessor {//implements Runnable  {
 			e.printStackTrace();
 		}
 		//List<Mapping> fieldMappingList=mappingData.getMapping();
-		//Iterator<Mapping> it=fieldMappingList.iterator();		
-		
-		
-		
+		//Iterator<Mapping> it=fieldMappingList.iterator();	
 	}
-	/*public void run() 
-	{
-		BluevigilConsumer consumer = new BluevigilConsumer();
-		SparkConf conf = new SparkConf().setAppName("BluevigilStreamingProcessor").setMaster("local[*]");
-		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(2));
-		Gson gson = new Gson();
-		final File folder = new File("./properties");
-		/*for (final File fileEntry : folder.listFiles()) {
-			if(fileEntry.getName().endsWith(".json"))
-			{
-				JsonReader reader = new JsonReader(new FileReader("./properties/"+fileEntry.getName()));
-				FieldMapping mappingData = gson.fromJson(reader,FieldMapping.class); 
-				System.out.println("Delimitter="+mappingData.getDelimitter());
-				consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, BOOTSTRAP_SERVERS, ZOOKEEPER_SERVER, jssc,mappingData);
-				
-			}
-		}*/
-		/*JsonReader reader;
-		try {
-			reader = new JsonReader(new FileReader("./properties/httpFields.json"));
-		
-		FieldMapping mappingData = gson.fromJson(reader,FieldMapping.class); 
-		System.out.println("Delimitter="+mappingData.getDelimitter());
-		consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, BOOTSTRAP_SERVERS, ZOOKEEPER_SERVER, jssc,mappingData);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	
-	}*/
 
 }
 

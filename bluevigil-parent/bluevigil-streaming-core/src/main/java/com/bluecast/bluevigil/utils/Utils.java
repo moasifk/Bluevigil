@@ -29,6 +29,8 @@ import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 
 public class Utils implements Serializable{
+	static transient Logger LOGGER = Logger.getLogger(Utils.class);
+	private static Properties props=new Properties();
 	
 	public static Producer<String, String> createProducer(String bootstrapServers) {
 		Properties props = new Properties();
@@ -38,48 +40,32 @@ public class Utils implements Serializable{
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		return new KafkaProducer<String, String>(props);
 	}
-	/*public static  Connection getHbaseConnection() {
-		//Connection con=new Conne
-		Configuration conf=HBaseConfiguration.create();
-		///*conf.set("hbase.zookeeper.quorum", "nn02.itversity.com,nn01.itversity.com");
-		//conf.set("hbase.zookeeper.property.clientPort", "2181");
-		//conf.set("zookeeper.znode.parent","/hbase-unsecure");	
-		conf.set("hbase.zookeeper.quorum", "localhost");
-		conf.set("hbase.zookeeper.property.clientPort", "2181");
-		conf.set("zookeeper.znode.parent","/hbase-unsecure");		
-		try {
-			return ConnectionFactory.createConnection(conf);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-		
-	}*/
+	
 	
 	public static Connection getHbaseConnection() 
 	{
-		
+		props=getProperties();
 		try 
 		{
-			Class.forName("org.apache.phoenix.jdbc.PhoenixDriver");
+			Class.forName(props.getProperty("phoenix.jdbc.driver"));
 		} 
 		catch (ClassNotFoundException e1) 
 		{
 			System.out.println("Exception Loading Driver");
 			e1.printStackTrace();
+			LOGGER.error(e1.getMessage());
 			return null;
 		}
 		try
 		{
-			Connection con = DriverManager.getConnection("jdbc:phoenix:localhost:2181");  //172.31.124.43 is the adress of VM, not needed if ur running the program from vm itself
+			Connection con = DriverManager.getConnection(props.getProperty("phoenix.jdbc.url"));  //172.31.124.43 is the adress of VM, not needed if ur running the program from vm itself
 			System.out.println("Connection Established");
 			return con;
 		}
-		catch(Exception e)
+		catch(SQLException e)
 		{
 			System.out.println(e.getMessage());
+			LOGGER.error(e.getMessage());
 			return null;
 		}
 	}
@@ -108,9 +94,37 @@ public class Utils implements Serializable{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOGGER.error(e.getMessage());
 		}
 		return true;
 		
+	}
+	public static Properties getProperties() {
+		Properties prop = new Properties();
+		InputStream input = null;
+		try {
+
+			input = new FileInputStream("./properties/config.properties");
+
+			// load a properties file
+			prop.load(input);
+
+			return prop;
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			LOGGER.error(ex.getMessage());
+			return null;
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+					LOGGER.error(e.getMessage());
+				}
+			}
+		}
 	}
 	public static String getTime(long ts) {
 		Date dateTime = new Date(ts*1000L); 
@@ -147,17 +161,20 @@ public class Utils implements Serializable{
         return date.toString();
     }
 	public static String getIpResolveCountry(String  ipAddress) throws IOException {
-		IpResolveCountry ipc=new IpResolveCountry("./properties/GeoLite2-Country.mmdb");
+		props=getProperties();
+		IpResolveCountry ipc=new IpResolveCountry(props.getProperty("mmdb.geoLocation.Country"));
 		Tuple tuple= TupleFactory.getInstance().newTuple();//("162.168.1.1");
 		tuple.append(ipAddress);
 		String country= ipc.exec(tuple);
-		System.out.println("Country ="+country);
+		//System.out.println("Country ="+country);
 		return country;
 	}
 	public static String getIpResolveCity(String  ipAddress) throws IOException {
-		IpResolveCity ipCity=new IpResolveCity("./properties/GeoLite2-City.mmdb");
+		props=getProperties();
+		IpResolveCity ipCity=new IpResolveCity(props.getProperty("mmdb.geoLocation.City"));
 		Tuple cityTuple= TupleFactory.getInstance().newTuple();//("162.168.1.1");
 		cityTuple.append(ipAddress);
+		//System.out.println("city ="+ipCity.exec(cityTuple));
 		return ipCity.exec(cityTuple);
 		//System.out.println("Country ="+country);
 	}

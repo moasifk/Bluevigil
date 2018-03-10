@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,10 +25,12 @@ public class BluevigilController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/getAdhocResult", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String,Object>> getAdhocResult(@RequestParam(value = "sqlQuery") String sqlQuery) {
-		System.out.println("Sql query="+sqlQuery);
+	public @ResponseBody List<Map<String,Object>> getAdhocResult(@RequestBody String strArg) {
+		System.out.println("Sql query="+strArg);
+		JSONObject jsonObject = new JSONObject(strArg);
+		System.out.println("json sqlQuery="+ jsonObject.getString("sqlQuery"));
 		BluevigilAnalyticsQueryProcessor baqp=new BluevigilAnalyticsQueryProcessor();
-		return baqp.getHbaseData(sqlQuery);
+		return baqp.getHbaseData( jsonObject.getString("sqlQuery"));
 		
 	}
 }

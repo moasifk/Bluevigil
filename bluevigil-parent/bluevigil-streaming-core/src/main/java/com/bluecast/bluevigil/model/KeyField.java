@@ -9,6 +9,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class KeyField implements Serializable{
 
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 @SerializedName("backEndField")
 @Expose
 private String backEndField;

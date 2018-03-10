@@ -55,6 +55,9 @@ import scala.annotation.meta.field;
  *
  */
 public class BluevigilConsumer implements Serializable {
+	private static final long serialVersionUID = 1L;
+	static transient Logger LOGGER = Logger.getLogger(BluevigilConsumer.class);
+	Properties props=new Properties();
 	//Map<String,String> fieldMap=new HashMap<String,String>();
 
 	public void consumeDataFromSource(String soureTopic, final String destTopic, 
@@ -71,6 +74,9 @@ public class BluevigilConsumer implements Serializable {
 		System.out.println("in BlueVigilConsumer");
 		// Get the lines, split them into words, count the words and print
 		JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
+			
+			private static final long serialVersionUID = 1L;
+			
 			public String call(Tuple2<String, String> line) throws Exception {				
 				//System.out.println(line._2());
 				String str=line._2;
@@ -106,21 +112,17 @@ public class BluevigilConsumer implements Serializable {
 	}
 	
 	
-	public void insertIntoHdfs(String rawString) {
-		String[] arr,elements;
-		elements=rawString.split(",");
-	}
 	
 	
 	@SuppressWarnings("deprecation")
 	public void insertToHbase(String line,FieldMapping mappingData) {
 		System.out.println("In InsertIntoHbaseTable method");	
 		String backEndField,key,str;	
-		
+		JSONObject json;
 		
 		try {	
 			
-			JSONObject json = new JSONObject(line);
+			json= new JSONObject(line);
 			Map<String,Object> rawObjectMap=new HashMap<String,Object>();
 		    @SuppressWarnings("unchecked")
 			Iterator<String> keys = json.keys();
@@ -132,12 +134,9 @@ public class BluevigilConsumer implements Serializable {
 		   // rowKey=createHbaseRowKey(mappingData.getKeyFields(),rawObjectMap);
 			//String sqlQuery="upsert into "+mappingData.getHbaseTable();
 		    Map<String,Object> queryMap=new HashMap<String,Object>();
-		    String queryfields=null;	
+		    	
 		    Object fieldValue;
-		    //connection to hbase table
-		    Table hbaseTable = null;
-		    //Connection con=Utils.getHbaseConnection();
-		    //hbaseTable=con.getTable(TableName.valueOf(mappingData.getHbaseTable()));
+		    
 		    
 			Set<String> mapKeySet = rawObjectMap.keySet();
 			List<Mapping> fieldMappingList=mappingData.getMapping();
@@ -146,6 +145,7 @@ public class BluevigilConsumer implements Serializable {
 				Mapping mappingObj=it.next();
 				backEndField=mappingObj.getBackEndField();
 				//hbaseField=mappingObj.getHbaseField();
+				try {
 				if(mapKeySet.contains(backEndField))
 				{
 					fieldValue=rawObjectMap.get(backEndField);
@@ -161,33 +161,39 @@ public class BluevigilConsumer implements Serializable {
 					}
 					else if(fieldValue!= null &&isIpValid(fieldValue.toString()))
 					{
+						
 						if(mappingObj.getHbaseField().equals("DEST_IP") ||mappingObj.getHbaseField()=="DEST_IP") 
 						{
-							
+							country=Utils.getIpResolveCountry(fieldValue.toString());
+							city=Utils.getIpResolveCity(fieldValue.toString());
 							queryMap.put(mappingObj.getHbaseField(), fieldValue);
 							
 							if(!mappingData.getLogFileName().equals("conn"))
 							{
-								queryMap.put("DEST_COUNTRY", Utils.getIpResolveCountry(fieldValue.toString()));
-								queryMap.put("DEST_CITY", Utils.getIpResolveCity(fieldValue.toString()));
+								
+								queryMap.put("DEST_COUNTRY", (Object)country);
+								
+								queryMap.put("DEST_CITY",city );
 							}
 							else if (mappingData.getLogFileName().equals("conn"))
 							{
-								queryMap.put("DEST_LOCATION", Utils.getIpResolveCountry(fieldValue.toString()));
+								queryMap.put("DEST_LOCATION", country);
 							}
 						}
 						else if (mappingObj.getHbaseField().equals("SOURCE_IP") ||mappingObj.getHbaseField()=="SOURCE_IP")
 						{
+							country=Utils.getIpResolveCountry(fieldValue.toString());
+							city=Utils.getIpResolveCity(fieldValue.toString());
 							queryMap.put(mappingObj.getHbaseField(), fieldValue);
 							
 							if(!mappingData.getLogFileName().equals("conn"))
 							{
-								queryMap.put("SOURCE_COUNTRY", Utils.getIpResolveCountry(fieldValue.toString()));
-								queryMap.put("SOURCE_CITY", Utils.getIpResolveCity(fieldValue.toString()));
+								queryMap.put("SOURCE_COUNTRY", country);
+								queryMap.put("SOURCE_CITY", city);
 							}
 							else if (mappingData.getLogFileName().equals("conn"))
 							{
-								queryMap.put("SOURCE_LOCATION", Utils.getIpResolveCountry(fieldValue.toString()));
+								queryMap.put("SOURCE_LOCATION", country);
 							}
 						}
 						
@@ -223,6 +229,11 @@ public class BluevigilConsumer implements Serializable {
 					
 					
 				}
+			} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					LOGGER.error(e.getMessage());
+				}
 				
 			}
 			queryMap.put("INSERT_DATE_TIME",Utils.getCurrentTime());
@@ -230,10 +241,12 @@ public class BluevigilConsumer implements Serializable {
 			queryMap.put("FILE_HANDLE",mappingData.getLogFileName()+"_"+Utils.getUnixTime());
 			System.out.println("File handle value="+mappingData.getLogFileName()+"_"+Utils.getUnixTime());
 			insertQuery(mappingData.getHbaseTable(),fieldMappingList,queryMap);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				LOGGER.error(e.getMessage());
+			
+			}
 			
 	}
 	public void insertQuery(String hbaseTableName,List<Mapping> fieldMappingList,Map<String,Object> queryMap)
@@ -338,51 +351,99 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("DEST_COUNTRY")|| field=="DEST_COUNTRY")
 					{
 						System.out.println("dest_country=");
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
-						stmt.setString(i,fieldVal);
+						Object fieldVal=valueIt.next();
+						if(fieldVal==null || fieldVal=="")
+						{
+							
+							stmt.setString(i,null);
+						}
+						else
+						{	
+							System.out.println("Field value="+fieldVal);
+							stmt.setString(i,fieldVal.toString());
+						}
 						i++;
 						break;
 					}
 					else if(field.equals("DEST_LOCATION")|| field=="DEST_LOCATION")
 					{
 						System.out.println("DEST_LOCATION=");
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
-						stmt.setString(i,fieldVal);
+						Object fieldVal=valueIt.next();
+						if(fieldVal==null || fieldVal=="")
+						{
+							
+							stmt.setString(i,null);
+						}
+						else
+						{	
+							System.out.println("Field value="+fieldVal);
+							stmt.setString(i,fieldVal.toString());
+						}
 						i++;
 						break;
 					}
 					else if(field.equals("DEST_CITY")|| field=="DEST_CITY")
 					{
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
-						stmt.setString(i,fieldVal);
+						Object fieldVal=valueIt.next();
+						if(fieldVal==null || fieldVal=="")
+						{
+							
+							stmt.setString(i,null);
+						}
+						else
+						{	
+							System.out.println("Field value="+fieldVal);
+							stmt.setString(i,fieldVal.toString());
+						}
 						i++;
 						break;
 						
 					}
 					else if(field.equals("SOURCE_COUNTRY")|| field=="SOURCE_COUNTRY")
 					{
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
-						stmt.setString(i,fieldVal);
+						Object fieldVal=valueIt.next();
+						if(fieldVal==null || fieldVal==""|| fieldVal.equals(null))
+						{
+							
+							stmt.setString(i,null);
+						}
+						else
+						{	
+							System.out.println("Field value="+fieldVal);
+							stmt.setString(i,fieldVal.toString());
+						}
 						i++;
 						break;
 					}
 					else if(field.equals("SOURCE_LOCATION")|| field=="SOURCE_LOCATION")
 					{
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
-						stmt.setString(i,fieldVal);
+						Object fieldVal=valueIt.next();
+						if(fieldVal==null || fieldVal==""|| fieldVal.equals(null))
+						{
+							
+							stmt.setString(i,null);
+						}
+						else
+						{	
+							System.out.println("Field value="+fieldVal);
+							stmt.setString(i,fieldVal.toString());
+						}
 						i++;
 						break;
 					}
 					else if(field.equals("SOURCE_CITY")|| field=="SOURCE_CITY")
 					{
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
-						stmt.setString(i,fieldVal);
+						Object fieldVal=valueIt.next();
+						if(fieldVal==null || fieldVal==""|| fieldVal.equals(null))
+						{
+							
+							stmt.setString(i,null);
+						}
+						else
+						{	
+							System.out.println("Field value="+fieldVal);
+							stmt.setString(i,fieldVal.toString());
+						}
 						i++;
 						break;
 						
@@ -419,6 +480,7 @@ public class BluevigilConsumer implements Serializable {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOGGER.error(e.getMessage());
 		}
 		
 	}
@@ -438,17 +500,5 @@ public class BluevigilConsumer implements Serializable {
 		  return matcher.matches();
 	    }
 
-public void getHbaseData() throws FileNotFoundException, SQLException {
-	/*Gson gson = new Gson();
-	JsonReader reader = new JsonReader(new FileReader("./properties/queryFields.json"));
-	QueryFieldMapping queryMappingData = gson.fromJson(reader,QueryFieldMapping.class); 
-	List<QueryField> queryMappingList=queryMappingData.getQueryFields();
-	Iterator<QueryField> it=queryMappingList.iterator();
-	while(it.hasNext()) {
-		System.out.println("Table name ="+it.next().getTableName());
-	
-		}*/
-	//Testing pheonix code
-	phoenix_hbase.connectHbase();
-}
+
 }
