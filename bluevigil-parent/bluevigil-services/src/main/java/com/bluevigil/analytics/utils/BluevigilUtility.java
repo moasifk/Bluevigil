@@ -1,11 +1,15 @@
 package com.bluevigil.analytics.utils;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -40,5 +44,31 @@ public class BluevigilUtility {
 		}
 	}
 	
+	public static Properties getProperties() {
+		Properties prop = new Properties();
+		InputStream input = null;
+		try {
 
+			input = new FileInputStream("./properties/config.properties");
+
+			// load a properties file
+			prop.load(input);
+
+			return prop;
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			LOGGER.error(ex.getMessage());
+			return null;
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+					LOGGER.error(e.getMessage());
+				}
+			}
+		}
+	}
 }

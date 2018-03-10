@@ -45,8 +45,6 @@ public class BluevigilAnalyticsQueryProcessor {
 			return json;
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			LOGGER.
 			e.printStackTrace();
 			return null;
 		}

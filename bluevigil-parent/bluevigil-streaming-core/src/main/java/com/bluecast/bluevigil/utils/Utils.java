@@ -1,6 +1,8 @@
 package com.bluecast.bluevigil.utils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,13 +12,14 @@ import java.util.Properties;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
+import java.sql.SQLException;
 import java.util.TimeZone;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.log4j.Logger;
 import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 import org.joda.time.DateTime;

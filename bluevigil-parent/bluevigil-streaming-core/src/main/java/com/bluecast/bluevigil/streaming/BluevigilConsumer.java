@@ -1,12 +1,10 @@
 package com.bluecast.bluevigil.streaming;
 
-import java.io.FileNotFoundException;
-
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,17 +13,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.TableName;
-//import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.Table;
+
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.VoidFunction;
@@ -33,21 +29,15 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
-
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.bluecast.bluevigil.model.FieldMapping;
-import com.bluecast.bluevigil.model.KeyField;
 import com.bluecast.bluevigil.model.Mapping;
-
 import com.bluecast.bluevigil.utils.Utils;
 
-
-import com.bluecast.bluevigil.utils.phoenix_hbase;
 import kafka.serializer.StringDecoder;
-
 import scala.Tuple2;
-import scala.annotation.meta.field;
 
 /**
  * Consumer class to condume data from Kafka topic
@@ -59,9 +49,9 @@ public class BluevigilConsumer implements Serializable {
 	static transient Logger LOGGER = Logger.getLogger(BluevigilConsumer.class);
 	Properties props=new Properties();
 	//Map<String,String> fieldMap=new HashMap<String,String>();
-
+ 
 	public void consumeDataFromSource(String soureTopic, final String destTopic, 
-			final String bootstrapServers, String zookeeperServer, JavaStreamingContext jssc,FieldMapping mappingData)  {
+			final String bootstrapServers, String zookeeperServer, JavaStreamingContext jssc,final FieldMapping mappingData)  {
 		HashSet<String> topicsSet = new HashSet<String>(Arrays.asList(soureTopic.split(",")));
 		HashMap<String, String> kafkaParams = new HashMap<String, String>();
 		kafkaParams.put("metadata.broker.list", bootstrapServers);
@@ -117,12 +107,13 @@ public class BluevigilConsumer implements Serializable {
 	@SuppressWarnings("deprecation")
 	public void insertToHbase(String line,FieldMapping mappingData) {
 		System.out.println("In InsertIntoHbaseTable method");	
-		String backEndField,key,str;	
-		JSONObject json;
-		
-		try {	
+		String backEndField,key,str,country,city;	
+		//try {	
 			
-			json= new JSONObject(line);
+			JSONObject json;
+			try {
+				json = new JSONObject(line);
+			
 			Map<String,Object> rawObjectMap=new HashMap<String,Object>();
 		    @SuppressWarnings("unchecked")
 			Iterator<String> keys = json.keys();
@@ -130,13 +121,13 @@ public class BluevigilConsumer implements Serializable {
 		    	key=keys.next();		    	
 		        rawObjectMap.put(key,json.get(key));	        
 		        
-		    }
+		    	}
+			
 		   // rowKey=createHbaseRowKey(mappingData.getKeyFields(),rawObjectMap);
 			//String sqlQuery="upsert into "+mappingData.getHbaseTable();
 		    Map<String,Object> queryMap=new HashMap<String,Object>();
 		    	
 		    Object fieldValue;
-		    
 		    
 			Set<String> mapKeySet = rawObjectMap.keySet();
 			List<Mapping> fieldMappingList=mappingData.getMapping();
@@ -297,7 +288,7 @@ public class BluevigilConsumer implements Serializable {
 					{
 						if(mappingObj.getType().equals("int")|| mappingObj.getType()=="int")
 						{
-							int fieldVal=(int)valueIt.next();
+							int fieldVal=(Integer)valueIt.next();
 							System.out.println("Field value="+fieldVal);
 							stmt.setInt(i,fieldVal );
 							
@@ -310,19 +301,19 @@ public class BluevigilConsumer implements Serializable {
 						}
 						else if(mappingObj.getType().equals("boolean")|| mappingObj.getType()=="boolean")
 						{
-							boolean fieldVal=(boolean)valueIt.next();
+							boolean fieldVal=(Boolean)valueIt.next();
 							System.out.println("Field value="+fieldVal);
 							stmt.setBoolean(i, fieldVal);
 						}
 						else if(mappingObj.getType().equals("double")|| mappingObj.getType()=="double")
 						{
-							double fieldVal=(double)valueIt.next();
+							double fieldVal=(Double)valueIt.next();
 							System.out.println("Field value="+fieldVal);
 							stmt.setDouble(i, fieldVal);
 						}
 						else if(mappingObj.getType().equals("long")|| mappingObj.getType()=="long")
 						{
-							long fieldVal=(long)valueIt.next();
+							long fieldVal=(Long)valueIt.next();
 							System.out.println("Field value="+fieldVal);
 							stmt.setLong(i, fieldVal);
 						}
@@ -499,6 +490,5 @@ public class BluevigilConsumer implements Serializable {
 		  matcher = pattern.matcher(ip);
 		  return matcher.matches();
 	    }
-
 
 }

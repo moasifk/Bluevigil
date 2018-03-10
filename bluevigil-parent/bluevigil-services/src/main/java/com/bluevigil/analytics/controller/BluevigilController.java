@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bluevigil.analytics.hbase.BluevigilAnalyticsQueryProcessor;
-import com.bluevigil.analytics.model.HttpLog;
 
 @RestController
 

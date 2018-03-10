@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
