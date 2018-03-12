@@ -25,9 +25,9 @@ public class BluevigilController {
 	@CrossOrigin
 	@RequestMapping(value = "/getAdhocResult", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String,Object>> getAdhocResult(@RequestBody String strArg) {
-		System.out.println("Sql query="+strArg);
+		LOGGER.info("Sql query="+strArg);
 		JSONObject jsonObject = new JSONObject(strArg);
-		System.out.println("json sqlQuery="+ jsonObject.getString("sqlQuery"));
+		LOGGER.info("json sqlQuery="+ jsonObject.getString("sqlQuery"));
 		BluevigilAnalyticsQueryProcessor baqp=new BluevigilAnalyticsQueryProcessor();
 		return baqp.getHbaseData( jsonObject.getString("sqlQuery"));
 		

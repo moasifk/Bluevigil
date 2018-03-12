@@ -18,10 +18,10 @@ import java.util.Iterator;
 import static java.util.Arrays.asList;
 
 /**
- * Created by bijay on 1/6/15.
+ * Created by yassar on 03/02/2018.
  */
 public class IpResolveCountry extends EvalFunc<String> {
-  Logger logger = LoggerFactory.getLogger(IpResolveCountry.class);
+  Logger LOGGER = LoggerFactory.getLogger(IpResolveCountry.class);
   private final static String _local = "local";
   DatabaseReader reader;
   private File ipDatabase;
@@ -35,8 +35,8 @@ public IpResolveCountry(String fileName) {
       this.reader = new DatabaseReader.Builder(ipDatabase).build();
 //	  this.listCIDR = Arrays.asList("172.16.","172.17.","172.18.","172.19.","172.20.","172.21.","172.22.","172.23.","172.24.","172.25.","172.26.","172.27.","172.28.","172.29.","172.30.","172.31.","10.");
     } catch (IOException e) {
-      System.out.println("Database reader cannot be created");
-      e.printStackTrace();
+    	LOGGER.info("Database reader cannot be created");
+      LOGGER.error(e.getMessage());
     }
   }
 
@@ -65,7 +65,7 @@ public String exec(Tuple tuple) throws IOException {
       }
 
     } catch (GeoIp2Exception e) {
-      e.printStackTrace();
+    	LOGGER.error(e.getMessage());
     }
     return countryName;
   }

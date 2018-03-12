@@ -50,26 +50,16 @@ public class BluevigilStreamingProcessor {//implements Runnable  {
 		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(2));
 		Gson gson = new Gson();
 		final File folder = new File("./properties");
-		/*for (final File fileEntry : folder.listFiles()) {
-			if(fileEntry.getName().endsWith(".json"))
-			{
-				JsonReader reader = new JsonReader(new FileReader("./properties/"+fileEntry.getName()));
-				FieldMapping mappingData = gson.fromJson(reader,FieldMapping.class); 
-				System.out.println("Delimitter="+mappingData.getDelimitter());
-				consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, BOOTSTRAP_SERVERS, ZOOKEEPER_SERVER, jssc,mappingData);
-				
-			}
-		}*/
 		JsonReader reader;
 		try {
 			reader = new JsonReader(new FileReader("./properties/httpFields.json"));
 		
 		FieldMapping mappingData = gson.fromJson(reader,FieldMapping.class); 
-		System.out.println("going to call h-base scan method");
+		LOGGER.info("Going to call h-base consumeDataFromSource method");
 		consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, BOOTSTRAP_SERVERS, ZOOKEEPER_SERVER, jssc,mappingData);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(e.getMessage());
 		}
 		//List<Mapping> fieldMappingList=mappingData.getMapping();
 		//Iterator<Mapping> it=fieldMappingList.iterator();	

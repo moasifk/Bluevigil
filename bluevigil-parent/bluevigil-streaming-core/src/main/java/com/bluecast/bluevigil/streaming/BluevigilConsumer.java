@@ -60,17 +60,17 @@ public class BluevigilConsumer implements Serializable {
 		// Create direct Kafka stream with brokers and topics
 		JavaPairInputDStream<String, String> messages = KafkaUtils.createDirectStream(jssc, String.class, String.class,
 				StringDecoder.class, StringDecoder.class, kafkaParams, topicsSet);
+		LOGGER.info("in BlueVigilConsumer method");
 		
-		System.out.println("in BlueVigilConsumer");
 		// Get the lines, split them into words, count the words and print
 		JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
 			
 			private static final long serialVersionUID = 1L;
 			
 			public String call(Tuple2<String, String> line) throws Exception {				
-				//System.out.println(line._2());
+				LOGGER.info(line._2());
 				String str=line._2;
-				//System.out.println("Line is ="+str);
+				
 				insertToHbase(str, mappingData);
 				return line._2();
 			}
@@ -87,15 +87,11 @@ public class BluevigilConsumer implements Serializable {
 						Producer<String, String> producer = utils.createProducer(bootstrapServers);
 						ProducerRecord<String, String> record = new ProducerRecord<String, String>(destTopic, "key", s);
 						RecordMetadata metadata = producer.send(record).get();
-						//insertIntoHdfs(s);
+						
 					}
 				});
 			}
 		});
-
-		//lines.print();
-
-		// Execute the Spark workflow defined above
 		jssc.start();
 		jssc.awaitTermination();
 
@@ -106,7 +102,7 @@ public class BluevigilConsumer implements Serializable {
 	
 	@SuppressWarnings("deprecation")
 	public void insertToHbase(String line,FieldMapping mappingData) {
-		System.out.println("In InsertIntoHbaseTable method");	
+		LOGGER.info("In InsertIntoHbaseTable method");	
 		String backEndField,key,str,country,city;	
 		//try {	
 			
@@ -123,8 +119,7 @@ public class BluevigilConsumer implements Serializable {
 		        
 		    	}
 			
-		   // rowKey=createHbaseRowKey(mappingData.getKeyFields(),rawObjectMap);
-			//String sqlQuery="upsert into "+mappingData.getHbaseTable();
+		   
 		    Map<String,Object> queryMap=new HashMap<String,Object>();
 		    	
 		    Object fieldValue;
@@ -228,9 +223,9 @@ public class BluevigilConsumer implements Serializable {
 				
 			}
 			queryMap.put("INSERT_DATE_TIME",Utils.getCurrentTime());
-			System.out.println("Current date and time="+Utils.getCurrentTime());
+			LOGGER.info("Current date and time="+Utils.getCurrentTime());
 			queryMap.put("FILE_HANDLE",mappingData.getLogFileName()+"_"+Utils.getUnixTime());
-			System.out.println("File handle value="+mappingData.getLogFileName()+"_"+Utils.getUnixTime());
+			LOGGER.info("File handle value="+mappingData.getLogFileName()+"_"+Utils.getUnixTime());
 			insertQuery(mappingData.getHbaseTable(),fieldMappingList,queryMap);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -243,7 +238,7 @@ public class BluevigilConsumer implements Serializable {
 	public void insertQuery(String hbaseTableName,List<Mapping> fieldMappingList,Map<String,Object> queryMap)
 	{
 		try {
-			System.out.println("In InsertQuery Method");
+			LOGGER.info("In InsertQuery Method");
 			Connection con=Utils.getHbaseConnection();
 			Set<String> queryFieldSet = queryMap.keySet();
 			Collection<Object> objCollection=queryMap.values(); 
@@ -253,7 +248,7 @@ public class BluevigilConsumer implements Serializable {
 			while(it.hasNext())
 			{
 				String field=it.next();
-				System.out.println("query field value="+field);
+				LOGGER.info("query field value="+field);
 				if(queryFields=="")
 				{
 					queryFields=queryFields+field;
@@ -268,7 +263,7 @@ public class BluevigilConsumer implements Serializable {
 			}			
 			
 			String sqlQuery="upsert into "+hbaseTableName+" ("+queryFields+") values("+valueFields+")";
-			System.out.println("Sql Query ="+sqlQuery);
+			LOGGER.info("Sql Query ="+sqlQuery);
 		
 			PreparedStatement stmt = con.prepareStatement(sqlQuery);
 			//Statement stmt=con.createStatement();
@@ -289,32 +284,28 @@ public class BluevigilConsumer implements Serializable {
 						if(mappingObj.getType().equals("int")|| mappingObj.getType()=="int")
 						{
 							int fieldVal=(Integer)valueIt.next();
-							System.out.println("Field value="+fieldVal);
+							
 							stmt.setInt(i,fieldVal );
 							
 						}
 						else if(mappingObj.getType().equals("String")|| mappingObj.getType()=="String")
 						{
-							String fieldVal=valueIt.next().toString();
-							System.out.println("Field value="+fieldVal);
+							String fieldVal=valueIt.next().toString();							
 							stmt.setString(i,fieldVal);
 						}
 						else if(mappingObj.getType().equals("boolean")|| mappingObj.getType()=="boolean")
 						{
-							boolean fieldVal=(Boolean)valueIt.next();
-							System.out.println("Field value="+fieldVal);
+							boolean fieldVal=(Boolean)valueIt.next();							
 							stmt.setBoolean(i, fieldVal);
 						}
 						else if(mappingObj.getType().equals("double")|| mappingObj.getType()=="double")
 						{
-							double fieldVal=(Double)valueIt.next();
-							System.out.println("Field value="+fieldVal);
+							double fieldVal=(Double)valueIt.next();							
 							stmt.setDouble(i, fieldVal);
 						}
 						else if(mappingObj.getType().equals("long")|| mappingObj.getType()=="long")
 						{
-							long fieldVal=(Long)valueIt.next();
-							System.out.println("Field value="+fieldVal);
+							long fieldVal=(Long)valueIt.next();							
 							stmt.setLong(i, fieldVal);
 						}
 						
@@ -325,23 +316,21 @@ public class BluevigilConsumer implements Serializable {
 					
 					else if(field.equals("LOG_DATE")|| field=="LOG_DATE")
 					{
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
+						String fieldVal=valueIt.next().toString();						
 						stmt.setDate(i,Utils.getDate((long)Double.parseDouble(fieldVal)));
 						i++;
 						break;
 					}
 					else if(field.equals("LOG_TIME")|| field=="LOG_TIME")
 					{
-						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
+						String fieldVal=valueIt.next().toString();						
 						stmt.setString(i, fieldVal);
 						i++;
 						break;
 					}
 					else if(field.equals("DEST_COUNTRY")|| field=="DEST_COUNTRY")
 					{
-						System.out.println("dest_country=");
+						
 						Object fieldVal=valueIt.next();
 						if(fieldVal==null || fieldVal=="")
 						{
@@ -350,7 +339,7 @@ public class BluevigilConsumer implements Serializable {
 						}
 						else
 						{	
-							System.out.println("Field value="+fieldVal);
+							
 							stmt.setString(i,fieldVal.toString());
 						}
 						i++;
@@ -358,7 +347,7 @@ public class BluevigilConsumer implements Serializable {
 					}
 					else if(field.equals("DEST_LOCATION")|| field=="DEST_LOCATION")
 					{
-						System.out.println("DEST_LOCATION=");
+						
 						Object fieldVal=valueIt.next();
 						if(fieldVal==null || fieldVal=="")
 						{
@@ -367,7 +356,7 @@ public class BluevigilConsumer implements Serializable {
 						}
 						else
 						{	
-							System.out.println("Field value="+fieldVal);
+							
 							stmt.setString(i,fieldVal.toString());
 						}
 						i++;
@@ -383,7 +372,7 @@ public class BluevigilConsumer implements Serializable {
 						}
 						else
 						{	
-							System.out.println("Field value="+fieldVal);
+							
 							stmt.setString(i,fieldVal.toString());
 						}
 						i++;
@@ -400,7 +389,7 @@ public class BluevigilConsumer implements Serializable {
 						}
 						else
 						{	
-							System.out.println("Field value="+fieldVal);
+							
 							stmt.setString(i,fieldVal.toString());
 						}
 						i++;
@@ -416,7 +405,7 @@ public class BluevigilConsumer implements Serializable {
 						}
 						else
 						{	
-							System.out.println("Field value="+fieldVal);
+							
 							stmt.setString(i,fieldVal.toString());
 						}
 						i++;
@@ -432,7 +421,7 @@ public class BluevigilConsumer implements Serializable {
 						}
 						else
 						{	
-							System.out.println("Field value="+fieldVal);
+							
 							stmt.setString(i,fieldVal.toString());
 						}
 						i++;
@@ -442,7 +431,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("INSERT_DATE_TIME")|| field=="INSERT_DATE_TIME")
 					{
 						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
+						
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -451,7 +440,7 @@ public class BluevigilConsumer implements Serializable {
 					else if(field.equals("FILE_HANDLE")|| field=="FILE_HANDLE")
 					{
 						String fieldVal=valueIt.next().toString();
-						System.out.println("Field value="+fieldVal);
+						
 						stmt.setString(i,fieldVal);
 						i++;
 						break;
@@ -464,7 +453,7 @@ public class BluevigilConsumer implements Serializable {
 			//System.out.println("I value="+i);
 			
 			
-			System.out.println("Going to insert into table");
+			LOGGER.info("Going to insert into table");
 			stmt.executeUpdate();
 			con.commit();
 			

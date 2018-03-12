@@ -22,7 +22,7 @@ public class BluevigilAnalyticsQueryProcessor {
 	public List<Map<String,Object>> getHbaseData(String sqlQuery) {
 		try {
 			Connection con=BluevigilUtility.getHbaseConnection();
-			System.out.println("In BlueVigilAnalyticsProcessor query="+sqlQuery);
+			LOGGER.info("In BlueVigilAnalyticsProcessor query="+sqlQuery);
 			PreparedStatement stmt = con.prepareStatement(sqlQuery);
 			ResultSet rs = stmt.executeQuery();
 			List<Map<String,Object>> json = new ArrayList<Map<String,Object>>();
@@ -45,7 +45,8 @@ public class BluevigilAnalyticsQueryProcessor {
 			return json;
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.info(e.getMessage());
+			LOGGER.error(e.getMessage());
 			return null;
 		}
 		

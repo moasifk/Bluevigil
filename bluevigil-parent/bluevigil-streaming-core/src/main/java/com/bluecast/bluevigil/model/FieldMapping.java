@@ -30,6 +30,9 @@ private List<KeyField> keyFields = new ArrayList<KeyField>();
 @Expose
 private List<Mapping> mapping = new ArrayList<Mapping>();
 
+public FieldMapping() {
+	
+}
 public String getLogFileName() {
 return logFileName;
 }

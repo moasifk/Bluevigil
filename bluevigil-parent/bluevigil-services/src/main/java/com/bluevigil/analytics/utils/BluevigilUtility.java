@@ -25,20 +25,19 @@ public class BluevigilUtility {
 		} 
 		catch (ClassNotFoundException e1) 
 		{
-			System.out.println("Exception Loading Driver");
-			e1.printStackTrace();
+			LOGGER.info("Exception Loading Driver");
 			LOGGER.error(e1.getMessage());
 			return null;
 		}
 		try
 		{
 			Connection con = DriverManager.getConnection(props.getProperty("phoenix.jdbc.url"));  //172.31.124.43 is the adress of VM, not needed if ur running the program from vm itself
-			System.out.println("Hbase Connection Established");
+			LOGGER.info("Hbase Connection Established");
 			return con;
 		}
 		catch(SQLException e)
 		{
-			System.out.println(e.getMessage());
+			LOGGER.info(e.getMessage());
 			LOGGER.error(e.getMessage());
 			return null;
 		}
@@ -57,7 +56,7 @@ public class BluevigilUtility {
 			return prop;
 
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			LOGGER.info(ex.getMessage());
 			LOGGER.error(ex.getMessage());
 			return null;
 		} finally {
@@ -65,7 +64,7 @@ public class BluevigilUtility {
 				try {
 					input.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.info(e.getMessage());
 					LOGGER.error(e.getMessage());
 				}
 			}
