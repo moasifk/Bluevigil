@@ -9,6 +9,7 @@ public class BluevigilControllerTest {
 	@Test
 	public void getAdhocResultTest() {
 		BluevigilController controller = new BluevigilController();
-		controller.getAdhocResult("query");
+		System.out.println("Hello");
+//		controller.getAdhocResult("select  * from  HBASE_TEST");
 	}
 }

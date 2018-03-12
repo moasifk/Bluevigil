@@ -11,5 +11,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>bluevigil-streaming-core</module>
+		<module>bluevigil-services</module>
 	</modules>
 </project>
