@@ -1,6 +1,11 @@
 <!--
 Title: Bluevigil
-Description:  Bluevigil is an entreprise ready network security analysis application which provides security analytics and insights on a huge volume of data on real time or near real time.
+Description:  Bluevigil security analytics application
+
+-->
+# Bluevigil
+
+Bluevigil is an entreprise ready network security analysis application which provides security analytics and insights on a huge volume of data on real time or near real time.
 This is a streaming analytics application that makes it faster and easier to make decisions for network analysts and security operations personnals.
 
 This provides organizations to ingest, enrich, store and process the different types of network logs and other security related data feeds in a scalable and distributed way 
@@ -20,8 +25,6 @@ This application provides ability to do advanced querying and analysis based on 
 
 API interfaces
 This platform provides different API end points for accessing the data available in security data vault.
-
--->
 
 # Requirements
 Apache Maven 3.3.3 or higher
