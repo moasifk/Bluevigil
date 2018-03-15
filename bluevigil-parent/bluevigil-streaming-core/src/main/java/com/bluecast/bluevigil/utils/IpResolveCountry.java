@@ -3,10 +3,10 @@ package com.bluecast.bluevigil.utils;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CountryResponse;
+
+import org.apache.log4j.Logger;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.data.Tuple;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import static java.util.Arrays.asList;
  * Created by yassar on 03/02/2018.
  */
 public class IpResolveCountry extends EvalFunc<String> {
-  Logger LOGGER = LoggerFactory.getLogger(IpResolveCountry.class);
+  static Logger LOGGER = Logger.getLogger(IpResolveCountry.class);
   private final static String _local = "local";
   DatabaseReader reader;
   private File ipDatabase;
@@ -60,7 +60,7 @@ public String exec(Tuple tuple) throws IOException {
 		countryName = response.getCountry().getName();
 	}
       if (countryName == null || countryName.length() == 0) {
-        logger.warn("ipAddress:"+ip+" cannot be resolved");
+        LOGGER.warn("ipAddress:"+ip+" cannot be resolved");
         return null;
       }
 

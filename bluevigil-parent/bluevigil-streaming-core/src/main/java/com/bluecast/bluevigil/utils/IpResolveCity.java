@@ -1,28 +1,28 @@
 package com.bluecast.bluevigil.utils;
 
 
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.model.CityResponse;
-import org.apache.pig.EvalFunc;
-import org.apache.pig.data.Tuple;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Arrays.asList;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
-import static java.util.Arrays.asList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.apache.pig.EvalFunc;
+import org.apache.pig.data.Tuple;
+
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
 
 /**
  * Created by yassar on 03/02/2018.
  */
 public class IpResolveCity extends EvalFunc<String> {
-  Logger LOGGER = LoggerFactory.getLogger(IpResolveCity.class);
+  static Logger LOGGER = Logger.getLogger(IpResolveCity.class);
   private final static String _local = "local";
   DatabaseReader reader;
   private File ipDatabase;
@@ -59,7 +59,7 @@ public class IpResolveCity extends EvalFunc<String> {
 		cityName = response.getCity().getName();
 	}
       if (cityName == null || cityName.length() == 0) {
-        logger.warn("ipAddress:"+ip+" cannot be resolved");
+    	  LOGGER.warn("ipAddress:"+ip+" cannot be resolved");
         return null;
       }
 
