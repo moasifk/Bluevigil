@@ -32,27 +32,30 @@ import com.bluecast.bluevigil.model.Mapping;
  * 
  */
 public class BluevigilStreamingProcessor {//implements Runnable  {
-	Logger LOGGER = Logger.getLogger(BluevigilStreamingProcessor.class);
+	static Logger LOGGER = Logger.getLogger(BluevigilStreamingProcessor.class);
 	private static Properties props=new Properties();
 	private static String SOURCE_TOPIC;
 	private static String DEST_TOPIC;
 	private static String BOOTSTRAP_SERVERS;
 	private static String ZOOKEEPER_SERVER;
-
+	private static String NWLOG_FILE_CONFIG_PATH;
+	
 	public static void main(String args[]){
-		SOURCE_TOPIC ="Yassar060Blue"; //args[0]; // Source topic - Flume ingest logs to this topic
-		DEST_TOPIC = "Yassar060BlueOutput";//args[1]; // The spark processed data kept in this topic
-		BOOTSTRAP_SERVERS = "localhost:9092";//args[2]; // Bootstrap server details, comma seperated
-		ZOOKEEPER_SERVER ="localhost:2181";//args[3]; // Zookeeper server details, comma seperated
+		SOURCE_TOPIC = args[0]; // Source topic - Flume ingest logs to this topic
+		DEST_TOPIC = args[1]; // The spark processed data kept in this topic
+		BOOTSTRAP_SERVERS = args[2]; // Bootstrap server details, comma seperated
+		ZOOKEEPER_SERVER = args[3]; // Zookeeper server details, comma seperated
+		NWLOG_FILE_CONFIG_PATH = args[4];
 		//parsing filled mapping JSON file
 		BluevigilConsumer consumer = new BluevigilConsumer();
-		SparkConf conf = new SparkConf().setAppName("BluevigilStreamingProcessor").setMaster("local[*]");
+		// SparkConf conf = new SparkConf().setAppName("BluevigilStreamingProcessor").setMaster("local[*]");
+		SparkConf conf = new SparkConf().setAppName("BluevigilStreamingProcessor");
 		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(2));
 		Gson gson = new Gson();
-		final File folder = new File("./properties");
+//		final File folder = new File("./properties");
 		JsonReader reader;
 		try {
-			reader = new JsonReader(new FileReader("./properties/httpFields.json"));
+			reader = new JsonReader(new FileReader(NWLOG_FILE_CONFIG_PATH));
 		
 		FieldMapping mappingData = gson.fromJson(reader,FieldMapping.class); 
 		LOGGER.info("Going to call h-base consumeDataFromSource method");
