@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workflow-app xmlns="uri:oozie:workflow:0.3" name="grfe-uat-workflow-381113">
+    <start to="Bluevigil-Streaming"/>
+    <action name="Bluevigil-Streaming">
+        <spark xmlns="uri:oozie:spark-action:0.1">
+            <job-tracker>{jobTracker}</job-tracker>
+            <name-node>{nameNode}</name-node>
+            <master>yarn</master>
+            <mode>cluster</mode>
+            <name>Bluevigil-Streaming-HTTP</name>
+            <class>com.bluecast.bluevigil.streaming.BluevigilStreamingProcessor</class>
+            <jar>bluevigil-streaming-core-jar-with-dependencies.jar</jar>
+            <arg>HttpLogdata</arg> <!-- Source topic name, flume ingest logs to this topic -->
+	    <arg>HttpLogdOutput</arg> <!-- Output topic name, processed data pushed to this topic to be consumed by web ui -->
+	    <arg>localhost:9092</arg> <!-- Bootstrap server details, comma seperated -->
+            <arg>localhost:2181</arg> <!-- Zookeeper server details, comma seperated -->
+	    <arg>httpFields.json</arg> <!-- Network log file config path -->
+        </spark>
+        <ok to="end"/>
+        <error to="Kill"/>
+    </action>
+    <kill name="Kill">
+        <message>cluster-wf failed, error message:
+         [${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
