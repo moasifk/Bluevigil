@@ -41,11 +41,12 @@ public class BluevigilStreamingProcessor {//implements Runnable  {
 	private static String NWLOG_FILE_CONFIG_PATH;
 	
 	public static void main(String args[]){
-		SOURCE_TOPIC = args[0]; // Source topic - Flume ingest logs to this topic
-		DEST_TOPIC = args[1]; // The spark processed data kept in this topic
+	    // Below argument values are populated based on the input logs we have to push to hadoop 
+		SOURCE_TOPIC = args[0]; // Source topic - Flume ingest logs to this topic eg: dns-input-topic, http-input-topic
+		DEST_TOPIC = args[1]; // The spark processed data kept in this topic eg: eg: dns-output-topic, http-output-topic
 		BOOTSTRAP_SERVERS = args[2]; // Bootstrap server details, comma seperated
 		ZOOKEEPER_SERVER = args[3]; // Zookeeper server details, comma seperated
-		NWLOG_FILE_CONFIG_PATH = args[4];
+		NWLOG_FILE_CONFIG_PATH = args[4]; // Network log configuration(json) file path eg: /user/bluvigil/configs/Http_file_config.json 
 		//parsing filled mapping JSON file
 		BluevigilConsumer consumer = new BluevigilConsumer();
 		// SparkConf conf = new SparkConf().setAppName("BluevigilStreamingProcessor").setMaster("local[*]");
