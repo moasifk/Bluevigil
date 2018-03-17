@@ -37,11 +37,15 @@ Apache Oozie 4.2.1
 Clone the project from this repository
 Go to your project path 
 Run below command to generate all required Jars and War 
+
 mvn -DskipTests clean package
+
 This will generate jar and war files required for deploying Bluevigil application
 
 bluevigil-streaming-core-jar-with-dependencies.jar
+
 bluevigil-streaming-core.jar
+
 BluevigilAnalyticsServices.war
 
 # Installation
