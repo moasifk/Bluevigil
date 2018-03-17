@@ -45,21 +45,27 @@ bluevigil-streaming-core.jar
 BluevigilAnalyticsServices.war
 
 #Installation
-Step 1: Configure flume - Create flume config file for each type of network file available in the networks logs directory.
+
+#Step 1: 
+    Configure flume - Create flume config file for each type of network file available in the networks logs directory.
         Edit the sample flume config template available at conf/flume_config_templates/.
         Modify the networks logs directory - Spool directory
         Modify file pattern to include the specific files from the directory
         Modify input Kafka topic name for this type of file.
         Add Kafka broker list according to system configuration.
-Step 2: Configure Oozie workflow.xml and job.properties file
+#Step 2: 
+    Configure Oozie workflow.xml and job.properties file
 		Modify the workflow.xml and job.properties file available at conf/workflow_templates.
 		Arg0: source topic name - input kafka topic name mentioned in previous step.
 		Arg1: Output Kafka topic name where the processed data pushed to consume by Web UI.
 		Arg2: Bootstrap server details.
 		Arg3: Zookeeper server details.
 		Arg4: Network log json file path - Json property file for different types of log files available at conf/properties.
-Step 3: Create required tables in Phoenix by executing script createTable.sh at conf/scripts
+#Step 3: 
+    Create required tables in Phoenix by executing script createTable.sh at conf/scripts
 		sh createTable.sh
-Step 4: Execute oozie workflow from the jar path
+#Step 4: 
+    Execute oozie workflow from the jar path
 		oozie job -oozie http://<Your Ip>:11000/oozie -config job.properties -run
-Step 5: Deploy BluevigilAnalyticsServices.war
+#Step 5:
+    Deploy BluevigilAnalyticsServices.war
