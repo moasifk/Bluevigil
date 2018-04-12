@@ -40,7 +40,7 @@ import kafka.serializer.StringDecoder;
 import scala.Tuple2;
 
 /**
- * Consumer class to condume data from Kafka topic
+ * Consumer class to consume data from Kafka topic
  * @author asif
  *
  */
