@@ -1,0 +1,227 @@
+{
+	"LogFileName": "http",
+	"HbaseTable": "http_hb_tbl",
+	"SourceTopic": "http_src_topic",
+	"DestinationTopic": "http_dest_topic",
+	"RowKeyFields": 
+	[
+		{
+			"BackEndField": "ts",
+			"Order": "0"
+		},
+
+		{
+			"BackEndField": "id_res_h",
+			"Order": "1"
+		},
+
+		{
+			"BackEndField": "id_res_p",
+			"Order": "2"
+		},
+
+		{
+			"BackEndField": "uid",
+			"Order": "3"
+		}
+	],
+
+	"FieldMapping": 
+	[
+		{
+			"BackEndField": "ts",
+			"Order": "0",
+			"IsRequired": "true",
+			"Label": "Timestamp"
+		},
+
+		{
+			"BackEndField": "uid",
+			"Order": "1",
+			"IsRequired": "true",
+			"Label": "User Id"
+		},
+
+		{
+			"BackEndField": "id_res_h",
+			"Order": "2",
+			"IsRequired": "true",
+			"Label": "DestinationIP"
+		},
+
+		{
+			"BackEndField": "id_res_p",
+			"Order": "3",
+			"IsRequired": "true",
+			"Label": "DestinationPort"
+		},
+
+		{
+			"BackEndField": "id_ori_h",
+			"Order": "4",
+			"IsRequired": "true",
+			"Label": "SourceIP"
+		},
+
+		{
+			"BackEndField": "id_ori_p",
+			"Order": "5",
+			"IsRequired": "true",
+			"Label": "SourcePort"
+		},
+
+		{
+			"BackEndField": "tra_dep",
+			"Order": "6",
+			"IsRequired": "true",
+			"Label": "TransDepth"
+		},
+
+		{
+			"BackEndField": "met",
+			"Order": "7",
+			"IsRequired": "true",
+			"Label": "Method"
+		},
+
+		{
+			"BackEndField": "hos",
+			"Order": "8",
+			"IsRequired": "true",
+			"Label": "Host"
+		},
+
+		{
+			"BackEndField": "uri",
+			"Order": "9",
+			"IsRequired": "true",
+			"Label": "Uri"
+		},
+
+		{
+			"BackEndField": "ref",
+			"Order": "10",
+			"IsRequired": "true",
+			"Label": "Referrer"
+		},
+
+		{
+			"BackEndField": "ver",
+			"Order": "11",
+			"IsRequired": "true",
+			"Label": "Version"
+		},
+
+		{
+			"BackEndField": "use_age",
+			"Order": "12",
+			"IsRequired": "true",
+			"Label": "UserAgent"
+		},
+
+		{
+			"BackEndField": "req_bod_len",
+			"Order": "13",
+			"IsRequired": "true",
+			"Label": "RequestBodyLen"
+		},
+
+		{
+			"BackEndField": "res_bod_len",
+			"Order": "14",
+			"IsRequired": "true",
+			"Label": "ResponseBodyLen"
+		},
+
+		{
+			"BackEndField": "sta_cod",
+			"Order": "15",
+			"IsRequired": "true",
+			"Label": "StatusCode"
+		},
+
+		{
+			"BackEndField": "sta_msg",
+			"Order": "16",
+			"IsRequired": "true",
+			"Label": "StatusMsg"
+		},
+
+		{
+			"BackEndField": "tags",
+			"Order": "17",
+			"IsRequired": "true",
+			"Label": "Tags"
+		},
+
+		{
+			"BackEndField": "res_fui",
+			"Order": "18",
+			"IsRequired": "true",
+			"Label": "RespFuids"
+		},
+
+		{
+			"BackEndField": "res_fil",
+			"Order": "19",
+			"IsRequired": "true",
+			"Label": "RespFileNames"
+		},
+
+		{
+			"BackEndField": "res_mim_typ",
+			"Order": "20",
+			"IsRequired": "true",
+			"Label": "RespMimeTypes"
+		},
+
+		{
+			"BackEndField": "sta_cod",
+			"Order": "21",
+			"IsRequired": "true",
+			"Label": "StatusCode"
+		},
+
+		{
+			"BackEndField": "sta_msg",
+			"Order": "22",
+			"IsRequired": "true",
+			"Label": "StatusMsg"
+		},
+
+		{
+			"BackEndField": "inf_cod",
+			"Order": "23",
+			"IsRequired": "false",
+			"Label": "InfoCode"
+		},
+
+		{
+			"BackEndField": "inf_msg",
+			"Order": "24",
+			"IsRequired": "false",
+			"Label": "InfoMsg"
+		},
+
+		{
+			"BackEndField": "use",
+			"Order": "25",
+			"IsRequired": "false",
+			"Label": "UserName"
+		},
+
+		{
+			"BackEndField": "pas",
+			"Order": "26",
+			"IsRequired": "false",
+			"Label": "Password"
+		},
+
+		{
+			"BackEndField": "cap_pas",
+			"Order": "27",
+			"IsRequired": "false",
+			"Label": "CapturePassword"
+		}
+	]
+}

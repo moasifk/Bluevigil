@@ -1,22 +1,14 @@
-package com.bluecast.bluevigil.streaming;
+package com.bluevigil.streaming;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -29,12 +21,13 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import com.bluecast.bluevigil.model.FieldMapping;
-import com.bluecast.bluevigil.model.Mapping;
-import com.bluecast.bluevigil.utils.Utils;
+import com.bluevigil.model.FieldMapping;
+import com.bluevigil.model.LogFileConfig;
+import com.bluevigil.model.RowKeyField;
+import com.bluevigil.utils.BluevigilProperties;
+import com.bluevigil.utils.DynamicJsonParser;
+import com.bluevigil.utils.Utils;
 
 import kafka.serializer.StringDecoder;
 import scala.Tuple2;
@@ -47,11 +40,33 @@ import scala.Tuple2;
 public class BluevigilConsumer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	static transient Logger LOGGER = Logger.getLogger(BluevigilConsumer.class);
-	Properties props=new Properties();
-	//Map<String,String> fieldMap=new HashMap<String,String>();
+	private static BluevigilProperties props = BluevigilProperties.getInstance();
  
 	public void consumeDataFromSource(String soureTopic, final String destTopic, 
-			final String bootstrapServers, String zookeeperServer, JavaStreamingContext jssc,final FieldMapping mappingData)  {
+			final String bootstrapServers, String zookeeperServer, JavaStreamingContext jssc, LogFileConfig mappingData)  {
+		
+		Iterator<FieldMapping> fieldMappingItr = mappingData.getFieldMapping().iterator();
+		Iterator<RowKeyField> rowkeyFieldMappingItr = mappingData.getRowKeyFields().iterator();
+		// Required fields list from the config file
+		final Map<Integer, String> backendFieldMap = new HashMap<Integer, String>();
+		final List<String> rowkeyFieldList = new ArrayList<String>();
+		FieldMapping fieldMapping = null;
+		RowKeyField rowkeyField = null;
+
+		// Rowkey fields list based on row key field mapping
+		while (rowkeyFieldMappingItr.hasNext()) {
+			rowkeyField = rowkeyFieldMappingItr.next();
+			rowkeyFieldList.add(rowkeyField.getOrder(), rowkeyField.getBackEndField());
+		}
+
+		// Backend field mapping list
+		while (fieldMappingItr.hasNext()) {
+			fieldMapping = fieldMappingItr.next();
+			if (fieldMapping.isRequired()) {
+				backendFieldMap.put(fieldMapping.getOrder(), fieldMapping.getBackEndField());
+			}
+		}
+		
 		HashSet<String> topicsSet = new HashSet<String>(Arrays.asList(soureTopic.split(",")));
 		HashMap<String, String> kafkaParams = new HashMap<String, String>();
 		kafkaParams.put("metadata.broker.list", bootstrapServers);
@@ -62,32 +77,27 @@ public class BluevigilConsumer implements Serializable {
 				StringDecoder.class, StringDecoder.class, kafkaParams, topicsSet);
 		LOGGER.info("in BlueVigilConsumer method");
 		
-		// Get the lines, split them into words, count the words and print
 		JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
-			
 			private static final long serialVersionUID = 1L;
-			
 			public String call(Tuple2<String, String> line) throws Exception {				
 				LOGGER.info(line._2());
-				String str=line._2;
-				
-				insertToHbase(str, mappingData);
+				String jsonRecord = line._2;
+				Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord, backendFieldMap, "",
+						new HashMap<String, String>());
+				DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap);
 				return line._2();
 			}
 
 		});		
 		
-		
-		
-		final Utils utils = new Utils();
+		Utils utils = new Utils();
+		final Producer<String, String> producer = utils.createProducer(bootstrapServers);
 		lines.foreachRDD(new VoidFunction<JavaRDD<String>>() {
 			public void call(JavaRDD<String> rdd) throws Exception {
 				rdd.foreach(new VoidFunction<String>() {
 					public void call(String s) throws Exception {
-						Producer<String, String> producer = utils.createProducer(bootstrapServers);
 						ProducerRecord<String, String> record = new ProducerRecord<String, String>(destTopic, "key", s);
 						RecordMetadata metadata = producer.send(record).get();
-						
 					}
 				});
 			}
@@ -99,7 +109,7 @@ public class BluevigilConsumer implements Serializable {
 	
 	
 	
-	
+	/*
 	@SuppressWarnings("deprecation")
 	public void insertToHbase(String line,FieldMapping mappingData) {
 		LOGGER.info("In InsertIntoHbaseTable method");	
@@ -478,6 +488,6 @@ public class BluevigilConsumer implements Serializable {
 	    pattern = Pattern.compile(IPADDRESS_PATTERN);
 		  matcher = pattern.matcher(ip);
 		  return matcher.matches();
-	    }
+	    }*/
 
 }

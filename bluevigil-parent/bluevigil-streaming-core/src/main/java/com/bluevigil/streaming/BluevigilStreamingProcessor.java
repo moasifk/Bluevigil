@@ -1,4 +1,4 @@
-package com.bluecast.bluevigil.streaming;
+package com.bluevigil.streaming;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,9 +8,10 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
-import com.bluecast.bluevigil.model.FieldMapping;
-import com.bluecast.bluevigil.utils.BluevigilConstant;
-import com.bluecast.bluevigil.utils.BluevigilProperties;
+import com.bluevigil.model.FieldMapping;
+import com.bluevigil.model.LogFileConfig;
+import com.bluevigil.utils.BluevigilConstant;
+import com.bluevigil.utils.BluevigilProperties;
 import com.google.gson.Gson;
 
 /**
@@ -60,16 +61,13 @@ public class BluevigilStreamingProcessor {// implements Runnable {
 		FileReader reader;
 		try {
 			reader = new FileReader(NWLOG_FILE_CONFIG_PATH);
-			FieldMapping mappingData = gson.fromJson(reader, FieldMapping.class);
+			LogFileConfig mappingData = gson.fromJson(reader, LogFileConfig.class);
 			LOGGER.info("Going to call h-base consumeDataFromSource method");
 			consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, BOOTSTRAP_SERVERS, ZOOKEEPER_SERVER, jssc,
 					mappingData);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			LOGGER.error(e.getMessage());
 		}
-		// List<Mapping> fieldMappingList=mappingData.getMapping();
-		// Iterator<Mapping> it=fieldMappingList.iterator();
 	}
 
 }

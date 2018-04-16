@@ -1,4 +1,4 @@
-package com.bluecast.bluevigil.utils;
+package com.bluevigil.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

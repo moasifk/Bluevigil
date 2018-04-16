@@ -1,4 +1,4 @@
-package com.bluecast.bluevigil.utils;
+package com.bluevigil.utils;
 import java.util.*;
 import java.io.File;
 import java.io.IOException;

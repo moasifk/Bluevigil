@@ -1,4 +1,4 @@
-package com.bluecast.bluevigil.utils;
+package com.bluevigil.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import org.apache.hadoop.hbase.client.HBaseAdmin;
 public class Utils implements Serializable{
 	static transient Logger LOGGER = Logger.getLogger(Utils.class);
 	private static Properties props=new Properties();
-	
+	private static BluevigilProperties propss = BluevigilProperties.getInstance();
 	public static Producer<String, String> createProducer(String bootstrapServers) {
 		Properties props = new Properties();
 		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -180,5 +180,16 @@ public class Utils implements Serializable{
 		//System.out.println("city ="+ipCity.exec(cityTuple));
 		return ipCity.exec(cityTuple);
 		//System.out.println("Country ="+country);
+	}
+	
+	public static String createBluevigilFieldName(String fieldName, int length) {
+		StringBuffer bluevigilField = new StringBuffer();
+		String connector = propss.getProperty("bluevigil.hbase.column.qualifier.connector");
+		for (String fieldPart: fieldName.trim().replaceAll("[^a-zA-Z0-9]+", connector).split(connector)) {
+			if (!fieldPart.isEmpty() && !fieldPart.equals(connector)) {
+				bluevigilField.append(fieldPart.substring(0, Math.min(fieldPart.length(), length))).append(connector);
+			}
+		}
+		return bluevigilField.substring(0, bluevigilField.length()-1).toString();
 	}
 }
