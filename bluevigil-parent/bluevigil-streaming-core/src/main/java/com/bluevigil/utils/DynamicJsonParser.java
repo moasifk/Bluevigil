@@ -59,7 +59,7 @@ public class DynamicJsonParser {
 			}
 		}
 
-		String columnQual = ""; // Hbase column name
+		String columnQual = BluevigilConstant.EMPTY_STRING; // Hbase column name
 		Map<String, String> parsedJsonMap = parseJsonInputLine(line, backendFieldMap, columnQual,
 				new HashMap<String, String>());
 		Put put = createHbaseObject(rowkeyFieldList, parsedJsonMap);
@@ -76,8 +76,8 @@ public class DynamicJsonParser {
 	 *            Backend Field map details from the input config file
 	 * @param columnQual
 	 *            Qualifier name
-	 * @param parsedJsonMap
-	 * @return
+	 * @param parsedJsonMap jsonMap containing parsed data key=columnQual, value=jsonElementValue
+	 * @return parsedJsonMap
 	 */
 	public static Map<String, String> parseJsonInputLine(String line, Map<Integer, String> backendFieldMap,
 			String columnQual, Map<String, String> parsedJsonMap) {
@@ -87,7 +87,7 @@ public class DynamicJsonParser {
 		int qualMaxLength = Integer.parseInt(props.getProperty("bluevigil.hbase.column.qualifier.maxlength"));
 		// Get the connector string for connecting different hbase field name
 		String qualConnector = props.getProperty("bluevigil.hbase.column.qualifier.connector");
-		final String EMPTY_STRING = "";
+		final String EMPTY_STRING = BluevigilConstant.EMPTY_STRING;
 		while (jsonObjectItr.hasNext()) {
 			String jsonObjectKey = jsonObjectItr.next();
 			JsonElement jsonElementValue = jsonObject.get(jsonObjectKey);
@@ -120,9 +120,16 @@ public class DynamicJsonParser {
 		return columnQual;
 	}
 
+	/**
+	 * @param rowkeyFieldList
+	 *            List of row key fields defined during the input file config
+	 * @param parsedJsonMap
+	 *            Json map containing parsed data for each field
+	 * @return put Hbase put object with all column qualifier name and data
+	 */
 	public static Put createHbaseObject(List<String> rowkeyFieldList, Map<String, String> parsedJsonMap) {
 		// Creating row key string
-		StringBuffer rowKey = new StringBuffer("");
+		StringBuffer rowKey = new StringBuffer(BluevigilConstant.EMPTY_STRING);
 		for (int i = 0; rowkeyFieldList.size() > i; i++) {
 			rowKey.append(parsedJsonMap.get(rowkeyFieldList.get(i)) + "|");
 			parsedJsonMap.remove(rowkeyFieldList.get(i));
@@ -131,10 +138,8 @@ public class DynamicJsonParser {
 
 		String columnFamily = props.getProperty("bluevigil.hbase.column.family.name.primary");
 		for (Map.Entry<String, String> entry : parsedJsonMap.entrySet()) {
-			put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(entry.getKey()),
-					Bytes.toBytes(entry.getValue()));
+			put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(entry.getKey()), Bytes.toBytes(entry.getValue()));
 		}
 		return put;
 	}
-
 }

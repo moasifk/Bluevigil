@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.Map;
 import java.util.Properties;
 
 import java.sql.Connection;
@@ -182,6 +182,12 @@ public class Utils implements Serializable{
 		//System.out.println("Country ="+country);
 	}
 	
+	/**
+	 * Method for creating a standard column filed name from the json key
+	 * @param fieldName json key name
+	 * @param length Maximum length to split the field
+	 * @return Formatted hbase field name
+	 */
 	public static String createBluevigilFieldName(String fieldName, int length) {
 		StringBuffer bluevigilField = new StringBuffer();
 		String connector = propss.getProperty("bluevigil.hbase.column.qualifier.connector");
@@ -191,5 +197,14 @@ public class Utils implements Serializable{
 			}
 		}
 		return bluevigilField.substring(0, bluevigilField.length()-1).toString();
+	}
+	
+	public static String createLineFromParsedJson(String separator, Map<String, String> parsedJson, Map<Integer, String> backenFieldMap) {
+		StringBuilder outputLine = new StringBuilder();
+		for(int key:backenFieldMap.keySet()) {
+			outputLine.append(parsedJson.get(backenFieldMap.get(key)) + separator);
+		}
+		// Remove the last comma separator
+		return outputLine.substring(0, outputLine.length()-1).toString();
 	}
 }
