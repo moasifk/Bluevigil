@@ -8,10 +8,10 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
-import com.bluevigil.model.FieldMapping;
 import com.bluevigil.model.LogFileConfig;
 import com.bluevigil.utils.BluevigilConstant;
 import com.bluevigil.utils.BluevigilProperties;
+import com.bluevigil.utils.Utils;
 import com.google.gson.Gson;
 
 /**
@@ -41,30 +41,26 @@ public class BluevigilStreamingProcessor {// implements Runnable {
 		// http-input-topic
 		SOURCE_TOPIC = args[0];
 		// The spark processed data kept in this topic eg: eg: dns-output-topic,
-		// http-output-topic
+		// http-output-topicargs
 		DEST_TOPIC = args[1];
-		// Bootstrap server details, comma seperated
-		BOOTSTRAP_SERVERS = args[2];
-		// Zookeeper server details, comma seperated
-		ZOOKEEPER_SERVER = args[3];
 		// Network log configuration(json) file path eg:
 		// /user/bluvigil/configs/Http_file_config.json
-		NWLOG_FILE_CONFIG_PATH = args[4];
+		NWLOG_FILE_CONFIG_PATH = args[2];
 		// parsing filled mapping JSON file
 		BluevigilConsumer consumer = new BluevigilConsumer();
 		// SparkConf conf = new
 		// SparkConf().setAppName("BluevigilStreamingProcessor").setMaster("local[*]");
 		SparkConf conf = new SparkConf().setAppName(
-				props.getProperty("bluevigil.application.name" + BluevigilConstant.UNDERSCORE + SOURCE_TOPIC));
-		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(2));
+				props.getProperty("bluevigil.application.name") + BluevigilConstant.UNDERSCORE + SOURCE_TOPIC).setMaster("local[*]");
+		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(30));
 		Gson gson = new Gson();
 		FileReader reader;
 		try {
 			reader = new FileReader(NWLOG_FILE_CONFIG_PATH);
 			LogFileConfig mappingData = gson.fromJson(reader, LogFileConfig.class);
+			Utils.createHbaseTable(mappingData.getHbaseTable(), props.getProperty("bluevigil.hbase.column.family.name.primary"));
 			LOGGER.info("Going to call h-base consumeDataFromSource method");
-			consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, BOOTSTRAP_SERVERS, ZOOKEEPER_SERVER, jssc,
-					mappingData);
+			consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, jssc, mappingData);
 		} catch (FileNotFoundException e) {
 			LOGGER.error(e.getMessage());
 		}

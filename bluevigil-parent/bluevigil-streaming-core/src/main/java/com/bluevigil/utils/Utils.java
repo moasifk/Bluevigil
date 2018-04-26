@@ -27,6 +27,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableName;
 //import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
@@ -72,36 +73,27 @@ public class Utils implements Serializable{
 			return null;
 		}
 	}
-	public static  boolean isHbaseTableExists(String hbaseTableName,String hbaseTableColumnFamily) {
-		//Connection con=new Conne
+	public static  void createHbaseTable(String hbaseTableName,String hbaseTableColumnFamily) {
 		Configuration conf=HBaseConfiguration.create();
-		
-		/*conf.set("hbase.zookeeper.quorum", "nn02.itversity.com,nn01.itversity.com");
+		/*conf.set("hbase.zookeeper.quorum", "localhost");
 		conf.set("hbase.zookeeper.property.clientPort", "2181");
 		conf.set("zookeeper.znode.parent","/hbase-unsecure");	*/
-		conf.set("hbase.zookeeper.quorum", "localhost");
-		conf.set("hbase.zookeeper.property.clientPort", "2181");
-		conf.set("zookeeper.znode.parent","/hbase-unsecure");	
 		try {
-		HBaseAdmin hba = new HBaseAdmin(conf);
-		
-			if(!hba.tableExists(hbaseTableName)){
-				
-				HTableDescriptor tableDescriptor = new HTableDescriptor(hbaseTableName);
+		HBaseAdmin hbaseAdmin = new HBaseAdmin(conf);
+			if(!hbaseAdmin.tableExists(hbaseTableName)){
+				LOGGER.info("Hbase table "+hbaseTableName+" not available");
+				HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf(hbaseTableName));
 			    HColumnDescriptor columnDescriptor = new HColumnDescriptor(hbaseTableColumnFamily);
 			    tableDescriptor.addFamily(columnDescriptor);
-			    System.out.println("In Hbase table creatioin");
-			    hba.createTable(tableDescriptor);
-			    System.out.println("Hbase table "+hbaseTableName+" has been created");
+			    hbaseAdmin.createTable(tableDescriptor);
+			    LOGGER.info("Hbase table "+hbaseTableName+" has been created");
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOGGER.error(e.getMessage());
 		}
-		return true;
-		
 	}
+	
 	public static Properties getProperties() {
 		Properties prop = new Properties();
 		InputStream input = null;
@@ -199,6 +191,13 @@ public class Utils implements Serializable{
 		return bluevigilField.substring(0, bluevigilField.length()-1).toString();
 	}
 	
+	/**
+	 * Method for generating a full line with all column fields separated by a comma 
+	 * @param separator
+	 * @param parsedJson
+	 * @param backenFieldMap
+	 * @return
+	 */
 	public static String createLineFromParsedJson(String separator, Map<String, String> parsedJson, Map<Integer, String> backenFieldMap) {
 		StringBuilder outputLine = new StringBuilder();
 		for(int key:backenFieldMap.keySet()) {

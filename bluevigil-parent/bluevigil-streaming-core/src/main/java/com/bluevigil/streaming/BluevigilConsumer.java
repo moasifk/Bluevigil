@@ -9,19 +9,18 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TreeMap;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.client.Table;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.log4j.Logger;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
@@ -34,6 +33,7 @@ import com.bluevigil.utils.BluevigilConstant;
 import com.bluevigil.utils.BluevigilProperties;
 import com.bluevigil.utils.DynamicJsonParser;
 import com.bluevigil.utils.Utils;
+import com.sun.tools.internal.jxc.gen.config.Config;
 
 import kafka.serializer.StringDecoder;
 import scala.Tuple2;
@@ -49,9 +49,10 @@ public class BluevigilConsumer implements Serializable {
 	static transient Logger LOGGER = Logger.getLogger(BluevigilConsumer.class);
 	private static BluevigilProperties props = BluevigilProperties.getInstance();
 
-	public void consumeDataFromSource(String soureTopic, final String destTopic, final String bootstrapServers,
-			String zookeeperServer, JavaStreamingContext jssc, LogFileConfig mappingData) {
-
+	public void consumeDataFromSource(String soureTopic, final String destTopic, JavaStreamingContext jssc,
+			final LogFileConfig mappingData) {
+		final String bootstrapServers = props.getProperty("bluevigil.bootstrap.servers");
+		String zookeeperServer = props.getProperty("bluevigil.zookeeper.servers");
 		Iterator<FieldMapping> fieldMappingItr = mappingData.getFieldMapping().iterator();
 		Iterator<RowKeyField> rowkeyFieldMappingItr = mappingData.getRowKeyFields().iterator();
 		// Required fields list from the config file
@@ -83,39 +84,73 @@ public class BluevigilConsumer implements Serializable {
 		// Create direct Kafka stream with brokers and topics
 		JavaPairInputDStream<String, String> messages = KafkaUtils.createDirectStream(jssc, String.class, String.class,
 				StringDecoder.class, StringDecoder.class, kafkaParams, topicsSet);
-		
-		Configuration hbaseConfig = HBaseConfiguration.create();
-		HTable hTable = null;
-		try {
-			hTable = new HTable(hbaseConfig, "student");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		final HTable finalHTable = hTable;
-		final Producer<String, String> producer = Utils.createProducer(bootstrapServers);
-		LOGGER.info("Consume data available in the source topic");
-		JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
-			private static final long serialVersionUID = 1L;
 
-			public String call(Tuple2<String, String> line) throws Exception {
-				String jsonRecord = line._2;
-				// Parse the input json line
-				Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord, backendFieldMap,
-						BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
-				// Create Hbase Put object with the parsed data
-				finalHTable.put(DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap));
-				
-				// Create a comma separated line in the defined column order
-				String formattedLine = Utils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap, backendFieldMap);
-				
-				// Send the comma separated line to Kafka to consume by web UI
-				ProducerRecord<String, String> finalRecord = new ProducerRecord<String, String>(destTopic, "key", formattedLine);
-				producer.send(finalRecord);
-				return formattedLine;
-			}
+//		Configuration config = HBaseConfiguration.create();
+//		config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
+//		config.set("hbase.zookeeper.property.clientPort", props.getProperty("bluevigil.zookeeper.port"));
+//		Connection connection = null;
+//		Table table = null;
+//		try {
+			
+//			final Table finalHTable = table;
+			final String tableName = mappingData.getHbaseTable();
+			
+			LOGGER.info("Consume data available in the source topic");
+			JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
+				private static final long serialVersionUID = 1L;
+				Connection connection = null;
+				Table table = null;
+				Producer<String, String> producer = null;
+				public void Function() {
+					Configuration config = HBaseConfiguration.create();
+					config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
+					
+					try {
+						connection = ConnectionFactory.createConnection(config);
+						table = connection.getTable(TableName.valueOf(tableName));
+						producer = Utils.createProducer(bootstrapServers);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				public String call(Tuple2<String, String> line) throws Exception {
+					String jsonRecord = line._2;
+					// Parse the input json line
+					Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord,
+							backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
+					// Create Hbase Put object with the parsed data
+					table.put(DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap));
+					
+					// Create a comma separated line in the defined column order
+					String formattedLine = Utils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap,
+							backendFieldMap);
 
-		});
+					// Send the comma separated line to Kafka to consume by web
+					// UI
+					ProducerRecord<String, String> finalRecord = new ProducerRecord<String, String>(destTopic, "key",
+							formattedLine);
+					producer.send(finalRecord);
+					return formattedLine;
+				}
 
+			});
+			System.out.println(lines.count());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (table != null) {
+//					table.close();
+//				}
+//
+//				if (connection != null && !connection.isClosed()) {
+//					connection.close();
+//				}
+//			} catch (Exception e2) {
+//				e2.printStackTrace();
+//			}
+//		}
 		jssc.start();
 		jssc.awaitTermination();
 	}
