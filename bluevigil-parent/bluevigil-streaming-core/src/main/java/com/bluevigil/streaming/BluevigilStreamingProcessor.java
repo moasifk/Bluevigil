@@ -30,8 +30,6 @@ public class BluevigilStreamingProcessor {// implements Runnable {
 	private static BluevigilProperties props = BluevigilProperties.getInstance();
 	private static String SOURCE_TOPIC;
 	private static String DEST_TOPIC;
-	private static String BOOTSTRAP_SERVERS;
-	private static String ZOOKEEPER_SERVER;
 	private static String NWLOG_FILE_CONFIG_PATH;
 
 	public static void main(String args[]) {
@@ -48,11 +46,16 @@ public class BluevigilStreamingProcessor {// implements Runnable {
 		NWLOG_FILE_CONFIG_PATH = args[2];
 		// parsing filled mapping JSON file
 		BluevigilConsumer consumer = new BluevigilConsumer();
-		// SparkConf conf = new
-		// SparkConf().setAppName("BluevigilStreamingProcessor").setMaster("local[*]");
-		SparkConf conf = new SparkConf().setAppName(
-				props.getProperty("bluevigil.application.name") + BluevigilConstant.UNDERSCORE + SOURCE_TOPIC).setMaster("local[*]");
-		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(30));
+		SparkConf conf;
+		if (props.getProperty("env").equals("local")) {
+			conf = new SparkConf().setAppName(
+					props.getProperty("bluevigil.application.name") + BluevigilConstant.UNDERSCORE + SOURCE_TOPIC).setMaster("local[*]");
+		} else {
+			conf = new SparkConf().setAppName(
+					props.getProperty("bluevigil.application.name") + BluevigilConstant.UNDERSCORE + SOURCE_TOPIC);
+		}
+		
+		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(10));
 		Gson gson = new Gson();
 		FileReader reader;
 		try {

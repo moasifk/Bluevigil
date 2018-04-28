@@ -22,6 +22,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.streaming.api.java.JavaDStream;
+import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
@@ -96,12 +97,20 @@ public class BluevigilConsumer implements Serializable {
 			final String tableName = mappingData.getHbaseTable();
 			
 			LOGGER.info("Consume data available in the source topic");
-			JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
+			// Filter empty lines and null lines
+			JavaPairDStream<String, String> filteredMessages = messages.filter(new Function<Tuple2<String,String>, Boolean>() {
+				public Boolean call(Tuple2<String, String> line) throws Exception {
+					return line._2 != null && line._2.trim().length() > 0;
+				}
+			});
+			
+			JavaDStream<String> lines = filteredMessages.map(new Function<Tuple2<String, String>, String>() {
 				private static final long serialVersionUID = 1L;
 				Connection connection = null;
 				Table table = null;
 				Producer<String, String> producer = null;
-				public void Function() {
+				
+				public String call(Tuple2<String, String> line) throws Exception {
 					Configuration config = HBaseConfiguration.create();
 					config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
 					
@@ -113,8 +122,6 @@ public class BluevigilConsumer implements Serializable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-				public String call(Tuple2<String, String> line) throws Exception {
 					String jsonRecord = line._2;
 					// Parse the input json line
 					Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord,
@@ -135,22 +142,7 @@ public class BluevigilConsumer implements Serializable {
 				}
 
 			});
-			System.out.println(lines.count());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (table != null) {
-//					table.close();
-//				}
-//
-//				if (connection != null && !connection.isClosed()) {
-//					connection.close();
-//				}
-//			} catch (Exception e2) {
-//				e2.printStackTrace();
-//			}
-//		}
+		lines.print();
 		jssc.start();
 		jssc.awaitTermination();
 	}

@@ -200,8 +200,10 @@ public class Utils implements Serializable{
 	 */
 	public static String createLineFromParsedJson(String separator, Map<String, String> parsedJson, Map<Integer, String> backenFieldMap) {
 		StringBuilder outputLine = new StringBuilder();
+		String value;
 		for(int key:backenFieldMap.keySet()) {
-			outputLine.append(parsedJson.get(backenFieldMap.get(key)) + separator);
+			value = parsedJson.get(backenFieldMap.get(key));
+			outputLine.append((value!=null?value:BluevigilConstant.EMPTY_STRING) + separator);
 		}
 		// Remove the last comma separator
 		return outputLine.substring(0, outputLine.length()-1).toString();

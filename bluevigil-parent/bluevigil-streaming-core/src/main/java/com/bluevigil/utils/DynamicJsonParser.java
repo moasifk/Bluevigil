@@ -81,7 +81,13 @@ public class DynamicJsonParser {
 	 */
 	public static Map<String, String> parseJsonInputLine(String line, Map<Integer, String> backendFieldMap,
 			String columnQual, Map<String, String> parsedJsonMap) {
-		JsonObject jsonObject = parser.parse(line).getAsJsonObject();
+		JsonObject jsonObject = null;
+		if (parser.parse(line).isJsonObject()) {
+			jsonObject = parser.parse(line).getAsJsonObject();
+		} else {
+			LOGGER.error("Not a JSON Object, line discarded: "+line);
+			return parsedJsonMap;
+		}
 		Iterator<String> jsonObjectItr = jsonObject.keySet().iterator();
 		// Getting the max length of the column qualifier
 		int qualMaxLength = Integer.parseInt(props.getProperty("bluevigil.hbase.column.qualifier.maxlength"));
@@ -128,16 +134,20 @@ public class DynamicJsonParser {
 	 * @return put Hbase put object with all column qualifier name and data
 	 */
 	public static Put createHbaseObject(List<String> rowkeyFieldList, Map<String, String> parsedJsonMap) {
+		Map<String, String> parsedJsonMapCopy = new HashMap<String, String>();
+		// Copying parsed json map content to a new map as we need to remove
+		// row key content from parsed json map.
+		parsedJsonMapCopy.putAll(parsedJsonMap);
 		// Creating row key string
 		StringBuffer rowKey = new StringBuffer(BluevigilConstant.EMPTY_STRING);
 		for (int i = 0; rowkeyFieldList.size() > i; i++) {
-			rowKey.append(parsedJsonMap.get(rowkeyFieldList.get(i)) + "|");
-			parsedJsonMap.remove(rowkeyFieldList.get(i));
+			rowKey.append(parsedJsonMapCopy.get(rowkeyFieldList.get(i)) + "|");
+			parsedJsonMapCopy.remove(rowkeyFieldList.get(i));
 		}
 		Put put = new Put(Bytes.toBytes(rowKey.toString()));
 
 		String columnFamily = props.getProperty("bluevigil.hbase.column.family.name.primary");
-		for (Map.Entry<String, String> entry : parsedJsonMap.entrySet()) {
+		for (Map.Entry<String, String> entry : parsedJsonMapCopy.entrySet()) {
 			put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(entry.getKey()), Bytes.toBytes(entry.getValue()));
 		}
 		return put;
