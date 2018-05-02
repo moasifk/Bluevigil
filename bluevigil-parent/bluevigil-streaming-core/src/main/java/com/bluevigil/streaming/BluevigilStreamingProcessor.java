@@ -5,6 +5,8 @@ import java.io.FileReader;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
@@ -55,18 +57,21 @@ public class BluevigilStreamingProcessor {// implements Runnable {
 					props.getProperty("bluevigil.application.name") + BluevigilConstant.UNDERSCORE + SOURCE_TOPIC);
 		}
 		
-		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(10));
+		JavaSparkContext jsc = new JavaSparkContext(conf);
 		Gson gson = new Gson();
-		FileReader reader;
-		try {
-			reader = new FileReader(NWLOG_FILE_CONFIG_PATH);
-			LogFileConfig mappingData = gson.fromJson(reader, LogFileConfig.class);
-			Utils.createHbaseTable(mappingData.getHbaseTable(), props.getProperty("bluevigil.hbase.column.family.name.primary"));
-			LOGGER.info("Going to call h-base consumeDataFromSource method");
-			consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, jssc, mappingData);
-		} catch (FileNotFoundException e) {
-			LOGGER.error(e.getMessage());
+		JavaRDD<String> lines = jsc.textFile(NWLOG_FILE_CONFIG_PATH);
+		StringBuilder inputJson = new StringBuilder();
+		LOGGER.info("Reading input config json file : ");
+		for (String line:lines.collect()) {
+			inputJson.append(line);
 		}
+		jsc.close();jsc.stop();
+		JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(2));
+		LOGGER.info("Input json : "+inputJson.toString());
+		LogFileConfig mappingData = gson.fromJson(inputJson.toString(), LogFileConfig.class);
+		Utils.createHbaseTable(mappingData.getHbaseTable(), props.getProperty("bluevigil.hbase.column.family.name.primary"));
+		LOGGER.info("Going to call h-base consumeDataFromSource method");
+		consumer.consumeDataFromSource(SOURCE_TOPIC, DEST_TOPIC, jssc, mappingData);
 	}
 
 }

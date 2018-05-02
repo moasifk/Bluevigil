@@ -75,9 +75,11 @@ public class Utils implements Serializable{
 	}
 	public static  void createHbaseTable(String hbaseTableName,String hbaseTableColumnFamily) {
 		Configuration conf=HBaseConfiguration.create();
-		/*conf.set("hbase.zookeeper.quorum", "localhost");
-		conf.set("hbase.zookeeper.property.clientPort", "2181");
-		conf.set("zookeeper.znode.parent","/hbase-unsecure");	*/
+		LOGGER.info("inside createHbaseTable");
+		BluevigilProperties blueProps = BluevigilProperties.getInstance();
+		conf.set("hbase.zookeeper.quorum", blueProps.getProperty("bluevigil.zookeeper.quorum"));
+		conf.set("hbase.zookeeper.property.clientPort", blueProps.getProperty("bluevigil.zookeeper.port"));
+		conf.set("zookeeper.znode.parent","/hbase-unsecure");	
 		try {
 		HBaseAdmin hbaseAdmin = new HBaseAdmin(conf);
 			if(!hbaseAdmin.tableExists(hbaseTableName)){
@@ -88,6 +90,8 @@ public class Utils implements Serializable{
 			    hbaseAdmin.createTable(tableDescriptor);
 			    LOGGER.info("Hbase table "+hbaseTableName+" has been created");
 			}
+			
+			LOGGER.info("Hbase connection successfull");
 		} catch (IOException e) {
 			e.printStackTrace();
 			LOGGER.error(e.getMessage());

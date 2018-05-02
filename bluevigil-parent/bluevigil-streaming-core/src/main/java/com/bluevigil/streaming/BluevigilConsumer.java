@@ -96,48 +96,69 @@ public class BluevigilConsumer implements Serializable {
 //			final Table finalHTable = table;
 			final String tableName = mappingData.getHbaseTable();
 			
-			LOGGER.info("Consume data available in the source topic");
+			LOGGER.info("Consume data available in the source topic _ "+soureTopic);
 			// Filter empty lines and null lines
-			JavaPairDStream<String, String> filteredMessages = messages.filter(new Function<Tuple2<String,String>, Boolean>() {
+			/*JavaPairDStream<String, String> filteredMessages = messages.repartition(1).filter(new Function<Tuple2<String,String>, Boolean>() {
 				public Boolean call(Tuple2<String, String> line) throws Exception {
+					LOGGER.info("Data from Kafka******************************"+line._2);
 					return line._2 != null && line._2.trim().length() > 0;
 				}
-			});
+			});*/
 			
-			JavaDStream<String> lines = filteredMessages.map(new Function<Tuple2<String, String>, String>() {
+			JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
 				private static final long serialVersionUID = 1L;
 				Connection connection = null;
 				Table table = null;
-				Producer<String, String> producer = null;
 				
 				public String call(Tuple2<String, String> line) throws Exception {
-					Configuration config = HBaseConfiguration.create();
-					config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
+					Producer<String, String> producer = Utils.createProducer(bootstrapServers);
 					
-					try {
-						connection = ConnectionFactory.createConnection(config);
-						table = connection.getTable(TableName.valueOf(tableName));
-						producer = Utils.createProducer(bootstrapServers);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					String jsonRecord = line._2;
+					LOGGER.info("Kafka line: "+jsonRecord);
 					// Parse the input json line
 					Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord,
 							backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
-					// Create Hbase Put object with the parsed data
-					table.put(DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap));
-					
-					// Create a comma separated line in the defined column order
-					String formattedLine = Utils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap,
-							backendFieldMap);
+					LOGGER.info("parsedJsonMap map: "+parsedJsonMap);
+					Configuration config = HBaseConfiguration.create();
+			        config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
+			        config.set("hbase.zookeeper.property.clientPort", props.getProperty("bluevigil.zookeeper.port"));
+			        config.set("zookeeper.znode.parent", "/hbase-unsecure");
+			        Connection connection = null;
+			        Table table = null;
+					String formattedLine = "";
+					try {
+						LOGGER.info("Creating connection");
+						connection = ConnectionFactory.createConnection(config);
+						table = connection.getTable(TableName.valueOf(tableName));
+						LOGGER.info("Putting data to Hbase**********************************************************");
+						// Create Hbase Put object with the parsed data
+						table.put(DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap));
+						
+						// Create a comma separated line in the defined column order
+						formattedLine = Utils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap,
+								backendFieldMap);
+						LOGGER.info("formattedLine record**********************before sending to hbase: "+formattedLine);
+						// Send the comma separated line to Kafka to consume by web
+						// UI
+						ProducerRecord<String, String> finalRecord = new ProducerRecord<String, String>(destTopic, "key",
+								formattedLine);
+						producer.send(finalRecord);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						 try {
+				                if (table != null) {
+				                	table.close();
+				                }
 
-					// Send the comma separated line to Kafka to consume by web
-					// UI
-					ProducerRecord<String, String> finalRecord = new ProducerRecord<String, String>(destTopic, "key",
-							formattedLine);
-					producer.send(finalRecord);
+				                if (connection != null && !connection.isClosed()) {
+				                    connection.close();
+				                }
+				            } catch (Exception e2) {
+				                e2.printStackTrace();
+				            }
+					}
 					return formattedLine;
 				}
 
