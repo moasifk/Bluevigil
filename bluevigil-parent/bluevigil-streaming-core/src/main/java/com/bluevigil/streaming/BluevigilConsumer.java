@@ -1,6 +1,5 @@
 package com.bluevigil.streaming;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import org.apache.hadoop.conf.Configuration;
@@ -16,11 +16,17 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.log4j.Logger;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
+import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaPairInputDStream;
@@ -34,7 +40,7 @@ import com.bluevigil.utils.BluevigilConstant;
 import com.bluevigil.utils.BluevigilProperties;
 import com.bluevigil.utils.DynamicJsonParser;
 import com.bluevigil.utils.Utils;
-import com.sun.tools.internal.jxc.gen.config.Config;
+import com.google.gson.Gson;
 
 import kafka.serializer.StringDecoder;
 import scala.Tuple2;
@@ -48,27 +54,33 @@ import scala.Tuple2;
 public class BluevigilConsumer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	static transient Logger LOGGER = Logger.getLogger(BluevigilConsumer.class);
-	private static BluevigilProperties props = BluevigilProperties.getInstance();
+	private static BluevigilProperties props;
 
-	public void consumeDataFromSource(String soureTopic, final String destTopic, JavaStreamingContext jssc,
-			final LogFileConfig mappingData) {
-		final String bootstrapServers = props.getProperty("bluevigil.bootstrap.servers");
-		String zookeeperServer = props.getProperty("bluevigil.zookeeper.servers");
-		Iterator<FieldMapping> fieldMappingItr = mappingData.getFieldMapping().iterator();
+	public void consumeDataFromSource(JavaSparkContext jsc,
+			String inputJson) {
+		LOGGER.info("BluevigilConsumer - consumeDataFromSource started");
+		props = BluevigilProperties.getInstance();
+		JavaStreamingContext jssc = new JavaStreamingContext(jsc,
+				Durations.seconds(Integer.parseInt(props.getProperty(BluevigilConstant.STREAMING_DURATION_INTERVAL))));
+		// Parsing json
+		Gson gson = new Gson();
+		LogFileConfig mappingData = gson.fromJson(inputJson, LogFileConfig.class);
+		String soureTopic = mappingData.getSourceTopic();
+		final String destTopic = mappingData.getDestinationTopic();
 		Iterator<RowKeyField> rowkeyFieldMappingItr = mappingData.getRowKeyFields().iterator();
-		// Required fields list from the config file
-		final Map<Integer, String> backendFieldMap = new TreeMap<Integer, String>();
 		// Rowkey field list, in fields order given in input config file
 		final List<String> rowkeyFieldList = new ArrayList<String>();
-		FieldMapping fieldMapping = null;
 		RowKeyField rowkeyField = null;
-
 		// Rowkey fields list based on row key field mapping
 		while (rowkeyFieldMappingItr.hasNext()) {
 			rowkeyField = rowkeyFieldMappingItr.next();
 			rowkeyFieldList.add(rowkeyField.getOrder(), rowkeyField.getBackEndField());
 		}
 
+		// Required fields list from the config file
+		Iterator<FieldMapping> fieldMappingItr = mappingData.getFieldMapping().iterator();
+		FieldMapping fieldMapping = null;
+		final Map<Integer, String> backendFieldMap = new TreeMap<Integer, String>();
 		// Backend field mapping list
 		while (fieldMappingItr.hasNext()) {
 			fieldMapping = fieldMappingItr.next();
@@ -77,94 +89,120 @@ public class BluevigilConsumer implements Serializable {
 			}
 		}
 
-		HashSet<String> topicsSet = new HashSet<String>(Arrays.asList(soureTopic.split(",")));
+		// Consume data from Kafka
+		LOGGER.info("Configuring Kafka properties");
+		final String bootstrapServers = props.getProperty(BluevigilConstant.BOOTSTRAP_SERVERS);
+		String zookeeperServer = props.getProperty(BluevigilConstant.ZOOKEEPER_SERVERS);
+		HashSet<String> topicsSet = new HashSet<String>(Arrays.asList(soureTopic.split(BluevigilConstant.COMMA)));
 		HashMap<String, String> kafkaParams = new HashMap<String, String>();
-		kafkaParams.put("metadata.broker.list", bootstrapServers);
-		kafkaParams.put("zookeeper.connect", zookeeperServer);
-
+		kafkaParams.put(BluevigilConstant.CONFIG_METADATA_BROKER_LIST, bootstrapServers);
+		kafkaParams.put(BluevigilConstant.CONFIG_ZOOKEEPER_CONNECT, zookeeperServer);
+		LOGGER.info("Configuring Kafka properties - Done");
+		
 		// Create direct Kafka stream with brokers and topics
+		LOGGER.info("Cosnuming data from Kafka topic");
 		JavaPairInputDStream<String, String> messages = KafkaUtils.createDirectStream(jssc, String.class, String.class,
 				StringDecoder.class, StringDecoder.class, kafkaParams, topicsSet);
-
-//		Configuration config = HBaseConfiguration.create();
-//		config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
-//		config.set("hbase.zookeeper.property.clientPort", props.getProperty("bluevigil.zookeeper.port"));
-//		Connection connection = null;
-//		Table table = null;
-//		try {
-			
-//			final Table finalHTable = table;
-			final String tableName = mappingData.getHbaseTable();
-			
-			LOGGER.info("Consume data available in the source topic _ "+soureTopic);
-			// Filter empty lines and null lines
-			/*JavaPairDStream<String, String> filteredMessages = messages.repartition(1).filter(new Function<Tuple2<String,String>, Boolean>() {
-				public Boolean call(Tuple2<String, String> line) throws Exception {
-					LOGGER.info("Data from Kafka******************************"+line._2);
-					return line._2 != null && line._2.trim().length() > 0;
-				}
-			});*/
-			
-			JavaDStream<String> lines = messages.map(new Function<Tuple2<String, String>, String>() {
-				private static final long serialVersionUID = 1L;
-				Connection connection = null;
-				Table table = null;
+		LOGGER.info("Kafka read - Done");
+		
+		// Filter messages for empty lines and null values
+		LOGGER.info("Filter data from Kafka for empty lines");
+		JavaPairDStream<String, String> filteredMessages = messages.filter(new Function<Tuple2<String,String>, Boolean>() {
+			public Boolean call(Tuple2<String, String> line) throws Exception {
+				return line._2 != null && line._2.trim().length() > 0;
+			}
+		});
+		LOGGER.info("Filtering - Done");
+		
+		LOGGER.info("Parsing json data");
+		JavaDStream<Map<String, String>> parsedJsonMapDStream = filteredMessages.map(new Function<Tuple2<String, String>, Map<String, String>>() {
+			private static final long serialVersionUID = 1L;
+			public Map<String, String> call(Tuple2<String, String> line) throws Exception {
+				String jsonRecord = line._2;
 				
-				public String call(Tuple2<String, String> line) throws Exception {
-					Producer<String, String> producer = Utils.createProducer(bootstrapServers);
-					
-					String jsonRecord = line._2;
-					LOGGER.info("Kafka line: "+jsonRecord);
-					// Parse the input json line
-					Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord,
-							backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
-					LOGGER.info("parsedJsonMap map: "+parsedJsonMap);
+				LOGGER.info("Parsing json data - started");
+				Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord,
+						backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
+				LOGGER.info("Parsing json data - Done");
+				LOGGER.info("ParsedJsonMap map: "+parsedJsonMap);
+				return parsedJsonMap;
+			}
+		});
+		LOGGER.info("Parsing completed");
+		
+		LOGGER.info("Writing parsed data to Kafka");
+		JavaDStream<String> formattedLine = parsedJsonMapDStream.map(new Function<Map<String,String>, String>() {
+			String formattedLine = BluevigilConstant.EMPTY_STRING;
+			
+			public String call(Map<String, String> parsedJsonMap) throws Exception {
+				LOGGER.info("Creating Kafka producer config");
+				Producer<String, String> producer = createProducer(bootstrapServers);
+				LOGGER.info("Creating Kafka producer config - Done");
+				LOGGER.info("Formatting parsed json data");
+				formattedLine = Utils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap,
+						backendFieldMap);
+				ProducerRecord<String, String> finalRecord = new ProducerRecord<String, String>(destTopic, "key",
+						formattedLine);
+				LOGGER.info("Writing parsed data to Kafka");
+				producer.send(finalRecord);
+				LOGGER.info("Writing to Kafka completed");
+				return formattedLine;
+			}
+		});
+		LOGGER.info("Writing parsed data to Kafka completed");
+		
+		formattedLine.print();
+		LOGGER.info("Create Hbase Put object and write to hbase");
+		final String hbaseTableName = mappingData.getHbaseTable();
+		if (Utils.isHbaseTableExists(hbaseTableName)) {
+			JavaDStream<Put> hbasePutObjects = parsedJsonMapDStream.map(new Function<Map<String,String>, Put>() {
+				
+				public Put call(Map<String, String> parsedJsonMap) throws Exception {
+					Put putObj = DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap);
 					Configuration config = HBaseConfiguration.create();
-			        config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
-			        config.set("hbase.zookeeper.property.clientPort", props.getProperty("bluevigil.zookeeper.port"));
-			        config.set("zookeeper.znode.parent", "/hbase-unsecure");
+					config.set(BluevigilConstant.CONFIG_ZOOKEEPER_QUORUM, props.getProperty(BluevigilConstant.ZOOKEEPER_QUORUM));
+			        config.set(BluevigilConstant.CONFIG_ZOOKEEPER_CLIENT_PORT, props.getProperty(BluevigilConstant.ZOOKEEPER_PORT));
+			        config.set(BluevigilConstant.CONFIG_ZNODE_PARENT, "/hbase-unsecure");
 			        Connection connection = null;
 			        Table table = null;
-					String formattedLine = "";
-					try {
-						LOGGER.info("Creating connection");
-						connection = ConnectionFactory.createConnection(config);
-						table = connection.getTable(TableName.valueOf(tableName));
-						LOGGER.info("Putting data to Hbase**********************************************************");
-						// Create Hbase Put object with the parsed data
-						table.put(DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap));
-						
-						// Create a comma separated line in the defined column order
-						formattedLine = Utils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap,
-								backendFieldMap);
-						LOGGER.info("formattedLine record**********************before sending to hbase: "+formattedLine);
-						// Send the comma separated line to Kafka to consume by web
-						// UI
-						ProducerRecord<String, String> finalRecord = new ProducerRecord<String, String>(destTopic, "key",
-								formattedLine);
-						producer.send(finalRecord);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						 try {
-				                if (table != null) {
-				                	table.close();
-				                }
+			        try {
+			            connection = ConnectionFactory.createConnection(config);
+			            table = connection.getTable(TableName.valueOf(hbaseTableName));
+			            table.put(putObj);
+			        } catch (Exception e) {
+			        	LOGGER.error("Exception in establishing Hbase connection");
+			        } finally {
+			            try {
+			                if (table != null) {
+			                	table.close();
+			                }
 
-				                if (connection != null && !connection.isClosed()) {
-				                    connection.close();
-				                }
-				            } catch (Exception e2) {
-				                e2.printStackTrace();
-				            }
-					}
-					return formattedLine;
+			                if (connection != null && !connection.isClosed()) {
+			                    connection.close();
+			                }
+			            } catch (Exception e2) {
+			            	LOGGER.error("Exception in closing Hbase connection");
+			            }
+			        }
+					
+					return putObj;
 				}
-
 			});
-		lines.print();
+		} else {
+			LOGGER.error("Hbase table doesn't exists - exiting");
+		}
+		LOGGER.info("Create Hbase Put object and write to hbase - completed");
+		
 		jssc.start();
 		jssc.awaitTermination();
+	}
+	
+	public Producer<String, String> createProducer(String bootstrapServers) {
+		Properties props = new Properties();
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		props.put(ProducerConfig.CLIENT_ID_CONFIG, "BluevigilDev");
+		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		return new KafkaProducer<String, String>(props);
 	}
 }

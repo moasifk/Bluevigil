@@ -7,7 +7,7 @@ public class DyanmicJsonParserTest {
 	@Test
 	public void testParseDyuidnamicJson() {
 		DynamicJsonParser praser = new DynamicJsonParser();
-		praser.parseDynamicJson(props.getProperty("line"),"./properties/http_config.json");
+//		praser.parseDynamicJson(props.getProperty("line"),"./properties/http_config.json");
 	}
 
 }
