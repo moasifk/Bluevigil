@@ -129,12 +129,12 @@ public class Utils implements Serializable{
 		//System.out.println("Time="+time);
 		return time;
 	}
-	public static java.sql.Date getDate(long ts) {
+	public static String getDate(long ts) {
 		
 		java.sql.Date sqlDate = new java.sql.Date(ts*1000L);
 		//System.out.println("SQL Date="+sqlDate);   
 		
-		return sqlDate;
+		return sqlDate.toString();
 	}
 	public static  long getUnixTime() {
         long unixTime = 0;

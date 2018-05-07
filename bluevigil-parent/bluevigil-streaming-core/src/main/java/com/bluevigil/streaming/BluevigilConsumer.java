@@ -26,6 +26,7 @@ import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
 
+import com.bluevigil.model.DerivedFieldMapping;
 import com.bluevigil.model.FieldMapping;
 import com.bluevigil.model.LogFileConfig;
 import com.bluevigil.model.RowKeyField;
@@ -71,11 +72,21 @@ public class BluevigilConsumer implements Serializable {
 		// Backend field mapping list
 		while (fieldMappingItr.hasNext()) {
 			fieldMapping = fieldMappingItr.next();
-			if (fieldMapping.isRequired()) {
-				backendFieldMap.put(fieldMapping.getOrder(), fieldMapping.getBackEndField());
+			if (fieldMapping.isRequired()) {				
+				{
+					backendFieldMap.put(fieldMapping.getOrder(), fieldMapping.getBackEndField());
+				}			
 			}
 		}
-
+		
+		//Jsoon parser Tester
+		/*System.out.println("test="+mappingData.getDerivedFieldMapping().toString());
+		String jsonRecordTest="{\"ts\":1510665261.593545,\"uid\":\"CLPj1c2y2azVqpC1Tg\",\"nested\":{\"id.orig_host\":{\"host\":\"192.168.100.9\",\"id.orig_port\":45224},\"id.resp_host\":\"216.58.208.78\"},\"id.resp_port\":80}";
+		Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecordTest,
+				backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>(),mappingData.getDerivedFieldMapping());
+		*/
+		//Jsoon parser Tester end
+		
 		HashSet<String> topicsSet = new HashSet<String>(Arrays.asList(soureTopic.split(",")));
 		HashMap<String, String> kafkaParams = new HashMap<String, String>();
 		kafkaParams.put("metadata.broker.list", bootstrapServers);
@@ -100,7 +111,7 @@ public class BluevigilConsumer implements Serializable {
 				private static final long serialVersionUID = 1L;
 				Connection connection = null;
 				Table table = null;
-				Producer<String, String> producer = null;
+				Producer<String, String> producer = null;				
 				public void Function() {
 					Configuration config = HBaseConfiguration.create();
 					config.set("hbase.zookeeper.quorum", props.getProperty("bluevigil.zookeeper.quorum"));
@@ -108,7 +119,7 @@ public class BluevigilConsumer implements Serializable {
 					try {
 						connection = ConnectionFactory.createConnection(config);
 						table = connection.getTable(TableName.valueOf(tableName));
-						producer = Utils.createProducer(bootstrapServers);
+						producer = Utils.createProducer(bootstrapServers);						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -116,9 +127,10 @@ public class BluevigilConsumer implements Serializable {
 				}
 				public String call(Tuple2<String, String> line) throws Exception {
 					String jsonRecord = line._2;
+					System.out.println("in call method");
 					// Parse the input json line
 					Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord,
-							backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
+							backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>(),mappingData.getDerivedFieldMapping());
 					// Create Hbase Put object with the parsed data
 					table.put(DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap));
 					

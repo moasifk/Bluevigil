@@ -87,3 +87,997 @@
 2018-04-14 13:32:01,612 - com.bluevigil.utils.DynamicJsonParser - INFO - Dynamic json parser {"ts":1510665261.593545,"uid":"CLPj1c2y2azVqpC1Tg","id.orig_h":"192.168.100.9","id.orig_p":45224,"id.resp_h":"216.58.208.78","id.resp_p":80,"trans_depth":1,"method":"POST","host":"clients1.google.com","uri":"/ocsp","version":"1.1","user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0","request_body_len":75,"response_body_len":463,"status_code":200,"status_msg":"OK","tags":[],"orig_fuids":["FlD9j3hVHiVU4T0T9"],"orig_mime_types":["application/ocsp-request"],"resp_fuids":["FxXGfP2orWzwwF3RB8"],"resp_mime_types":["application/ocsp-response"]}
 2018-04-14 13:32:16,659 - com.bluevigil.utils.DynamicJsonParser - INFO - Dynamic json parser {"ts":1510665261.593545,"uid":"CLPj1c2y2azVqpC1Tg","id.orig_h":"192.168.100.9","id.orig_p":45224,"id.resp_h":"216.58.208.78","id.resp_p":80,"trans_depth":1,"method":"POST","host":"clients1.google.com","uri":"/ocsp","version":"1.1","user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0","request_body_len":75,"response_body_len":463,"status_code":200,"status_msg":"OK","tags":[],"orig_fuids":["FlD9j3hVHiVU4T0T9"],"orig_mime_types":["application/ocsp-request"],"resp_fuids":["FxXGfP2orWzwwF3RB8"],"resp_mime_types":["application/ocsp-response"]}
 2018-04-14 13:33:52,131 - com.bluevigil.utils.DynamicJsonParser - INFO - Dynamic json parser {"ts":1510665261.593545,"uid":"CLPj1c2y2azVqpC1Tg","id.orig_h":"192.168.100.9","id.orig_p":45224,"id.resp_h":"216.58.208.78","id.resp_p":80,"trans_depth":1,"method":"POST","host":"clients1.google.com","uri":"/ocsp","version":"1.1","user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0","request_body_len":75,"response_body_len":463,"status_code":200,"status_msg":"OK","tags":[],"orig_fuids":["FlD9j3hVHiVU4T0T9"],"orig_mime_types":["application/ocsp-request"],"resp_fuids":["FxXGfP2orWzwwF3RB8"],"resp_mime_types":["application/ocsp-response"]}
+2018-05-07 16:01:41,467 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 16:01:41,763 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 16:01:42,002 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 16:01:42,003 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 16:01:42,028 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 16:01:42,029 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 16:01:42,030 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 16:01:42,576 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 39639.
+2018-05-07 16:01:43,006 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 16:01:43,071 - Remoting - INFO - Starting remoting
+2018-05-07 16:01:43,287 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:37111]
+2018-05-07 16:01:43,297 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 37111.
+2018-05-07 16:01:43,327 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 16:01:43,356 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 16:01:43,380 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-23b69457-d569-483e-a46b-3781398538cd
+2018-05-07 16:01:43,393 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 16:01:43,487 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 16:01:43,727 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 16:01:43,767 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 16:01:43,767 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 16:01:43,772 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 16:01:43,891 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 16:01:43,916 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 35656.
+2018-05-07 16:01:43,917 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 35656
+2018-05-07 16:01:43,918 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 16:01:43,922 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:35656 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 35656)
+2018-05-07 16:01:43,925 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 16:01:44,660 - org.apache.hadoop.hbase.zookeeper.RecoverableZooKeeper - INFO - Process identifier=hconnection-0x7bb004b8 connecting to ZooKeeper ensemble=localhost:2181
+2018-05-07 16:01:44,671 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT
+2018-05-07 16:01:44,672 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:host.name=localhost
+2018-05-07 16:01:44,672 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:java.version=1.8.0_151
+2018-05-07 16:01:44,672 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:java.vendor=Oracle Corporation
+2018-05-07 16:01:44,672 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:java.home=/opt/jdk1.8.0_151/jre
+2018-05-07 16:01:44,673 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:java.class.path=/opt/jdk1.8.0_151/jre/lib/resources.jar:/opt/jdk1.8.0_151/jre/lib/rt.jar:/opt/jdk1.8.0_151/jre/lib/jsse.jar:/opt/jdk1.8.0_151/jre/lib/jce.jar:/opt/jdk1.8.0_151/jre/lib/charsets.jar:/opt/jdk1.8.0_151/jre/lib/jfr.jar:/opt/jdk1.8.0_151/jre/lib/ext/sunec.jar:/opt/jdk1.8.0_151/jre/lib/ext/nashorn.jar:/opt/jdk1.8.0_151/jre/lib/ext/sunpkcs11.jar:/opt/jdk1.8.0_151/jre/lib/ext/localedata.jar:/opt/jdk1.8.0_151/jre/lib/ext/jaccess.jar:/opt/jdk1.8.0_151/jre/lib/ext/dnsns.jar:/opt/jdk1.8.0_151/jre/lib/ext/jfxrt.jar:/opt/jdk1.8.0_151/jre/lib/ext/sunjce_provider.jar:/opt/jdk1.8.0_151/jre/lib/ext/cldrdata.jar:/opt/jdk1.8.0_151/jre/lib/ext/zipfs.jar:/home/yassar/git/bluevigil-backend-hdp/bluevigil-parent/bluevigil-streaming-core/target/classes:/home/yassar/.m2/repository/javax/xml/bind/jaxb-api/2.2.7/jaxb-api-2.2.7.jar:/home/yassar/.m2/repository/org/json/json/20180130/json-20180130.jar:/home/yassar/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar:/home/yassar/.m2/repository/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar:/home/yassar/.m2/repository/org/apache/spark/spark-core_2.10/1.6.0/spark-core_2.10-1.6.0.jar:/home/yassar/.m2/repository/org/apache/avro/avro-mapred/1.7.7/avro-mapred-1.7.7-hadoop2.jar:/home/yassar/.m2/repository/org/apache/avro/avro-ipc/1.7.7/avro-ipc-1.7.7.jar:/home/yassar/.m2/repository/org/apache/avro/avro-ipc/1.7.7/avro-ipc-1.7.7-tests.jar:/home/yassar/.m2/repository/com/twitter/chill_2.10/0.5.0/chill_2.10-0.5.0.jar:/home/yassar/.m2/repository/com/esotericsoftware/kryo/kryo/2.21/kryo-2.21.jar:/home/yassar/.m2/repository/com/esotericsoftware/reflectasm/reflectasm/1.07/reflectasm-1.07-shaded.jar:/home/yassar/.m2/repository/com/esotericsoftware/minlog/minlog/1.2/minlog-1.2.jar:/home/yassar/.m2/repository/org/objenesis/objenesis/1.2/objenesis-1.2.jar:/home/yassar/.m2/repository/com/twitter/chill-java/0.5.0/chill-java-0.5.0.jar:/home/yassar/.m2/repository/org/apache/xbean/xbean-asm5-shaded/4.4/xbean-asm5-shaded-4.4.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-client/2.2.0/hadoop-client-2.2.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-mapreduce-client-app/2.2.0/hadoop-mapreduce-client-app-2.2.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-mapreduce-client-common/2.2.0/hadoop-mapreduce-client-common-2.2.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-yarn-client/2.2.0/hadoop-yarn-client-2.2.0.jar:/home/yassar/.m2/repository/com/sun/jersey/jersey-test-framework/jersey-test-framework-grizzly2/1.9/jersey-test-framework-grizzly2-1.9.jar:/home/yassar/.m2/repository/com/sun/jersey/jersey-test-framework/jersey-test-framework-core/1.9/jersey-test-framework-core-1.9.jar:/home/yassar/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar:/home/yassar/.m2/repository/com/sun/jersey/jersey-client/1.9/jersey-client-1.9.jar:/home/yassar/.m2/repository/com/sun/jersey/jersey-grizzly2/1.9/jersey-grizzly2-1.9.jar:/home/yassar/.m2/repository/org/glassfish/grizzly/grizzly-http/2.1.2/grizzly-http-2.1.2.jar:/home/yassar/.m2/repository/org/glassfish/grizzly/grizzly-framework/2.1.2/grizzly-framework-2.1.2.jar:/home/yassar/.m2/repository/org/glassfish/gmbal/gmbal-api-only/3.0.0-b023/gmbal-api-only-3.0.0-b023.jar:/home/yassar/.m2/repository/org/glassfish/external/management-api/3.0.0-b012/management-api-3.0.0-b012.jar:/home/yassar/.m2/repository/org/glassfish/grizzly/grizzly-http-server/2.1.2/grizzly-http-server-2.1.2.jar:/home/yassar/.m2/repository/org/glassfish/grizzly/grizzly-rcm/2.1.2/grizzly-rcm-2.1.2.jar:/home/yassar/.m2/repository/org/glassfish/grizzly/grizzly-http-servlet/2.1.2/grizzly-http-servlet-2.1.2.jar:/home/yassar/.m2/repository/org/glassfish/javax.servlet/3.1/javax.servlet-3.1.jar:/home/yassar/.m2/repository/com/sun/jersey/jersey-json/1.9/jersey-json-1.9.jar:/home/yassar/.m2/repository/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar:/home/yassar/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar:/home/yassar/.m2/repository/com/sun/xml/bind/jaxb-impl/2.2.3-1/jaxb-impl-2.2.3-1.jar:/home/yassar/.m2/repository/org/codehaus/jackson/jackson-xc/1.8.3/jackson-xc-1.8.3.jar:/home/yassar/.m2/repository/com/sun/jersey/contribs/jersey-guice/1.9/jersey-guice-1.9.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-yarn-server-common/2.2.0/hadoop-yarn-server-common-2.2.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-mapreduce-client-shuffle/2.2.0/hadoop-mapreduce-client-shuffle-2.2.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-yarn-api/2.2.0/hadoop-yarn-api-2.2.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-mapreduce-client-jobclient/2.2.0/hadoop-mapreduce-client-jobclient-2.2.0.jar:/home/yassar/.m2/repository/org/apache/spark/spark-launcher_2.10/1.6.0/spark-launcher_2.10-1.6.0.jar:/home/yassar/.m2/repository/org/apache/spark/spark-network-common_2.10/1.6.0/spark-network-common_2.10-1.6.0.jar:/home/yassar/.m2/repository/org/apache/spark/spark-network-shuffle_2.10/1.6.0/spark-network-shuffle_2.10-1.6.0.jar:/home/yassar/.m2/repository/org/fusesource/leveldbjni/leveldbjni-all/1.8/leveldbjni-all-1.8.jar:/home/yassar/.m2/repository/org/apache/spark/spark-unsafe_2.10/1.6.0/spark-unsafe_2.10-1.6.0.jar:/home/yassar/.m2/repository/net/java/dev/jets3t/jets3t/0.7.1/jets3t-0.7.1.jar:/home/yassar/.m2/repository/org/apache/curator/curator-recipes/2.4.0/curator-recipes-2.4.0.jar:/home/yassar/.m2/repository/org/apache/curator/curator-framework/2.4.0/curator-framework-2.4.0.jar:/home/yassar/.m2/repository/org/apache/curator/curator-client/2.4.0/curator-client-2.4.0.jar:/home/yassar/.m2/repository/org/eclipse/jetty/orbit/javax.servlet/3.0.0.v201112011016/javax.servlet-3.0.0.v201112011016.jar:/home/yassar/.m2/repository/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar:/home/yassar/.m2/repository/org/apache/commons/commons-math3/3.4.1/commons-math3-3.4.1.jar:/home/yassar/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/yassar/.m2/repository/org/slf4j/slf4j-api/1.7.10/slf4j-api-1.7.10.jar:/home/yassar/.m2/repository/org/slf4j/jul-to-slf4j/1.7.10/jul-to-slf4j-1.7.10.jar:/home/yassar/.m2/repository/org/slf4j/jcl-over-slf4j/1.7.10/jcl-over-slf4j-1.7.10.jar:/home/yassar/.m2/repository/org/slf4j/slf4j-log4j12/1.7.10/slf4j-log4j12-1.7.10.jar:/home/yassar/.m2/repository/com/ning/compress-lzf/1.0.3/compress-lzf-1.0.3.jar:/home/yassar/.m2/repository/org/xerial/snappy/snappy-java/1.1.2/snappy-java-1.1.2.jar:/home/yassar/.m2/repository/net/jpountz/lz4/lz4/1.3.0/lz4-1.3.0.jar:/home/yassar/.m2/repository/org/roaringbitmap/RoaringBitmap/0.5.11/RoaringBitmap-0.5.11.jar:/home/yassar/.m2/repository/commons-net/commons-net/2.2/commons-net-2.2.jar:/home/yassar/.m2/repository/com/typesafe/akka/akka-remote_2.10/2.3.11/akka-remote_2.10-2.3.11.jar:/home/yassar/.m2/repository/com/typesafe/akka/akka-actor_2.10/2.3.11/akka-actor_2.10-2.3.11.jar:/home/yassar/.m2/repository/com/typesafe/config/1.2.1/config-1.2.1.jar:/home/yassar/.m2/repository/io/netty/netty/3.8.0.Final/netty-3.8.0.Final.jar:/home/yassar/.m2/repository/org/uncommons/maths/uncommons-maths/1.2.2a/uncommons-maths-1.2.2a.jar:/home/yassar/.m2/repository/com/typesafe/akka/akka-slf4j_2.10/2.3.11/akka-slf4j_2.10-2.3.11.jar:/home/yassar/.m2/repository/org/scala-lang/scala-library/2.10.5/scala-library-2.10.5.jar:/home/yassar/.m2/repository/org/json4s/json4s-jackson_2.10/3.2.10/json4s-jackson_2.10-3.2.10.jar:/home/yassar/.m2/repository/org/json4s/json4s-core_2.10/3.2.10/json4s-core_2.10-3.2.10.jar:/home/yassar/.m2/repository/org/json4s/json4s-ast_2.10/3.2.10/json4s-ast_2.10-3.2.10.jar:/home/yassar/.m2/repository/org/scala-lang/scalap/2.10.0/scalap-2.10.0.jar:/home/yassar/.m2/repository/org/scala-lang/scala-compiler/2.10.0/scala-compiler-2.10.0.jar:/home/yassar/.m2/repository/com/sun/jersey/jersey-server/1.9/jersey-server-1.9.jar:/home/yassar/.m2/repository/asm/asm/3.1/asm-3.1.jar:/home/yassar/.m2/repository/com/sun/jersey/jersey-core/1.9/jersey-core-1.9.jar:/home/yassar/.m2/repository/org/apache/mesos/mesos/0.21.1/mesos-0.21.1-shaded-protobuf.jar:/home/yassar/.m2/repository/io/netty/netty-all/4.0.29.Final/netty-all-4.0.29.Final.jar:/home/yassar/.m2/repository/com/clearspring/analytics/stream/2.7.0/stream-2.7.0.jar:/home/yassar/.m2/repository/io/dropwizard/metrics/metrics-core/3.1.2/metrics-core-3.1.2.jar:/home/yassar/.m2/repository/io/dropwizard/metrics/metrics-jvm/3.1.2/metrics-jvm-3.1.2.jar:/home/yassar/.m2/repository/io/dropwizard/metrics/metrics-json/3.1.2/metrics-json-3.1.2.jar:/home/yassar/.m2/repository/io/dropwizard/metrics/metrics-graphite/3.1.2/metrics-graphite-3.1.2.jar:/home/yassar/.m2/repository/org/apache/ivy/ivy/2.4.0/ivy-2.4.0.jar:/home/yassar/.m2/repository/oro/oro/2.0.8/oro-2.0.8.jar:/home/yassar/.m2/repository/org/tachyonproject/tachyon-client/0.8.2/tachyon-client-0.8.2.jar:/home/yassar/.m2/repository/org/tachyonproject/tachyon-underfs-hdfs/0.8.2/tachyon-underfs-hdfs-0.8.2.jar:/home/yassar/.m2/repository/org/tachyonproject/tachyon-underfs-s3/0.8.2/tachyon-underfs-s3-0.8.2.jar:/home/yassar/.m2/repository/org/tachyonproject/tachyon-underfs-local/0.8.2/tachyon-underfs-local-0.8.2.jar:/home/yassar/.m2/repository/net/razorvine/pyrolite/4.9/pyrolite-4.9.jar:/home/yassar/.m2/repository/net/sf/py4j/py4j/0.9/py4j-0.9.jar:/home/yassar/.m2/repository/org/spark-project/spark/unused/1.0.0/unused-1.0.0.jar:/home/yassar/.m2/repository/org/apache/spark/spark-streaming_2.10/1.6.0/spark-streaming_2.10-1.6.0.jar:/home/yassar/.m2/repository/org/apache/spark/spark-streaming-kafka_2.10/1.6.0/spark-streaming-kafka_2.10-1.6.0.jar:/home/yassar/.m2/repository/org/apache/kafka/kafka_2.10/0.8.2.1/kafka_2.10-0.8.2.1.jar:/home/yassar/.m2/repository/org/apache/kafka/kafka-clients/0.8.2.1/kafka-clients-0.8.2.1.jar:/home/yassar/.m2/repository/com/101tec/zkclient/0.3/zkclient-0.3.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-client/1.0.1/hbase-client-1.0.1.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-annotations/1.0.1/hbase-annotations-1.0.1.jar:/opt/jdk1.8.0_151/lib/tools.jar:/home/yassar/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar:/home/yassar/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar:/home/yassar/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/home/yassar/.m2/repository/com/google/guava/guava/12.0.1/guava-12.0.1.jar:/home/yassar/.m2/repository/com/google/protobuf/protobuf-java/2.5.0/protobuf-java-2.5.0.jar:/home/yassar/.m2/repository/org/apache/zookeeper/zookeeper/3.4.6/zookeeper-3.4.6.jar:/home/yassar/.m2/repository/org/apache/htrace/htrace-core/3.1.0-incubating/htrace-core-3.1.0-incubating.jar:/home/yassar/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar:/home/yassar/.m2/repository/org/jruby/jcodings/jcodings/1.0.8/jcodings-1.0.8.jar:/home/yassar/.m2/repository/org/jruby/joni/joni/2.1.2/joni-2.1.2.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-auth/2.5.1/hadoop-auth-2.5.1.jar:/home/yassar/.m2/repository/org/apache/directory/server/apacheds-kerberos-codec/2.0.0-M15/apacheds-kerberos-codec-2.0.0-M15.jar:/home/yassar/.m2/repository/org/apache/directory/server/apacheds-i18n/2.0.0-M15/apacheds-i18n-2.0.0-M15.jar:/home/yassar/.m2/repository/org/apache/directory/api/api-asn1-api/1.0.0-M20/api-asn1-api-1.0.0-M20.jar:/home/yassar/.m2/repository/org/apache/directory/api/api-util/1.0.0-M20/api-util-1.0.0-M20.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-common/2.5.1/hadoop-common-2.5.1.jar:/home/yassar/.m2/repository/commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar:/home/yassar/.m2/repository/commons-digester/commons-digester/1.8/commons-digester-1.8.jar:/home/yassar/.m2/repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar:/home/yassar/.m2/repository/commons-beanutils/commons-beanutils-core/1.8.0/commons-beanutils-core-1.8.0.jar:/home/yassar/.m2/repository/com/jcraft/jsch/0.1.42/jsch-0.1.42.jar:/home/yassar/.m2/repository/org/apache/commons/commons-compress/1.4.1/commons-compress-1.4.1.jar:/home/yassar/.m2/repository/org/tukaani/xz/1.0/xz-1.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-mapreduce-client-core/2.5.1/hadoop-mapreduce-client-core-2.5.1.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-yarn-common/2.5.1/hadoop-yarn-common-2.5.1.jar:/home/yassar/.m2/repository/com/github/stephenc/findbugs/findbugs-annotations/1.3.9-1/findbugs-annotations-1.3.9-1.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-common/1.0.1/hbase-common-1.0.1.jar:/home/yassar/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar:/home/yassar/.m2/repository/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-server/1.0.1/hbase-server-1.0.1.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-prefix-tree/1.0.1/hbase-prefix-tree-1.0.1.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-common/1.0.1/hbase-common-1.0.1-tests.jar:/home/yassar/.m2/repository/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar:/home/yassar/.m2/repository/com/yammer/metrics/metrics-core/2.2.0/metrics-core-2.2.0.jar:/home/yassar/.m2/repository/commons-cli/commons-cli/1.2/commons-cli-1.2.jar:/home/yassar/.m2/repository/org/apache/commons/commons-math/2.2/commons-math-2.2.jar:/home/yassar/.m2/repository/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.jar:/home/yassar/.m2/repository/org/mortbay/jetty/jetty-sslengine/6.1.26/jetty-sslengine-6.1.26.jar:/home/yassar/.m2/repository/org/mortbay/jetty/jsp-2.1/6.1.14/jsp-2.1-6.1.14.jar:/home/yassar/.m2/repository/org/mortbay/jetty/jsp-api-2.1/6.1.14/jsp-api-2.1-6.1.14.jar:/home/yassar/.m2/repository/org/mortbay/jetty/servlet-api-2.5/6.1.14/servlet-api-2.5-6.1.14.jar:/home/yassar/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.jar:/home/yassar/.m2/repository/org/codehaus/jackson/jackson-jaxrs/1.8.8/jackson-jaxrs-1.8.8.jar:/home/yassar/.m2/repository/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.jar:/home/yassar/.m2/repository/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.jar:/home/yassar/.m2/repository/org/jamon/jamon-runtime/2.3.1/jamon-runtime-2.3.1.jar:/home/yassar/.m2/repository/com/lmax/disruptor/3.3.0/disruptor-3.3.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-hdfs/2.5.1/hadoop-hdfs-2.5.1.jar:/home/yassar/.m2/repository/commons-daemon/commons-daemon/1.0.13/commons-daemon-1.0.13.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-hadoop-compat/1.0.1/hbase-hadoop-compat-1.0.1.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-protocol/1.0.1/hbase-protocol-1.0.1.jar:/home/yassar/.m2/repository/org/apache/hbase/hbase-hadoop2-compat/1.0.1/hbase-hadoop2-compat-1.0.1.jar:/home/yassar/.m2/repository/org/apache/phoenix/phoenix-core/4.10.0-HBase-1.2/phoenix-core-4.10.0-HBase-1.2.jar:/home/yassar/.m2/repository/org/apache/tephra/tephra-api/0.9.0-incubating/tephra-api-0.9.0-incubating.jar:/home/yassar/.m2/repository/org/apache/tephra/tephra-core/0.9.0-incubating/tephra-core-0.9.0-incubating.jar:/home/yassar/.m2/repository/com/google/inject/guice/3.0/guice-3.0.jar:/home/yassar/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar:/home/yassar/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/home/yassar/.m2/repository/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar:/home/yassar/.m2/repository/org/apache/thrift/libthrift/0.9.0/libthrift-0.9.0.jar:/home/yassar/.m2/repository/it/unimi/dsi/fastutil/6.5.6/fastutil-6.5.6.jar:/home/yassar/.m2/repository/org/apache/twill/twill-common/0.6.0-incubating/twill-common-0.6.0-incubating.jar:/home/yassar/.m2/repository/org/apache/twill/twill-core/0.6.0-incubating/twill-core-0.6.0-incubating.jar:/home/yassar/.m2/repository/org/apache/twill/twill-api/0.6.0-incubating/twill-api-0.6.0-incubating.jar:/home/yassar/.m2/repository/org/ow2/asm/asm-all/5.0.2/asm-all-5.0.2.jar:/home/yassar/.m2/repository/org/apache/twill/twill-discovery-api/0.6.0-incubating/twill-discovery-api-0.6.0-incubating.jar:/home/yassar/.m2/repository/org/apache/twill/twill-discovery-core/0.6.0-incubating/twill-discovery-core-0.6.0-incubating.jar:/home/yassar/.m2/repository/org/apache/twill/twill-zookeeper/0.6.0-incubating/twill-zookeeper-0.6.0-incubating.jar:/home/yassar/.m2/repository/org/apache/tephra/tephra-hbase-compat-1.1/0.9.0-incubating/tephra-hbase-compat-1.1-0.9.0-incubating.jar:/home/yassar/.m2/repository/org/antlr/antlr-runtime/3.5.2/antlr-runtime-3.5.2.jar:/home/yassar/.m2/repository/jline/jline/2.11/jline-2.11.jar:/home/yassar/.m2/repository/sqlline/sqlline/1.2.0/sqlline-1.2.0.jar:/home/yassar/.m2/repository/joda-time/joda-time/1.6/joda-time-1.6.jar:/home/yassar/.m2/repository/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar:/home/yassar/.m2/repository/org/apache/httpcomponents/httpclient/4.0.1/httpclient-4.0.1.jar:/home/yassar/.m2/repository/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar:/home/yassar/.m2/repository/org/iq80/snappy/snappy/0.3/snappy-0.3.jar:/home/yassar/.m2/repository/org/apache/commons/commons-csv/1.0/commons-csv-1.0.jar:/home/yassar/.m2/repository/org/apache/hadoop/hadoop-annotations/2.7.1/hadoop-annotations-2.7.1.jar:/home/yassar/.m2/repository/org/apache/phoenix/phoenix-queryserver-client/4.10.0-HBase-1.2/phoenix-queryserver-client-4.10.0-HBase-1.2.jar:/home/yassar/.m2/repository/org/apache/calcite/avatica/avatica-core/1.9.0/avatica-core-1.9.0.jar:/home/yassar/.m2/repository/org/apache/calcite/avatica/avatica-metrics/1.9.0/avatica-metrics-1.9.0.jar:/home/yassar/.m2/repository/com/maxmind/geoip2/geoip2/2.10.0/geoip2-2.10.0.jar:/home/yassar/.m2/repository/com/maxmind/db/maxmind-db/1.2.2/maxmind-db-1.2.2.jar:/home/yassar/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.7.4/jackson-databind-2.7.4.jar:/home/yassar/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.7.0/jackson-annotations-2.7.0.jar:/home/yassar/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar:/home/yassar/.m2/repository/com/fasterxml/jackson/module/jackson-module-scala_2.10/2.7.4/jackson-module-scala_2.10-2.7.4.jar:/home/yassar/.m2/repository/org/scala-lang/scala-reflect/2.10.6/scala-reflect-2.10.6.jar:/home/yassar/.m2/repository/com/fasterxml/jackson/module/jackson-module-paranamer/2.7.4/jackson-module-paranamer-2.7.4.jar:/home/yassar/.m2/repository/com/thoughtworks/paranamer/paranamer/2.8/paranamer-2.8.jar:/home/yassar/.m2/repository/org/apache/pig/pig/0.17.0/pig-0.17.0.jar:/home/yassar/.m2/repository/xmlenc/xmlenc/0.52/xmlenc-0.52.jar:/home/yassar/.m2/repository/commons-el/commons-el/1.0/commons-el-1.0.jar:/home/yassar/.m2/repository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar:/home/yassar/.m2/repository/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10.jar:/home/yassar/.m2/repository/org/antlr/ST4/4.0.4/ST4-4.0.4.jar:/home/yassar/.m2/repository/dk/brics/automaton/automaton/1.11-8/automaton-1.11-8.jar:/home/yassar/.m2/repository/org/apache/avro/avro/1.7.5/avro-1.7.5.jar:/home/yassar/.m2/repository/org/codehaus/groovy/groovy-all/2.4.5/groovy-all-2.4.5.jar:/home/yassar/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar:/home/yassar/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar
+2018-05-07 16:01:44,675 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+2018-05-07 16:01:44,675 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:java.io.tmpdir=/tmp
+2018-05-07 16:01:44,675 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:java.compiler=<NA>
+2018-05-07 16:01:44,675 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:os.name=Linux
+2018-05-07 16:01:44,676 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:os.arch=amd64
+2018-05-07 16:01:44,676 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:os.version=3.10.0-693.17.1.el7.x86_64
+2018-05-07 16:01:44,676 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:user.name=yassar
+2018-05-07 16:01:44,676 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:user.home=/home/yassar
+2018-05-07 16:01:44,676 - org.apache.zookeeper.ZooKeeper - INFO - Client environment:user.dir=/home/yassar/git/bluevigil-backend-hdp/bluevigil-parent/bluevigil-streaming-core
+2018-05-07 16:01:44,678 - org.apache.zookeeper.ZooKeeper - INFO - Initiating client connection, connectString=localhost:2181 sessionTimeout=90000 watcher=hconnection-0x7bb004b80x0, quorum=localhost:2181, baseZNode=/hbase
+2018-05-07 16:01:44,732 - org.apache.zookeeper.ClientCnxn - INFO - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2018-05-07 16:01:44,746 - org.apache.zookeeper.ClientCnxn - INFO - Socket connection established to localhost/127.0.0.1:2181, initiating session
+2018-05-07 16:01:44,768 - org.apache.zookeeper.ClientCnxn - INFO - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x1633a0c4bb1000d, negotiated timeout = 40000
+2018-05-07 16:02:33,845 - com.bluevigil.utils.Utils - ERROR - Failed after attempts=36, exceptions:
+Mon May 07 16:02:33 IST 2018, null, java.net.SocketTimeoutException: callTimeout=60000, callDuration=68637: row 'http_hb_tbl,,' on table 'hbase:meta' at region=hbase:meta,,1.1588230740, hostname=localhost,16201,1524288087593, seqNum=0
+
+2018-05-07 16:02:33,846 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 16:02:33,951 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 16:02:33,959 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 16:02:33,960 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 16:02:34,307 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 16:02:34,402 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 16:02:34,415 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 16:02:34,415 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 16:02:34,416 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 16:02:34,416 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 16:02:34,416 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 16:02:34,417 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 16:02:34,417 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 16:02:34,417 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 16:02:34,418 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 16:02:34,418 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 16:02:34,419 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 16:02:34,419 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 16:02:34,420 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 16:02:34,420 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 16:02:34,420 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 16:02:34,420 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 16:02:34,421 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 16:02:34,421 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 16:02:34,421 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 16:02:34,422 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 16:02:34,422 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 16:02:34,422 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 16:02:34,422 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 16:02:34,422 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 16:02:34,423 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 16:02:34,476 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 16:02:34,496 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 16:02:34,502 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 16:02:34,503 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 16:02:34,503 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 16:02:34,506 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 16:02:34,508 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 16:02:34,509 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 16:02:34,510 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-297f79bc-91da-4ba9-a6da-008d8e7690f8
+2018-05-07 16:04:40,023 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 16:04:40,229 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 16:04:40,458 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 16:04:40,458 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 16:04:40,478 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 16:04:40,479 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 16:04:40,480 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 16:04:40,952 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 37966.
+2018-05-07 16:04:41,311 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 16:04:41,355 - Remoting - INFO - Starting remoting
+2018-05-07 16:04:41,514 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:45138]
+2018-05-07 16:04:41,520 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 45138.
+2018-05-07 16:04:41,543 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 16:04:41,563 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 16:04:41,576 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-960f2ede-17c0-4866-ae64-1274c1475b42
+2018-05-07 16:04:41,585 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 16:04:41,671 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 16:04:41,834 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 16:04:41,877 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 16:04:41,877 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 16:04:41,879 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 16:04:41,983 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 16:04:42,003 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37429.
+2018-05-07 16:04:42,004 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 37429
+2018-05-07 16:04:42,005 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 16:04:42,008 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:37429 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 37429)
+2018-05-07 16:04:42,011 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 16:04:42,469 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 16:04:42,744 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 16:04:42,758 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 16:04:42,759 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 16:04:43,239 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 16:04:43,311 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 16:04:43,324 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 16:04:43,325 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 16:04:43,325 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 16:04:43,325 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 16:04:43,325 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 16:04:43,325 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 16:04:43,326 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 16:04:43,326 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 16:04:43,326 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 16:04:43,326 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 16:04:43,326 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 16:04:43,327 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 16:04:43,327 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 16:04:43,327 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 16:04:43,327 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 16:04:43,327 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 16:04:43,328 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 16:04:43,328 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 16:04:43,328 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 16:04:43,328 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 16:04:43,328 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 16:04:43,329 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 16:04:43,329 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 16:04:43,329 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 16:04:43,329 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 16:04:43,380 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 16:04:43,388 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 16:04:43,392 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 16:04:43,392 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 16:04:43,398 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 16:04:43,401 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 16:04:43,408 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 16:04:43,408 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 16:04:43,409 - akka.remote.RemoteActorRefProvider$RemotingTerminator - INFO - Shutting down remote daemon.
+2018-05-07 16:04:43,410 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-b9a1283d-d3d4-4410-b593-843f4033c777
+2018-05-07 16:22:32,336 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 16:22:32,653 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 16:22:32,913 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 16:22:32,914 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 16:22:32,938 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 16:22:32,939 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 16:22:32,940 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 16:22:33,441 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 37689.
+2018-05-07 16:22:33,798 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 16:22:33,865 - Remoting - INFO - Starting remoting
+2018-05-07 16:22:34,069 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:35352]
+2018-05-07 16:22:34,074 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 35352.
+2018-05-07 16:22:34,104 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 16:22:34,127 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 16:22:34,145 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-1e276e91-3982-444d-a1d3-56f1b345f4ad
+2018-05-07 16:22:34,159 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 16:22:34,261 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 16:22:34,501 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 16:22:34,559 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 16:22:34,560 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 16:22:34,561 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 16:22:34,735 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 16:22:34,764 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 39974.
+2018-05-07 16:22:34,766 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 39974
+2018-05-07 16:22:34,768 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 16:22:34,771 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:39974 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 39974)
+2018-05-07 16:22:34,774 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 16:22:35,101 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 16:22:35,284 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 16:22:35,303 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 16:22:35,304 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 16:22:35,773 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 16:22:35,900 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 16:22:35,917 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 16:22:35,917 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 16:22:35,918 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 16:22:35,918 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 16:22:35,919 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 16:22:35,919 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 16:22:35,919 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 16:22:35,920 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 16:22:35,920 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 16:22:35,920 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 16:22:35,921 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 16:22:35,921 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 16:22:35,921 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 16:22:35,922 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 16:22:35,922 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 16:22:35,922 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 16:22:35,922 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 16:22:35,923 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 16:22:35,923 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 16:22:35,923 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 16:22:35,924 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 16:22:35,924 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 16:22:35,924 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 16:22:35,925 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 16:22:35,925 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 16:22:35,981 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 16:22:35,993 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 16:22:36,003 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 16:22:36,004 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 16:22:36,012 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 16:22:36,017 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 16:22:36,029 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 16:22:36,030 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 16:22:36,032 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-744c67d6-569c-4fe9-bb16-af6942d6778d
+2018-05-07 16:35:31,638 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 16:35:31,976 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 16:35:32,288 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 16:35:32,289 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 16:35:32,313 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 16:35:32,314 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 16:35:32,315 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 16:35:32,886 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 44525.
+2018-05-07 16:35:33,313 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 16:35:33,385 - Remoting - INFO - Starting remoting
+2018-05-07 16:35:33,650 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:34573]
+2018-05-07 16:35:33,655 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 34573.
+2018-05-07 16:35:33,687 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 16:35:33,717 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 16:35:33,739 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-5ef60f6e-fa86-40f5-bcb3-7f9ff6ead143
+2018-05-07 16:35:33,757 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 16:35:33,850 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 16:35:34,085 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 16:35:34,134 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 16:35:34,137 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 16:35:34,139 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 16:35:34,256 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 16:35:34,284 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37226.
+2018-05-07 16:35:34,285 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 37226
+2018-05-07 16:35:34,287 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 16:35:34,290 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:37226 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 37226)
+2018-05-07 16:35:34,293 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 16:35:34,676 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 16:35:34,937 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 16:35:34,949 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 16:35:34,950 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 16:35:35,462 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 16:35:35,591 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 16:35:35,614 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 16:35:35,615 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 16:35:35,615 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 16:35:35,616 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 16:35:35,616 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 16:35:35,616 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 16:35:35,616 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 16:35:35,617 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 16:35:35,617 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 16:35:35,618 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 16:35:35,618 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 16:35:35,618 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 16:35:35,618 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 16:35:35,619 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 16:35:35,619 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 16:35:35,619 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 16:35:35,620 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 16:35:35,620 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 16:35:35,620 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 16:35:35,621 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 16:35:35,621 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 16:35:35,621 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 16:35:35,622 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 16:35:35,622 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 16:35:35,622 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 16:35:35,674 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 16:35:35,685 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 16:35:35,693 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 16:35:35,695 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 16:35:35,702 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 16:35:35,705 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 16:35:35,717 - akka.remote.RemoteActorRefProvider$RemotingTerminator - INFO - Shutting down remote daemon.
+2018-05-07 16:35:35,719 - akka.remote.RemoteActorRefProvider$RemotingTerminator - INFO - Remote daemon shut down; proceeding with flushing remote transports.
+2018-05-07 16:35:35,737 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 16:35:35,738 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 16:35:35,740 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-8cd08dd4-8218-411b-912b-4fb39bf1cf30
+2018-05-07 16:37:54,630 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 16:37:54,947 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 16:37:55,229 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 16:37:55,230 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 16:37:55,254 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 16:37:55,255 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 16:37:55,256 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 16:37:55,761 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 41072.
+2018-05-07 16:37:56,190 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 16:37:56,258 - Remoting - INFO - Starting remoting
+2018-05-07 16:37:56,463 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:45253]
+2018-05-07 16:37:56,472 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 45253.
+2018-05-07 16:37:56,505 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 16:37:56,542 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 16:37:56,577 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-487d027d-7549-4357-8204-d0854367feaf
+2018-05-07 16:37:56,595 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 16:37:56,721 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 16:37:56,987 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 16:37:57,032 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 16:37:57,035 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 16:37:57,037 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 16:37:57,179 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 16:37:57,205 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 33824.
+2018-05-07 16:37:57,206 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 33824
+2018-05-07 16:37:57,209 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 16:37:57,214 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:33824 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 33824)
+2018-05-07 16:37:57,217 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 16:37:57,598 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 16:37:57,757 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 16:37:57,765 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 16:37:57,765 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 16:37:58,093 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 16:37:58,266 - org.apache.spark.streaming.StreamingContext - ERROR - Error starting the context, marking it as stopped
+java.lang.IllegalArgumentException: requirement failed: No output operations registered, so nothing to execute
+	at scala.Predef$.require(Predef.scala:233)
+	at org.apache.spark.streaming.DStreamGraph.validate(DStreamGraph.scala:161)
+	at org.apache.spark.streaming.StreamingContext.validate(StreamingContext.scala:542)
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:601)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:600)
+	at org.apache.spark.streaming.api.java.JavaStreamingContext.start(JavaStreamingContext.scala:624)
+	at com.bluevigil.streaming.BluevigilConsumer.consumeDataFromSource(BluevigilConsumer.java:161)
+	at com.bluevigil.streaming.BluevigilStreamingProcessor.main(BluevigilStreamingProcessor.java:66)
+2018-05-07 16:37:58,275 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 16:37:58,290 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 16:37:58,291 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 16:37:58,291 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 16:37:58,292 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 16:37:58,292 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 16:37:58,292 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 16:37:58,293 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 16:37:58,293 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 16:37:58,294 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 16:37:58,294 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 16:37:58,294 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 16:37:58,295 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 16:37:58,295 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 16:37:58,295 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 16:37:58,296 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 16:37:58,296 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 16:37:58,297 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 16:37:58,298 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 16:37:58,299 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 16:37:58,299 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 16:37:58,300 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 16:37:58,300 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 16:37:58,300 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 16:37:58,301 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 16:37:58,301 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 16:37:58,353 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 16:37:58,367 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 16:37:58,379 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 16:37:58,380 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 16:37:58,385 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 16:37:58,390 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 16:37:58,397 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 16:37:58,398 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 16:37:58,401 - akka.remote.RemoteActorRefProvider$RemotingTerminator - INFO - Shutting down remote daemon.
+2018-05-07 16:37:58,402 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-95936aa1-8a9a-4ef3-9b3e-590af28dfb72
+2018-05-07 16:43:11,696 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 16:43:12,036 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 16:43:12,313 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 16:43:12,314 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 16:43:12,338 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 16:43:12,339 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 16:43:12,340 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 16:43:12,852 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 35484.
+2018-05-07 16:43:13,293 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 16:43:13,366 - Remoting - INFO - Starting remoting
+2018-05-07 16:43:13,591 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:34753]
+2018-05-07 16:43:13,601 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 34753.
+2018-05-07 16:43:13,637 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 16:43:13,670 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 16:43:13,698 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-e431263f-99fe-4e4a-b8cf-1db109fef4cb
+2018-05-07 16:43:13,716 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 16:43:13,823 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 16:43:14,072 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 16:43:14,122 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 16:43:14,123 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 16:43:14,124 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 16:43:14,260 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 16:43:14,289 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 45277.
+2018-05-07 16:43:14,290 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 45277
+2018-05-07 16:43:14,293 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 16:43:14,297 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:45277 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 45277)
+2018-05-07 16:43:14,300 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 16:43:14,682 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 16:43:14,868 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 16:43:14,876 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 16:43:14,877 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 16:43:15,278 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 16:43:15,464 - org.apache.spark.streaming.StreamingContext - ERROR - Error starting the context, marking it as stopped
+java.lang.IllegalArgumentException: requirement failed: No output operations registered, so nothing to execute
+	at scala.Predef$.require(Predef.scala:233)
+	at org.apache.spark.streaming.DStreamGraph.validate(DStreamGraph.scala:161)
+	at org.apache.spark.streaming.StreamingContext.validate(StreamingContext.scala:542)
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:601)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:600)
+	at org.apache.spark.streaming.api.java.JavaStreamingContext.start(JavaStreamingContext.scala:624)
+	at com.bluevigil.streaming.BluevigilConsumer.consumeDataFromSource(BluevigilConsumer.java:161)
+	at com.bluevigil.streaming.BluevigilStreamingProcessor.main(BluevigilStreamingProcessor.java:66)
+2018-05-07 16:43:15,470 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 16:43:15,484 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 16:43:15,484 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 16:43:15,484 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 16:43:15,485 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 16:43:15,485 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 16:43:15,485 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 16:43:15,485 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 16:43:15,486 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 16:43:15,486 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 16:43:15,486 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 16:43:15,486 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 16:43:15,486 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 16:43:15,487 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 16:43:15,487 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 16:43:15,487 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 16:43:15,488 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 16:43:15,489 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 16:43:15,489 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 16:43:15,489 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 16:43:15,489 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 16:43:15,489 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 16:43:15,490 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 16:43:15,490 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 16:43:15,490 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 16:43:15,491 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 16:43:15,542 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 16:43:15,549 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 16:43:15,554 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 16:43:15,554 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 16:43:15,559 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 16:43:15,561 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 16:43:15,566 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 16:43:15,567 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 16:43:15,568 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-f68d2912-355f-4128-9bc9-b64b4bae2799
+2018-05-07 16:58:32,372 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 16:58:32,682 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 16:58:32,954 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 16:58:32,955 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 16:58:32,983 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 16:58:32,984 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 16:58:32,985 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 16:58:33,603 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 46678.
+2018-05-07 16:58:34,060 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 16:58:34,150 - Remoting - INFO - Starting remoting
+2018-05-07 16:58:34,373 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:34849]
+2018-05-07 16:58:34,381 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 34849.
+2018-05-07 16:58:34,415 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 16:58:34,460 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 16:58:34,490 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-e8e7a861-c91f-4c49-939b-7d21581bc032
+2018-05-07 16:58:34,509 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 16:58:34,607 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 16:58:34,811 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 16:58:34,864 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 16:58:34,865 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 16:58:34,867 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 16:58:35,000 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 16:58:35,024 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 32979.
+2018-05-07 16:58:35,024 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 32979
+2018-05-07 16:58:35,026 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 16:58:35,029 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:32979 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 32979)
+2018-05-07 16:58:35,031 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 16:58:35,375 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 16:58:35,609 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 16:58:35,622 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 16:58:35,622 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 16:58:36,129 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 16:58:36,366 - org.apache.spark.streaming.StreamingContext - ERROR - Error starting the context, marking it as stopped
+java.lang.IllegalArgumentException: requirement failed: No output operations registered, so nothing to execute
+	at scala.Predef$.require(Predef.scala:233)
+	at org.apache.spark.streaming.DStreamGraph.validate(DStreamGraph.scala:161)
+	at org.apache.spark.streaming.StreamingContext.validate(StreamingContext.scala:542)
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:601)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:600)
+	at org.apache.spark.streaming.api.java.JavaStreamingContext.start(JavaStreamingContext.scala:624)
+	at com.bluevigil.streaming.BluevigilConsumer.consumeDataFromSource(BluevigilConsumer.java:162)
+	at com.bluevigil.streaming.BluevigilStreamingProcessor.main(BluevigilStreamingProcessor.java:66)
+2018-05-07 16:58:36,374 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 16:58:36,389 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 16:58:36,390 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 16:58:36,390 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 16:58:36,390 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 16:58:36,390 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 16:58:36,391 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 16:58:36,391 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 16:58:36,392 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 16:58:36,392 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 16:58:36,392 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 16:58:36,393 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 16:58:36,393 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 16:58:36,393 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 16:58:36,394 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 16:58:36,394 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 16:58:36,394 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 16:58:36,394 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 16:58:36,395 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 16:58:36,395 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 16:58:36,395 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 16:58:36,395 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 16:58:36,396 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 16:58:36,396 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 16:58:36,396 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 16:58:36,396 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 16:58:36,448 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 16:58:36,461 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 16:58:36,470 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 16:58:36,471 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 16:58:36,477 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 16:58:36,479 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 16:58:36,487 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 16:58:36,488 - akka.remote.RemoteActorRefProvider$RemotingTerminator - INFO - Shutting down remote daemon.
+2018-05-07 16:58:36,490 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 16:58:36,492 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-2cedf14d-97c0-443d-b97a-14e40454c192
+2018-05-07 17:22:06,318 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:22:06,634 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:22:06,900 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:22:06,900 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:22:06,929 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:22:06,930 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:22:06,930 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:22:07,652 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 33037.
+2018-05-07 17:22:08,104 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:22:08,187 - Remoting - INFO - Starting remoting
+2018-05-07 17:22:08,449 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:42029]
+2018-05-07 17:22:08,459 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 42029.
+2018-05-07 17:22:08,522 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:22:08,561 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:22:08,580 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-71153fc1-83e9-4a14-a25a-080a3aa36a89
+2018-05-07 17:22:08,595 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:22:08,705 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:22:14,064 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:22:14,128 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:22:14,129 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:22:14,131 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:22:14,271 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:22:14,291 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 34889.
+2018-05-07 17:22:14,292 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 34889
+2018-05-07 17:22:14,293 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:22:14,296 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:34889 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 34889)
+2018-05-07 17:22:14,299 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:22:14,627 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 17:34:02,945 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:34:03,279 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:34:03,577 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:34:03,578 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:34:03,620 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:34:03,622 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:34:03,623 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:34:04,295 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 37548.
+2018-05-07 17:34:04,803 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:34:04,881 - Remoting - INFO - Starting remoting
+2018-05-07 17:34:05,118 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:43136]
+2018-05-07 17:34:05,124 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 43136.
+2018-05-07 17:34:05,150 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:34:05,173 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:34:05,194 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-e90db27f-4ce8-4319-9039-a21cc23166e0
+2018-05-07 17:34:05,205 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:34:05,298 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:34:05,563 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:34:05,621 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:34:05,621 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:34:05,625 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:34:05,809 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:34:05,853 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37702.
+2018-05-07 17:34:05,854 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 37702
+2018-05-07 17:34:05,856 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:34:05,865 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:37702 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 37702)
+2018-05-07 17:34:05,869 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:34:06,281 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 17:42:07,217 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:42:07,548 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:42:07,851 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:42:07,852 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:42:07,894 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:42:07,896 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:42:07,897 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:42:08,610 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 40125.
+2018-05-07 17:42:09,053 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:42:09,119 - Remoting - INFO - Starting remoting
+2018-05-07 17:42:09,323 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:45454]
+2018-05-07 17:42:09,329 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 45454.
+2018-05-07 17:42:09,358 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:42:09,381 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:42:09,404 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-2c7aad92-0184-4900-a8c5-5ce85c3b5d20
+2018-05-07 17:42:09,416 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:42:09,522 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:42:09,796 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:42:09,852 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:42:09,860 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:42:09,864 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:42:10,023 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:42:10,066 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 34371.
+2018-05-07 17:42:10,067 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 34371
+2018-05-07 17:42:10,070 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:42:10,075 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:34371 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 34371)
+2018-05-07 17:42:10,078 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:42:36,653 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 17:42:36,669 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 17:42:36,673 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 17:42:36,673 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 17:42:36,674 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 17:42:36,674 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 17:42:36,674 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 17:42:36,675 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 17:42:36,675 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 17:42:36,675 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 17:42:36,676 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 17:42:36,676 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 17:42:36,677 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 17:42:36,677 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 17:42:36,678 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 17:42:36,678 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 17:42:36,678 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 17:42:36,679 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 17:42:36,679 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 17:42:36,679 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 17:42:36,680 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 17:42:36,680 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 17:42:36,681 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 17:42:36,681 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 17:42:36,682 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 17:42:36,682 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 17:42:36,735 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 17:42:36,756 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 17:42:36,830 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 17:42:36,832 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 17:42:36,834 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 17:42:36,839 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 17:42:36,843 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 17:42:36,844 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 17:42:36,847 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-0e44dda8-7bc7-4b82-80c6-2f08e4c8f513
+2018-05-07 17:43:37,864 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:43:38,166 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:43:38,426 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:43:38,427 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:43:38,455 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:43:38,456 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:43:38,457 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:43:38,992 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 37022.
+2018-05-07 17:43:39,484 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:43:39,568 - Remoting - INFO - Starting remoting
+2018-05-07 17:43:39,805 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:35468]
+2018-05-07 17:43:39,814 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 35468.
+2018-05-07 17:43:39,840 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:43:39,870 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:43:39,895 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-631711e5-c70c-4438-ada8-ee3fc5b9f23e
+2018-05-07 17:43:39,907 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:43:40,007 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:43:40,256 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:43:40,333 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:43:40,333 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:43:40,336 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:43:40,509 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:43:40,545 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37550.
+2018-05-07 17:43:40,546 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 37550
+2018-05-07 17:43:40,548 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:43:40,552 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:37550 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 37550)
+2018-05-07 17:43:40,555 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:43:57,490 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 17:43:57,509 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 17:43:57,510 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 17:43:57,510 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 17:43:57,510 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 17:43:57,510 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 17:43:57,511 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 17:43:57,512 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 17:43:57,512 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 17:43:57,513 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 17:43:57,513 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 17:43:57,513 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 17:43:57,513 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 17:43:57,514 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 17:43:57,514 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 17:43:57,514 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 17:43:57,514 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 17:43:57,514 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 17:43:57,515 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 17:43:57,515 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 17:43:57,516 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 17:43:57,516 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 17:43:57,516 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 17:43:57,516 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 17:43:57,516 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 17:43:57,517 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 17:43:57,571 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 17:43:57,587 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 17:43:57,600 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 17:43:57,601 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 17:43:57,611 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 17:43:57,678 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 17:43:57,686 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 17:43:57,687 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 17:43:57,689 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-40a839c1-6f9e-4f4f-ab40-6691881a0d94
+2018-05-07 17:45:23,684 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:45:23,978 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:45:24,271 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:45:24,272 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:45:24,301 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:45:24,302 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:45:24,303 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:45:24,987 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 34387.
+2018-05-07 17:45:25,469 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:45:25,539 - Remoting - INFO - Starting remoting
+2018-05-07 17:45:25,757 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:43471]
+2018-05-07 17:45:25,763 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 43471.
+2018-05-07 17:45:25,785 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:45:25,807 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:45:25,826 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-f9817992-8f06-4b6d-958f-ad92d96b0f44
+2018-05-07 17:45:25,840 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:45:25,942 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:45:26,261 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:45:26,350 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:45:26,356 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:45:26,361 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:45:26,543 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:45:26,581 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 46883.
+2018-05-07 17:45:26,583 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 46883
+2018-05-07 17:45:26,587 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:45:26,591 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:46883 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 46883)
+2018-05-07 17:45:26,595 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:45:39,509 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 17:45:39,523 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 17:45:39,523 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 17:45:39,523 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 17:45:39,524 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 17:45:39,524 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 17:45:39,524 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 17:45:39,524 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 17:45:39,525 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 17:45:39,525 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 17:45:39,525 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 17:45:39,525 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 17:45:39,525 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 17:45:39,526 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 17:45:39,526 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 17:45:39,526 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 17:45:39,526 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 17:45:39,526 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 17:45:39,527 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 17:45:39,527 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 17:45:39,528 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 17:45:39,528 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 17:45:39,528 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 17:45:39,528 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 17:45:39,529 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 17:45:39,529 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 17:45:39,584 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 17:45:39,599 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 17:45:39,615 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 17:45:39,620 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 17:45:39,627 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 17:45:39,632 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 17:45:39,701 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 17:45:39,704 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 17:45:39,706 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-d231eddd-2f7e-4cbd-8b6a-34c085376c92
+2018-05-07 17:48:22,058 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:48:22,383 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:48:22,728 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:48:22,728 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:48:22,767 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:48:22,768 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:48:22,770 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:48:23,409 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 45087.
+2018-05-07 17:48:23,792 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:48:23,855 - Remoting - INFO - Starting remoting
+2018-05-07 17:48:24,051 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:43118]
+2018-05-07 17:48:24,059 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 43118.
+2018-05-07 17:48:24,087 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:48:24,122 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:48:24,143 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-abf78967-4612-47ef-bc10-435e03eaad0b
+2018-05-07 17:48:24,159 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:48:24,259 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:48:24,515 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:48:24,570 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:48:24,573 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:48:24,576 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:48:24,706 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:48:24,736 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37285.
+2018-05-07 17:48:24,737 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 37285
+2018-05-07 17:48:24,739 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:48:24,744 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:37285 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 37285)
+2018-05-07 17:48:24,747 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:48:33,220 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 17:48:33,236 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 17:48:33,237 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 17:48:33,237 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 17:48:33,238 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 17:48:33,239 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 17:48:33,239 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 17:48:33,240 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 17:48:33,240 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 17:48:33,241 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 17:48:33,241 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 17:48:33,241 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 17:48:33,242 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 17:48:33,242 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 17:48:33,242 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 17:48:33,243 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 17:48:33,243 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 17:48:33,243 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 17:48:33,244 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 17:48:33,244 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 17:48:33,244 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 17:48:33,244 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 17:48:33,245 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 17:48:33,245 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 17:48:33,245 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 17:48:33,246 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 17:48:33,300 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 17:48:33,320 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 17:48:33,331 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 17:48:33,333 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 17:48:33,342 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 17:48:33,347 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 17:48:33,361 - akka.remote.RemoteActorRefProvider$RemotingTerminator - INFO - Shutting down remote daemon.
+2018-05-07 17:48:33,456 - akka.remote.RemoteActorRefProvider$RemotingTerminator - INFO - Remote daemon shut down; proceeding with flushing remote transports.
+2018-05-07 17:48:33,468 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 17:48:33,469 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 17:48:33,470 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-ef009dd1-c3a5-4cec-9465-c8f7656b98cf
+2018-05-07 17:55:32,157 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:55:32,462 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:55:32,737 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:55:32,738 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:55:32,768 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:55:32,769 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:55:32,770 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:55:33,608 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 40696.
+2018-05-07 17:55:34,139 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:55:34,222 - Remoting - INFO - Starting remoting
+2018-05-07 17:55:34,425 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:46053]
+2018-05-07 17:55:34,433 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 46053.
+2018-05-07 17:55:34,462 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:55:34,488 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:55:34,513 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-1ca92354-15e1-4391-bb30-76905e7e67ce
+2018-05-07 17:55:34,530 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:55:34,638 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:55:34,896 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:55:34,946 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:55:34,947 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:55:34,949 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:55:35,098 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:55:35,128 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37954.
+2018-05-07 17:55:35,129 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 37954
+2018-05-07 17:55:35,131 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:55:35,137 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:37954 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 37954)
+2018-05-07 17:55:35,140 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:55:47,958 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 17:56:27,238 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 17:56:27,461 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 17:56:27,727 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 17:56:27,728 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 17:56:27,756 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 17:56:27,757 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 17:56:27,758 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 17:56:28,367 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 36344.
+2018-05-07 17:56:28,935 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 17:56:29,003 - Remoting - INFO - Starting remoting
+2018-05-07 17:56:29,233 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:37382]
+2018-05-07 17:56:29,241 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 37382.
+2018-05-07 17:56:29,271 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 17:56:29,293 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 17:56:29,323 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-8da12882-d448-4577-8424-cd5f16c8daab
+2018-05-07 17:56:29,338 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 17:56:29,428 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 17:56:29,671 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 17:56:29,720 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 17:56:29,724 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 17:56:29,726 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 17:56:29,874 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 17:56:29,925 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 40431.
+2018-05-07 17:56:29,926 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 40431
+2018-05-07 17:56:29,927 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 17:56:29,931 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:40431 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 40431)
+2018-05-07 17:56:29,934 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 17:56:30,542 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 18:00:50,076 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 18:00:50,311 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 18:00:50,514 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 18:00:50,515 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 18:00:50,536 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 18:00:50,536 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 18:00:50,537 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 18:00:50,943 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 37101.
+2018-05-07 18:00:51,328 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 18:00:51,391 - Remoting - INFO - Starting remoting
+2018-05-07 18:00:51,556 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:45494]
+2018-05-07 18:00:51,562 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 45494.
+2018-05-07 18:00:51,587 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 18:00:51,612 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 18:00:51,629 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-9ea0a3bf-0b8c-491e-9a50-bf16560c400b
+2018-05-07 18:00:51,640 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 18:00:51,724 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 18:00:51,944 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 18:00:51,994 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 18:00:51,994 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 18:00:51,996 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 18:00:52,149 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 18:00:52,173 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 43755.
+2018-05-07 18:00:52,174 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 43755
+2018-05-07 18:00:52,176 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 18:00:52,179 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:43755 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 43755)
+2018-05-07 18:00:52,182 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 18:00:52,687 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method
+2018-05-07 18:00:53,014 - kafka.utils.VerifiableProperties - INFO - Verifying properties
+2018-05-07 18:00:53,031 - kafka.utils.VerifiableProperties - INFO - Property group.id is overridden to 
+2018-05-07 18:00:53,032 - kafka.utils.VerifiableProperties - INFO - Property zookeeper.connect is overridden to localhost:2181
+2018-05-07 18:00:53,449 - com.bluevigil.streaming.BluevigilConsumer - INFO - Consume data available in the source topic
+2018-05-07 18:00:53,580 - org.apache.spark.streaming.StreamingContext - ERROR - Error starting the context, marking it as stopped
+java.lang.IllegalArgumentException: requirement failed: No output operations registered, so nothing to execute
+	at scala.Predef$.require(Predef.scala:233)
+	at org.apache.spark.streaming.DStreamGraph.validate(DStreamGraph.scala:161)
+	at org.apache.spark.streaming.StreamingContext.validate(StreamingContext.scala:542)
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:601)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:600)
+	at org.apache.spark.streaming.api.java.JavaStreamingContext.start(JavaStreamingContext.scala:624)
+	at com.bluevigil.streaming.BluevigilConsumer.consumeDataFromSource(BluevigilConsumer.java:171)
+	at com.bluevigil.streaming.BluevigilStreamingProcessor.main(BluevigilStreamingProcessor.java:68)
+2018-05-07 18:00:53,586 - org.apache.spark.SparkContext - INFO - Invoking stop() from shutdown hook
+2018-05-07 18:00:53,599 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/metrics/json,null}
+2018-05-07 18:00:53,599 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/kill,null}
+2018-05-07 18:00:53,600 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/api,null}
+2018-05-07 18:00:53,600 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/,null}
+2018-05-07 18:00:53,600 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/static,null}
+2018-05-07 18:00:53,600 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump/json,null}
+2018-05-07 18:00:53,600 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/threadDump,null}
+2018-05-07 18:00:53,601 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors/json,null}
+2018-05-07 18:00:53,601 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/executors,null}
+2018-05-07 18:00:53,601 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment/json,null}
+2018-05-07 18:00:53,601 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/environment,null}
+2018-05-07 18:00:53,601 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd/json,null}
+2018-05-07 18:00:53,601 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/rdd,null}
+2018-05-07 18:00:53,602 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage/json,null}
+2018-05-07 18:00:53,602 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/storage,null}
+2018-05-07 18:00:53,602 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool/json,null}
+2018-05-07 18:00:53,602 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/pool,null}
+2018-05-07 18:00:53,602 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage/json,null}
+2018-05-07 18:00:53,603 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/stage,null}
+2018-05-07 18:00:53,603 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages/json,null}
+2018-05-07 18:00:53,603 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/stages,null}
+2018-05-07 18:00:53,603 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job/json,null}
+2018-05-07 18:00:53,603 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/job,null}
+2018-05-07 18:00:53,603 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs/json,null}
+2018-05-07 18:00:53,604 - org.spark-project.jetty.server.handler.ContextHandler - INFO - stopped o.s.j.s.ServletContextHandler{/jobs,null}
+2018-05-07 18:00:53,657 - org.apache.spark.ui.SparkUI - INFO - Stopped Spark web UI at http://192.168.0.127:4040
+2018-05-07 18:00:53,675 - org.apache.spark.MapOutputTrackerMasterEndpoint - INFO - MapOutputTrackerMasterEndpoint stopped!
+2018-05-07 18:00:53,686 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore cleared
+2018-05-07 18:00:53,688 - org.apache.spark.storage.BlockManager - INFO - BlockManager stopped
+2018-05-07 18:00:53,696 - org.apache.spark.storage.BlockManagerMaster - INFO - BlockManagerMaster stopped
+2018-05-07 18:00:53,702 - org.apache.spark.scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint - INFO - OutputCommitCoordinator stopped!
+2018-05-07 18:00:53,707 - org.apache.spark.SparkContext - INFO - Successfully stopped SparkContext
+2018-05-07 18:00:53,708 - org.apache.spark.util.ShutdownHookManager - INFO - Shutdown hook called
+2018-05-07 18:00:53,709 - org.apache.spark.util.ShutdownHookManager - INFO - Deleting directory /tmp/spark-4099a9a8-75c7-41de-99cf-a121d8fc4c3e
+2018-05-07 18:02:35,800 - org.apache.spark.SparkContext - INFO - Running Spark version 1.6.0
+2018-05-07 18:02:36,061 - org.apache.hadoop.util.NativeCodeLoader - WARN - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2018-05-07 18:02:36,306 - org.apache.spark.util.Utils - WARN - Your hostname, localhost.localdomain resolves to a loopback address: 127.0.0.1; using 192.168.0.127 instead (on interface wlp2s0)
+2018-05-07 18:02:36,307 - org.apache.spark.util.Utils - WARN - Set SPARK_LOCAL_IP if you need to bind to another address
+2018-05-07 18:02:36,334 - org.apache.spark.SecurityManager - INFO - Changing view acls to: yassar
+2018-05-07 18:02:36,335 - org.apache.spark.SecurityManager - INFO - Changing modify acls to: yassar
+2018-05-07 18:02:36,335 - org.apache.spark.SecurityManager - INFO - SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(yassar); users with modify permissions: Set(yassar)
+2018-05-07 18:02:36,861 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriver' on port 35630.
+2018-05-07 18:02:37,287 - akka.event.slf4j.Slf4jLogger - INFO - Slf4jLogger started
+2018-05-07 18:02:37,375 - Remoting - INFO - Starting remoting
+2018-05-07 18:02:37,620 - Remoting - INFO - Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.0.127:40779]
+2018-05-07 18:02:37,629 - org.apache.spark.util.Utils - INFO - Successfully started service 'sparkDriverActorSystem' on port 40779.
+2018-05-07 18:02:37,654 - org.apache.spark.SparkEnv - INFO - Registering MapOutputTracker
+2018-05-07 18:02:37,682 - org.apache.spark.SparkEnv - INFO - Registering BlockManagerMaster
+2018-05-07 18:02:37,700 - org.apache.spark.storage.DiskBlockManager - INFO - Created local directory at /tmp/blockmgr-d91d6502-9c0b-4889-9988-0db964075641
+2018-05-07 18:02:37,711 - org.apache.spark.storage.MemoryStore - INFO - MemoryStore started with capacity 1063.1 MB
+2018-05-07 18:02:37,815 - org.apache.spark.SparkEnv - INFO - Registering OutputCommitCoordinator
+2018-05-07 18:02:38,082 - org.spark-project.jetty.server.Server - INFO - jetty-8.y.z-SNAPSHOT
+2018-05-07 18:02:38,127 - org.spark-project.jetty.server.AbstractConnector - INFO - Started SelectChannelConnector@0.0.0.0:4040
+2018-05-07 18:02:38,128 - org.apache.spark.util.Utils - INFO - Successfully started service 'SparkUI' on port 4040.
+2018-05-07 18:02:38,131 - org.apache.spark.ui.SparkUI - INFO - Started SparkUI at http://192.168.0.127:4040
+2018-05-07 18:02:38,263 - org.apache.spark.executor.Executor - INFO - Starting executor ID driver on host localhost
+2018-05-07 18:02:38,309 - org.apache.spark.util.Utils - INFO - Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37749.
+2018-05-07 18:02:38,311 - org.apache.spark.network.netty.NettyBlockTransferService - INFO - Server created on 37749
+2018-05-07 18:02:38,313 - org.apache.spark.storage.BlockManagerMaster - INFO - Trying to register BlockManager
+2018-05-07 18:02:38,318 - org.apache.spark.storage.BlockManagerMasterEndpoint - INFO - Registering block manager localhost:37749 with 1063.1 MB RAM, BlockManagerId(driver, localhost, 37749)
+2018-05-07 18:02:38,321 - org.apache.spark.storage.BlockManagerMaster - INFO - Registered BlockManager
+2018-05-07 18:02:38,797 - com.bluevigil.streaming.BluevigilStreamingProcessor - INFO - Going to call h-base consumeDataFromSource method

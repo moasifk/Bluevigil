@@ -2,6 +2,8 @@ package com.bluevigil.utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.log4j.Logger;
 
+import com.bluevigil.model.DerivedFieldMapping;
 import com.bluevigil.model.FieldMapping;
 import com.bluevigil.model.LogFileConfig;
 import com.bluevigil.model.RowKeyField;
@@ -21,12 +24,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import scala.collection.generic.BitOperations.Int;
+
 public class DynamicJsonParser {
 	static Logger LOGGER = Logger.getLogger(DynamicJsonParser.class);
 	private static BluevigilProperties props = BluevigilProperties.getInstance();
 	private static JsonParser parser = new JsonParser();
 
-	public static Put parseDynamicJson(String line, String NWLOG_FILE_CONFIG_PATH) {
+	public static Put parseDynamicJson(String line, String NWLOG_FILE_CONFIG_PATH,List<DerivedFieldMapping> derivedFieldList) {
 		LOGGER.info("Dynamic json parser " + line);
 		parser = new JsonParser();
 		Gson gson = new Gson();
@@ -61,7 +66,7 @@ public class DynamicJsonParser {
 
 		String columnQual = BluevigilConstant.EMPTY_STRING; // Hbase column name
 		Map<String, String> parsedJsonMap = parseJsonInputLine(line, backendFieldMap, columnQual,
-				new HashMap<String, String>());
+				new HashMap<String, String>(),derivedFieldList);
 		Put put = createHbaseObject(rowkeyFieldList, parsedJsonMap);
 		return put;
 	}
@@ -80,32 +85,82 @@ public class DynamicJsonParser {
 	 * @return parsedJsonMap
 	 */
 	public static Map<String, String> parseJsonInputLine(String line, Map<Integer, String> backendFieldMap,
-			String columnQual, Map<String, String> parsedJsonMap) {
+			String columnQual, Map<String, String> parsedJsonMap,List<DerivedFieldMapping> derivedFieldList) {
 		JsonObject jsonObject = parser.parse(line).getAsJsonObject();
+		//System.out.println("In ParseJsonInput ,method");
 		Iterator<String> jsonObjectItr = jsonObject.keySet().iterator();
+		//System.out.println("derived field list="+derivedFieldList.toString());
+		Iterator<DerivedFieldMapping> derivedFieldListItr=derivedFieldList.iterator();
 		// Getting the max length of the column qualifier
 		int qualMaxLength = Integer.parseInt(props.getProperty("bluevigil.hbase.column.qualifier.maxlength"));
 		// Get the connector string for connecting different hbase field name
 		String qualConnector = props.getProperty("bluevigil.hbase.column.qualifier.connector");
 		final String EMPTY_STRING = BluevigilConstant.EMPTY_STRING;
-		while (jsonObjectItr.hasNext()) {
-			String jsonObjectKey = jsonObjectItr.next();
-			JsonElement jsonElementValue = jsonObject.get(jsonObjectKey);
-			jsonObjectKey = Utils.createBluevigilFieldName(jsonObjectKey, qualMaxLength);
-			if (jsonElementValue.isJsonObject()) {
-				// Create the field name as 3char_3char_3char
-				columnQual = getColumnQualifierName(columnQual, qualMaxLength, qualConnector, EMPTY_STRING,
-						jsonObjectKey);
-				parseJsonInputLine(jsonElementValue.toString(), backendFieldMap, columnQual, parsedJsonMap);
-			} else {
-				if (backendFieldMap.containsValue(jsonObjectKey)) {
+		try {
+			while (jsonObjectItr.hasNext()) {
+				String jsonObjectKey = jsonObjectItr.next();
+				//System.out.println("jsonObjectKey="+jsonObjectKey);
+				DerivedFieldMapping derField=null;				
+				JsonElement jsonElementValue = jsonObject.get(jsonObjectKey);
+				jsonObjectKey = Utils.createBluevigilFieldName(jsonObjectKey, qualMaxLength);
+				if (jsonElementValue.isJsonObject()) {
+					// Create the field name as 3char_3char_3char
 					columnQual = getColumnQualifierName(columnQual, qualMaxLength, qualConnector, EMPTY_STRING,
 							jsonObjectKey);
-					parsedJsonMap.put(columnQual, jsonElementValue.toString());
-					columnQual = EMPTY_STRING;
+					parseJsonInputLine(jsonElementValue.toString(), backendFieldMap, columnQual, parsedJsonMap,derivedFieldList);
+				} else {
+					if (backendFieldMap.containsValue(jsonObjectKey)) {
+						columnQual = getColumnQualifierName(columnQual, qualMaxLength, qualConnector, EMPTY_STRING,
+								jsonObjectKey);
+						parsedJsonMap.put(columnQual, jsonElementValue.toString());
+						columnQual = EMPTY_STRING;
+					}					
+				}			
+				while(derivedFieldListItr.hasNext())
+				{
+					derField=derivedFieldListItr.next();
+					
+					if(derField.getBackEndField().equals(jsonObjectKey))
+					{
+						columnQual = getColumnQualifierName(columnQual, qualMaxLength, qualConnector, EMPTY_STRING,
+								derField.getDerivedField());
+						if(derField.getDerivedType().equals("Date"))
+						{
+							Double a=Double.parseDouble(jsonElementValue.toString());
+							DecimalFormat formatter = new DecimalFormat("0.000000");
+							String ts=formatter.format(a);
+							//System.out.println("Date="+Utils.getDate((long)Double.parseDouble(ts)));
+							parsedJsonMap.put(columnQual, Utils.getDate((long)Double.parseDouble(ts)));
+						}
+						else if(derField.getDerivedType().equals("Time"))
+						{
+							Double a=Double.parseDouble(jsonElementValue.toString());
+							DecimalFormat formatter = new DecimalFormat("0.000000");
+							String ts=formatter.format(a);
+							//System.out.println("Time="+Utils.getTime((long)Double.parseDouble(ts)));
+							parsedJsonMap.put(columnQual, Utils.getTime((long)Double.parseDouble(ts)));
+						}
+						
+						else if(derField.getDerivedType().equals("City"))
+						{
+							//System.out.println("City="+Utils.getIpResolveCity(jsonElementValue.toString()));
+							parsedJsonMap.put(columnQual, Utils.getIpResolveCity(jsonElementValue.toString()));
+						}
+						else if(derField.getDerivedType().equals("Country"))
+						{
+							//System.out.println("Country="+Utils.getIpResolveCountry(jsonElementValue.toString()));
+							parsedJsonMap.put(columnQual, Utils.getIpResolveCountry(jsonElementValue.toString()));
+						}
+						
+						columnQual = EMPTY_STRING;
+					}
 				}
+			
 			}
+		}catch(IOException ex) {
+			LOGGER.error(ex);
 		}
+		
 		return parsedJsonMap;
 	}
 
@@ -119,6 +174,23 @@ public class DynamicJsonParser {
 		}
 		return columnQual;
 	}
+	/*private static String getDerivedFieldValue(Map<Integer,String> backendFieldMap,String jsonObjectKey) {
+		Iterator<String> it=backendFieldMap.values().iterator();
+		String derField=null;
+		while(it.hasNext())
+		{
+			derField=it.next().toString();
+			if(derField.startsWith("Derived"))
+			{
+				if(derField.substring(derField.indexOf("_")+1, derField.lastIndexOf("_")).equals(jsonObjectKey)|| derField.substring(derField.indexOf("_")+1, derField.lastIndexOf("_"))==jsonObjectKey)
+				{
+					return derField;
+				}
+			}
+		}
+		
+		return null;
+	}*/
 
 	/**
 	 * @param rowkeyFieldList

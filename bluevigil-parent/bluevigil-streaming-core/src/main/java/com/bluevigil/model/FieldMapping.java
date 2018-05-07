@@ -3,11 +3,18 @@ package com.bluevigil.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class FieldMapping {
+public class FieldMapping implements Serializable{
 
-    @SerializedName("BackEndField")
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@SerializedName("BackEndField")
     @Expose
     private String backEndField;
     @SerializedName("Order")
@@ -19,6 +26,13 @@ public class FieldMapping {
     @SerializedName("Label")
     @Expose
     private String label;
+    @SerializedName("DerivedType")
+    @Expose
+    private String derivedType;
+    @SerializedName("IsDerived")
+    @Expose
+    private boolean isDerived;
+
 
     public String getBackEndField() {
         return backEndField;
@@ -40,7 +54,7 @@ public class FieldMapping {
 		return isRequired;
 	}
 
-	public void setRequired(boolean isRequired) {
+	public void setIsRequired(boolean isRequired) {
 		this.isRequired = isRequired;
 	}
 
@@ -51,10 +65,24 @@ public class FieldMapping {
     public void setLabel(String label) {
         this.label = label;
     }
+    public String getDerivedType() {
+        return derivedType;
+    }
+
+    public void setDerivedType(String derivedType) {
+        this.derivedType = derivedType;
+    }
+    public boolean isDerived() {
+		return isDerived;
+	}
+
+	public void setRequired(boolean isDerived) {
+		this.isDerived = isDerived;
+	}
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("backEndField", backEndField).append("order", order).append("isRequired", isRequired).append("label", label).toString();
+        return new ToStringBuilder(this).append("backEndField", backEndField).append("order", order).append("isRequired", isRequired).append("label", label).append("derivedType", derivedType).append("isDerived", isDerived).toString();
     }
 
 }

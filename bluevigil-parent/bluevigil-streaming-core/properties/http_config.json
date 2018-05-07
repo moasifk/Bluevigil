@@ -32,196 +32,263 @@
 			"BackEndField": "ts",
 			"Order": "0",
 			"IsRequired": "true",
-			"Label": "Timestamp"
+			"Label": "Timestamp",			
+			"IsDerived": "false"
 		},
+		
 
 		{
 			"BackEndField": "uid",
 			"Order": "1",
 			"IsRequired": "true",
-			"Label": "User Id"
+			"Label": "User Id",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "id_res_h",
 			"Order": "2",
 			"IsRequired": "true",
-			"Label": "DestinationIP"
+			"Label": "DestinationIP",			
+			"IsDerived": "false"			
 		},
+		
 
 		{
 			"BackEndField": "id_res_p",
 			"Order": "3",
 			"IsRequired": "true",
-			"Label": "DestinationPort"
+			"Label": "DestinationPort",			
+			"IsDerived": "false"
 		},
 
-		{
-			"BackEndField": "id_ori_h",
-			"Order": "4",
-			"IsRequired": "true",
-			"Label": "SourceIP"
-		},
 
 		{
 			"BackEndField": "id_ori_p",
-			"Order": "5",
+			"Order": "4",
 			"IsRequired": "true",
-			"Label": "SourcePort"
+			"Label": "SourcePort",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "tra_dep",
-			"Order": "6",
+			"Order": "5",
 			"IsRequired": "true",
-			"Label": "TransDepth"
+			"Label": "TransDepth",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "met",
-			"Order": "7",
+			"Order": "6",
 			"IsRequired": "true",
-			"Label": "Method"
+			"Label": "Method",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "hos",
-			"Order": "8",
+			"Order": "7",
 			"IsRequired": "true",
-			"Label": "Host"
+			"Label": "Host",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "uri",
-			"Order": "9",
+			"Order": "8",
 			"IsRequired": "true",
 			"Label": "Uri"
 		},
 
 		{
 			"BackEndField": "ref",
-			"Order": "10",
+			"Order": "9",
 			"IsRequired": "true",
 			"Label": "Referrer"
 		},
 
 		{
 			"BackEndField": "ver",
-			"Order": "11",
+			"Order": "10",
 			"IsRequired": "true",
-			"Label": "Version"
+			"Label": "Version",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "use_age",
-			"Order": "12",
+			"Order": "11",
 			"IsRequired": "true",
 			"Label": "UserAgent"
 		},
 
 		{
 			"BackEndField": "req_bod_len",
-			"Order": "13",
+			"Order": "12",
 			"IsRequired": "true",
-			"Label": "RequestBodyLen"
+			"Label": "RequestBodyLen",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "res_bod_len",
-			"Order": "14",
+			"Order": "13",
 			"IsRequired": "true",
-			"Label": "ResponseBodyLen"
+			"Label": "ResponseBodyLen",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "sta_cod",
-			"Order": "15",
+			"Order": "14",
 			"IsRequired": "true",
-			"Label": "StatusCode"
+			"Label": "StatusCode",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "sta_msg",
-			"Order": "16",
+			"Order": "15",
 			"IsRequired": "true",
-			"Label": "StatusMsg"
+			"Label": "StatusMsg",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "tags",
-			"Order": "17",
+			"Order": "16",
 			"IsRequired": "true",
-			"Label": "Tags"
+			"Label": "Tags",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "res_fui",
-			"Order": "18",
+			"Order": "17",
 			"IsRequired": "true",
-			"Label": "RespFuids"
+			"Label": "RespFuids",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "res_fil",
-			"Order": "19",
+			"Order": "18",
 			"IsRequired": "true",
-			"Label": "RespFileNames"
+			"Label": "RespFileNames",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "res_mim_typ",
-			"Order": "20",
+			"Order": "19",
 			"IsRequired": "true",
-			"Label": "RespMimeTypes"
+			"Label": "RespMimeTypes",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "sta_cod",
-			"Order": "21",
+			"Order": "20",
 			"IsRequired": "true",
-			"Label": "StatusCode"
+			"Label": "StatusCode",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "sta_msg",
-			"Order": "22",
+			"Order": "21",
 			"IsRequired": "true",
-			"Label": "StatusMsg"
+			"Label": "StatusMsg",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "inf_cod",
-			"Order": "23",
+			"Order": "22",
 			"IsRequired": "false",
-			"Label": "InfoCode"
+			"Label": "InfoCode",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "inf_msg",
-			"Order": "24",
+			"Order": "23",
 			"IsRequired": "false",
-			"Label": "InfoMsg"
+			"Label": "InfoMsg",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "use",
-			"Order": "25",
+			"Order": "24",
 			"IsRequired": "false",
-			"Label": "UserName"
+			"Label": "UserName",			
+			"IsDerived": "false"
 		},
 
 		{
+			
 			"BackEndField": "pas",
-			"Order": "26",
+			"Order": "25",
 			"IsRequired": "false",
-			"Label": "Password"
+			"Label": "Password",			
+			"IsDerived": "false"
 		},
 
 		{
 			"BackEndField": "cap_pas",
-			"Order": "27",
+			"Order": "26",
 			"IsRequired": "false",
-			"Label": "CapturePassword"
+			"Label": "CapturePassword",			
+			"IsDerived": "false"
 		}
-	]
+	],
+	"DerivedFieldMapping": 
+	[
+		{
+		    "DerivedField" : "ts_dat",
+			"BackEndField": "ts",
+			"Order": "27",			
+			"Label": "Date",
+			"DerivedType" : "Date"			
+		},
+		{
+			"DerivedField" : "ts_tim",
+			"BackEndField": "ts",
+			"Order": "28",
+			"Label": "Time",
+			"DerivedType" : "Time"
+		},
+		{
+			"DerivedField" : "id_res_h_cou",
+			"BackEndField": "id_res_h",
+			"Order": "29",
+			"Label": "Country",
+			"DerivedType" : "Country"
+		},
+		{
+			"DerivedField" : "id_res_h_cit",
+			"BackEndField": "id_res_h",
+			"Order": "30",
+			"Label": "City",
+			"DerivedType" : "City"
+		},
+
+		{
+			"DerivedField" : "id_ori_h_cou",
+			"BackEndField": "id_ori_h",
+			"Order": "31",
+			"Label": "Country",
+			"DerivedType" : "Country"
+		},
+		{
+			"DerivedField" : "id_ori_h_cit",
+			"BackEndField": "id_ori_h",
+			"Order": "32",
+			"Label": "City",
+			"DerivedType" : "City"
+		}
+	]	
 }

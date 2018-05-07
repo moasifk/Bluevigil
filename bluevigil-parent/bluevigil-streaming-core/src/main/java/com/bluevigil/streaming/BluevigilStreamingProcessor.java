@@ -39,13 +39,16 @@ public class BluevigilStreamingProcessor {// implements Runnable {
 		// to push to hadoop
 		// Source topic - Flume ingest logs to this topic eg: dns-input-topic,
 		// http-input-topic
+		//SOURCE_TOPIC ="Yassar060Blue";
 		SOURCE_TOPIC = args[0];
 		// The spark processed data kept in this topic eg: eg: dns-output-topic,
 		// http-output-topicargs
+		//DEST_TOPIC = "Yassar060BlueOutput";
 		DEST_TOPIC = args[1];
 		// Network log configuration(json) file path eg:
 		// /user/bluvigil/configs/Http_file_config.json
 		NWLOG_FILE_CONFIG_PATH = args[2];
+		//NWLOG_FILE_CONFIG_PATH = "./properties/http_config.json";
 		// parsing filled mapping JSON file
 		BluevigilConsumer consumer = new BluevigilConsumer();
 		// SparkConf conf = new

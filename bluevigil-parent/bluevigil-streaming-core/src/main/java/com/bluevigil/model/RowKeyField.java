@@ -3,9 +3,12 @@ package com.bluevigil.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class RowKeyField {
+public class RowKeyField implements Serializable {
 
     @SerializedName("BackEndField")
     @Expose
