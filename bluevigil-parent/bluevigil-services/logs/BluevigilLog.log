@@ -1393,3 +1393,29 @@ java.net.ConnectException: Connection refused
 2018-03-01 19:35:04,388 - org.apache.hadoop.metrics2.impl.MetricsConfig - WARN - Cannot locate configuration: tried hadoop-metrics2-phoenix.properties,hadoop-metrics2.properties
 2018-03-01 19:35:04,494 - org.apache.hadoop.metrics2.impl.MetricsSystemImpl - INFO - Scheduled snapshot period at 10 second(s).
 2018-03-01 19:35:04,494 - org.apache.hadoop.metrics2.impl.MetricsSystemImpl - INFO - phoenix metrics system started
+2018-05-03 12:21:25,853 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - ./properties/config.properties (No such file or directory)
+2018-05-03 12:21:25,857 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - ./properties/config.properties (No such file or directory)
+2018-05-03 12:22:34,880 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - The server requested password-based authentication, but no password was provided.
+2018-05-03 12:22:34,883 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - The server requested password-based authentication, but no password was provided.
+2018-05-03 12:23:16,437 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - The server requested password-based authentication, but no password was provided.
+2018-05-03 12:23:16,441 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - The server requested password-based authentication, but no password was provided.
+2018-05-03 17:09:47,537 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - FATAL: Ident authentication failed for user "postgres"
+2018-05-03 17:09:47,541 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - FATAL: Ident authentication failed for user "postgres"
+2018-05-03 17:10:43,098 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - FATAL: Ident authentication failed for user "postgres"
+2018-05-03 17:10:43,101 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - FATAL: Ident authentication failed for user "postgres"
+2018-05-03 17:14:21,928 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - FATAL: Ident authentication failed for user "postgres"
+2018-05-03 17:14:21,931 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - FATAL: Ident authentication failed for user "postgres"
+2018-05-03 17:40:06,068 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - FATAL: Ident authentication failed for user "postgres"
+2018-05-03 17:40:06,071 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - FATAL: Ident authentication failed for user "postgres"
+2018-05-06 02:33:42,012 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - -------- PostgreSQL JDBC Connection Testing ------------
+2018-05-06 02:33:42,404 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - PostgreSQL JDBC Driver Registered!
+2018-05-06 02:33:42,404 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - Connection Failed! Check output console
+2018-05-07 01:04:11,773 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - -------- PostgreSQL JDBC Connection Testing ------------
+2018-05-07 01:04:12,217 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - PostgreSQL JDBC Driver Registered!
+2018-05-07 01:04:12,218 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - Connection Failed! Check output console
+2018-05-07 08:18:06,019 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - -------- PostgreSQL JDBC Connection Testing ------------
+2018-05-07 08:18:06,568 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - PostgreSQL JDBC Driver Registered!
+2018-05-07 08:18:06,570 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - Connection Failed! Check output console
+2018-05-07 11:33:33,053 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - -------- PostgreSQL JDBC Connection Testing ------------
+2018-05-07 11:33:33,510 - com.bluevigil.analytics.utils.BluevigilUtility - INFO - PostgreSQL JDBC Driver Registered!
+2018-05-07 11:33:33,511 - com.bluevigil.analytics.utils.BluevigilUtility - ERROR - Connection Failed! Check output console
