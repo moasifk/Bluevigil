@@ -18,6 +18,7 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -151,17 +152,20 @@ public class BluevigilConsumer implements Serializable {
 		});
 		LOGGER.info("Writing parsed data to Kafka completed");
 		
-		formattedLine.print();
 		LOGGER.info("Create Hbase Put object and write to hbase");
 		final String hbaseTableName = mappingData.getHbaseTable();
+		JavaDStream<Put> hbasePutObjects = null;
+		final String ZOOKEEPER_QUORUM = props.getProperty(BluevigilConstant.ZOOKEEPER_QUORUM);
+		final String CLIENT_PORT = props.getProperty(BluevigilConstant.ZOOKEEPER_PORT);
 		if (Utils.isHbaseTableExists(hbaseTableName)) {
-			JavaDStream<Put> hbasePutObjects = parsedJsonMapDStream.map(new Function<Map<String,String>, Put>() {
+			LOGGER.info("Hbase Table "+hbaseTableName+" exists");
+			hbasePutObjects = parsedJsonMapDStream.map(new Function<Map<String,String>, Put>() {
 				
 				public Put call(Map<String, String> parsedJsonMap) throws Exception {
-					Put putObj = DynamicJsonParser.createHbaseObject(rowkeyFieldList, parsedJsonMap);
+					Put putObj = createHbaseObject(rowkeyFieldList, parsedJsonMap);
 					Configuration config = HBaseConfiguration.create();
-					config.set(BluevigilConstant.CONFIG_ZOOKEEPER_QUORUM, props.getProperty(BluevigilConstant.ZOOKEEPER_QUORUM));
-			        config.set(BluevigilConstant.CONFIG_ZOOKEEPER_CLIENT_PORT, props.getProperty(BluevigilConstant.ZOOKEEPER_PORT));
+					config.set(BluevigilConstant.CONFIG_ZOOKEEPER_QUORUM, ZOOKEEPER_QUORUM);
+			        config.set(BluevigilConstant.CONFIG_ZOOKEEPER_CLIENT_PORT, CLIENT_PORT);
 			        config.set(BluevigilConstant.CONFIG_ZNODE_PARENT, "/hbase-unsecure");
 			        Connection connection = null;
 			        Table table = null;
@@ -192,7 +196,7 @@ public class BluevigilConsumer implements Serializable {
 			LOGGER.error("Hbase table doesn't exists - exiting");
 		}
 		LOGGER.info("Create Hbase Put object and write to hbase - completed");
-		
+		hbasePutObjects.print();
 		jssc.start();
 		jssc.awaitTermination();
 	}
@@ -204,5 +208,33 @@ public class BluevigilConsumer implements Serializable {
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		return new KafkaProducer<String, String>(props);
+	}
+	
+	/**
+	 * @param rowkeyFieldList
+	 *            List of row key fields defined during the input file config
+	 * @param parsedJsonMap
+	 *            Json map containing parsed data for each field
+	 * @return put Hbase put object with all column qualifier name and data
+	 */
+	public Put createHbaseObject(List<String> rowkeyFieldList, Map<String, String> parsedJsonMap) {
+		Map<String, String> parsedJsonMapCopy = new HashMap<String, String>();
+		props = BluevigilProperties.getInstance();
+		// Copying parsed json map content to a new map as we need to remove
+		// row key content from parsed json map.
+		parsedJsonMapCopy.putAll(parsedJsonMap);
+		// Creating row key string
+		StringBuffer rowKey = new StringBuffer(BluevigilConstant.EMPTY_STRING);
+		for (int i = 0; rowkeyFieldList.size() > i; i++) {
+			rowKey.append(parsedJsonMapCopy.get(rowkeyFieldList.get(i)) + "|");
+			parsedJsonMapCopy.remove(rowkeyFieldList.get(i));
+		}
+		Put put = new Put(Bytes.toBytes(rowKey.toString()));
+
+		String columnFamily = props.getProperty("bluevigil.hbase.column.family.name.primary");
+		for (Map.Entry<String, String> entry : parsedJsonMapCopy.entrySet()) {
+			put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(entry.getKey()), Bytes.toBytes(entry.getValue()));
+		}
+		return put;
 	}
 }

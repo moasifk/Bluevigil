@@ -2,11 +2,13 @@ package com.bluevigil.utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -87,14 +89,14 @@ public class DynamicJsonParser {
 			LOGGER.error("Not a JSON Object, line discarded: "+line);
 			return parsedJsonMap;
 		}
-		Iterator<String> jsonObjectItr = jsonObject.keySet().iterator();
+		Set<Map.Entry<String, JsonElement>> jsonObjectEntries = jsonObject.entrySet();
 		// Getting the max length of the column qualifier
 		int qualMaxLength = Integer.parseInt(props.getProperty("bluevigil.hbase.column.qualifier.maxlength"));
 		// Get the connector string for connecting different hbase field name
 		String qualConnector = props.getProperty("bluevigil.hbase.column.qualifier.connector");
 		final String EMPTY_STRING = BluevigilConstant.EMPTY_STRING;
-		while (jsonObjectItr.hasNext()) {
-			String jsonObjectKey = jsonObjectItr.next();
+		for (Map.Entry<String, JsonElement> jsonObjectEntry: jsonObjectEntries) {
+			String jsonObjectKey = jsonObjectEntry.getKey();
 			JsonElement jsonElementValue = jsonObject.get(jsonObjectKey);
 			jsonObjectKey = Utils.createBluevigilFieldName(jsonObjectKey, qualMaxLength);
 			if (jsonElementValue.isJsonObject()) {

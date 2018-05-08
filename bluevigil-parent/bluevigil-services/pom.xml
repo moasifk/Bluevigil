@@ -49,16 +49,16 @@
 		    <version>1.9.13</version>
 		</dependency>
 		<!-- Added for phoenix  -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.apache.phoenix</groupId>
 		    <artifactId>phoenix-core</artifactId>
 		    <version>4.10.0-HBase-1.2</version>
-		</dependency>
+		</dependency> 
 		<dependency>
 		    <groupId>org.apache.phoenix</groupId>
 		    <artifactId>phoenix-queryserver-client</artifactId>
 		    <version>4.10.0-HBase-1.2</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
