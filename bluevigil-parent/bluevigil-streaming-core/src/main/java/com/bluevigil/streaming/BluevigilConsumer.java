@@ -25,8 +25,12 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.log4j.Logger;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
+import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.broadcast.Broadcast;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
@@ -34,13 +38,14 @@ import org.apache.spark.streaming.api.java.JavaPairInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka.KafkaUtils;
 
+import com.bluevigil.model.DerivedFieldMapping;
 import com.bluevigil.model.FieldMapping;
 import com.bluevigil.model.LogFileConfig;
 import com.bluevigil.model.RowKeyField;
 import com.bluevigil.utils.BluevigilConstant;
 import com.bluevigil.utils.BluevigilProperties;
+import com.bluevigil.utils.BluevigilUtils;
 import com.bluevigil.utils.DynamicJsonParser;
-import com.bluevigil.utils.Utils;
 import com.google.gson.Gson;
 
 import kafka.serializer.StringDecoder;
@@ -89,7 +94,46 @@ public class BluevigilConsumer implements Serializable {
 				backendFieldMap.put(fieldMapping.getOrder(), fieldMapping.getBackEndField());
 			}
 		}
-
+		
+		// Derived fields mapping list
+		final List<DerivedFieldMapping> derivedFieldMappingList = mappingData.getDerivedFieldMapping();
+				
+		// Derived mapping details added to backed field mapping list
+		Iterator<DerivedFieldMapping> derivedFieldMappingItr = derivedFieldMappingList.iterator();
+		DerivedFieldMapping derivedFieldMapping = null;
+		while (derivedFieldMappingItr.hasNext()) {
+			derivedFieldMapping = derivedFieldMappingItr.next();
+			backendFieldMap.put(derivedFieldMapping.getOrder(), derivedFieldMapping.getDerivedField());
+		}
+		
+		// Broadcasting country details for GeoIp enrichment
+		// Reading coutry details from the HDFS location
+		JavaRDD<String> maxmindCountryDetails = jsc.textFile(props.getProperty("mmdb.geoLocation.Country"));
+		JavaPairRDD<Long, String> countryDataPairRDD = maxmindCountryDetails.mapToPair(new PairFunction<String, Long, String>() {
+			// Iterating over each line
+			// "1.0.0.0","1.0.0.255","16777216","16777471","AU","Australia"
+			String stringIpVal;
+			long longIpVal;
+			String country;
+			public Tuple2<Long, String> call(String line) throws Exception {
+				String[] lineValues = line.split(BluevigilConstant.COMMA);
+				stringIpVal = lineValues[2];
+				country = lineValues[5];
+				longIpVal = Long.parseLong(stringIpVal.substring(1, stringIpVal.length()-1));
+				country = country.substring(1, country.length()-1);
+				return new Tuple2<Long, String>(longIpVal, country);
+			}
+		});
+		// Converting countryDataPairRDD to map
+		Map<Long, String> countryDataMap = countryDataPairRDD.collectAsMap();
+		Long[] countryIpArray = countryDataMap.keySet().toArray(new Long[countryDataMap.keySet().size()]);
+		// Sorting array of country ips for binary search
+		Arrays.sort(countryIpArray);
+		// Broadcasting country data
+		final Broadcast<Long[]> broadcastedCountryIpArray = jsc.broadcast(countryIpArray);
+		final Broadcast<Map<Long, String>> broadcastedCountryDataMap = jsc.broadcast(countryDataMap);
+		// Broadcasting completed
+		
 		// Consume data from Kafka
 		LOGGER.info("Configuring Kafka properties");
 		final String bootstrapServers = props.getProperty(BluevigilConstant.BOOTSTRAP_SERVERS);
@@ -121,11 +165,13 @@ public class BluevigilConsumer implements Serializable {
 			public Map<String, String> call(Tuple2<String, String> line) throws Exception {
 				String jsonRecord = line._2;
 				
-				LOGGER.info("Parsing json data - started");
+				// Parsing json data - started
 				Map<String, String> parsedJsonMap = DynamicJsonParser.parseJsonInputLine(jsonRecord,
 						backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
-				LOGGER.info("Parsing json data - Done");
-				LOGGER.info("ParsedJsonMap map: "+parsedJsonMap);
+				// Initial Parsing of json data - Done
+				Map<String, String> finalParsedJsonMap  = DynamicJsonParser.getParsedJsonMapWithDerivedFields(broadcastedCountryIpArray, broadcastedCountryDataMap,
+						parsedJsonMap, derivedFieldMappingList);
+				// Derived fields data added ParsedJsonMap
 				return parsedJsonMap;
 			}
 		});
@@ -140,7 +186,7 @@ public class BluevigilConsumer implements Serializable {
 				Producer<String, String> producer = createProducer(bootstrapServers);
 				LOGGER.info("Creating Kafka producer config - Done");
 				LOGGER.info("Formatting parsed json data");
-				formattedLine = Utils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap,
+				formattedLine = BluevigilUtils.createLineFromParsedJson(BluevigilConstant.COMMA, parsedJsonMap,
 						backendFieldMap);
 				ProducerRecord<String, String> finalRecord = new ProducerRecord<String, String>(destTopic, "key",
 						formattedLine);
@@ -157,7 +203,7 @@ public class BluevigilConsumer implements Serializable {
 		JavaDStream<Put> hbasePutObjects = null;
 		final String ZOOKEEPER_QUORUM = props.getProperty(BluevigilConstant.ZOOKEEPER_QUORUM);
 		final String CLIENT_PORT = props.getProperty(BluevigilConstant.ZOOKEEPER_PORT);
-		if (Utils.isHbaseTableExists(hbaseTableName)) {
+		if (BluevigilUtils.isHbaseTableExists(hbaseTableName)) {
 			LOGGER.info("Hbase Table "+hbaseTableName+" exists");
 			hbasePutObjects = parsedJsonMapDStream.map(new Function<Map<String,String>, Put>() {
 				
@@ -196,7 +242,7 @@ public class BluevigilConsumer implements Serializable {
 			LOGGER.error("Hbase table doesn't exists - exiting");
 		}
 		LOGGER.info("Create Hbase Put object and write to hbase - completed");
-		hbasePutObjects.print();
+		formattedLine.print();
 		jssc.start();
 		jssc.awaitTermination();
 	}
@@ -237,4 +283,5 @@ public class BluevigilConsumer implements Serializable {
 		}
 		return put;
 	}
+	
 }

@@ -27,6 +27,9 @@ public class LogFileConfig {
     @SerializedName("FieldMapping")
     @Expose
     private List<FieldMapping> fieldMapping = new ArrayList<FieldMapping>();
+    @SerializedName("DerivedFieldMapping")
+    @Expose
+    private List<DerivedFieldMapping> derivedFieldMapping = new ArrayList<DerivedFieldMapping>();
 
     public String getLogFileName() {
         return logFileName;
@@ -56,7 +59,7 @@ public class LogFileConfig {
         return destinationTopic;
     }
 
-    public void setDestinationTopic(String destinationTopic) {
+	public void setDestinationTopic(String destinationTopic) {
         this.destinationTopic = destinationTopic;
     }
 
@@ -75,10 +78,19 @@ public class LogFileConfig {
     public void setFieldMapping(List<FieldMapping> fieldMapping) {
         this.fieldMapping = fieldMapping;
     }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("logFileName", logFileName).append("hbaseTable", hbaseTable).append("sourceTopic", sourceTopic).append("destinationTopic", destinationTopic).append("rowKeyFields", rowKeyFields).append("fieldMapping", fieldMapping).toString();
+    public List<DerivedFieldMapping> getDerivedFieldMapping() {
+        return derivedFieldMapping;
     }
+
+    public void setDerivedFieldMapping(List<DerivedFieldMapping> derivedFieldMapping) {
+        this.derivedFieldMapping = derivedFieldMapping;
+    }
+
+	@Override
+	public String toString() {
+		return "LogFileConfig [logFileName=" + logFileName + ", hbaseTable=" + hbaseTable + ", sourceTopic="
+				+ sourceTopic + ", destinationTopic=" + destinationTopic + ", rowKeyFields=" + rowKeyFields
+				+ ", fieldMapping=" + fieldMapping + ", derivedFieldMapping=" + derivedFieldMapping + "]";
+	}
 
 }

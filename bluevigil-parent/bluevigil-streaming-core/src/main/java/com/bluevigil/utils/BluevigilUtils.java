@@ -1,24 +1,24 @@
 package com.bluevigil.utils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TimeZone;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.log4j.Logger;
+import org.apache.pig.data.Tuple;
+import org.apache.pig.data.TupleFactory;
 
-public class Utils implements Serializable {
-	static transient Logger LOGGER = Logger.getLogger(Utils.class);
-	// private static Properties props=new Properties();
+
+public class BluevigilUtils implements Serializable {
+	static transient Logger LOGGER = Logger.getLogger(BluevigilUtils.class);
 	private static BluevigilProperties props;
 
 	/*
@@ -43,62 +43,49 @@ public class Utils implements Serializable {
 		return isExists;
 	}
 
-	public static Properties getProperties() {
-		Properties prop = new Properties();
-		InputStream input = null;
-		try {
-
-			input = new FileInputStream("./properties/config.properties");
-
-			// load a properties file
-			prop.load(input);
-
-			return prop;
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			LOGGER.error(ex.getMessage());
-			return null;
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					LOGGER.error(e.getMessage());
-				}
-			}
-		}
-	}
-
 	public static String getTime(long ts) {
 		Date dateTime = new Date(ts * 1000L);
-		String date, time;
+		String time;
 		SimpleDateFormat jdf = new SimpleDateFormat("hh:mm");
 		time = jdf.format(dateTime);
-		// System.out.println("Time="+time);
 		return time;
 	}
-
-	public static java.sql.Date getDate(long ts) {
-
-		java.sql.Date sqlDate = new java.sql.Date(ts * 1000L);
-		// System.out.println("SQL Date="+sqlDate);
-
-		return sqlDate;
+	
+	public static String getDate(long ts) {
+		java.sql.Date sqlDate = new java.sql.Date(ts*1000L);
+		return sqlDate.toString();
 	}
-
-	public static long getUnixTime() {
-		long unixTime = 0;
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+5:30")); // Specify
-																	// your
-																	// timezone
-		unixTime = date.getTime();
-		// unixTime = unixTime / 1000;
-		System.out.println("Unix time=" + unixTime);
-		return unixTime;
+	
+	public static  long getUnixTime() {
+        long unixTime = 0;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+5:30")); //Specify your timezone
+        unixTime = date.getTime();
+        return unixTime;
+    }
+	
+	public static  String getCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	Calendar cal = Calendar.getInstance();
+        return dateFormat.format(cal);
+    }
+	
+	public static String getIpResolveCountry(String  ipAddress) throws IOException {
+		props = BluevigilProperties.getInstance();
+		IpResolveCountry ipc=new IpResolveCountry(props.getProperty("mmdb.geoLocation.Country"));
+		Tuple tuple= TupleFactory.getInstance().newTuple();//("162.168.1.1");
+		tuple.append(ipAddress);
+		String country= ipc.exec(tuple);
+		return country;
+	}
+	
+	public static String getIpResolveCity(String  ipAddress) throws IOException {
+		props = BluevigilProperties.getInstance();
+		IpResolveCity ipCity=new IpResolveCity(props.getProperty("mmdb.geoLocation.City"));
+		Tuple cityTuple= TupleFactory.getInstance().newTuple();//("162.168.1.1");
+		cityTuple.append(ipAddress);
+		return ipCity.exec(cityTuple);
 	}
 
 	/**
@@ -141,5 +128,33 @@ public class Utils implements Serializable {
 		}
 		// Remove the last comma separator
 		return outputLine.substring(0, outputLine.length() - 1).toString();
+	}
+	
+	/**
+	 * Method to convert String ipAddress to long value
+	 * @param ipAddress
+	 * @return
+	 */
+	public static long ipToLong(String ipAddress) {
+		String[] ipAddressInArray = ipAddress.split("\\.");
+		long result = 0;
+		for (int i = 0; i < ipAddressInArray.length; i++) {
+			int power = 3 - i;
+			int ip = Integer.parseInt(ipAddressInArray[i]);
+			result += ip * Math.pow(256, power);
+		}
+		return result;
+	}
+	
+	public static String formatJsonValue(String jsonValue) {
+		while (jsonValue.startsWith("\"") || jsonValue.startsWith("[") || jsonValue.endsWith("\"") || jsonValue.endsWith("]")) {
+			if (jsonValue.startsWith("\"") || jsonValue.startsWith("[")) {
+				jsonValue = jsonValue.substring(1,jsonValue.length()); 
+			}
+			if (jsonValue.endsWith("\"") || jsonValue.endsWith("]")){
+				jsonValue = jsonValue.substring(0,jsonValue.length()-1); 
+			}
+		}
+		return jsonValue;
 	}
 }

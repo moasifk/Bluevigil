@@ -2,8 +2,11 @@ package com.bluevigil.utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +16,9 @@ import java.util.Set;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.log4j.Logger;
+import org.apache.spark.broadcast.Broadcast;
 
+import com.bluevigil.model.DerivedFieldMapping;
 import com.bluevigil.model.FieldMapping;
 import com.bluevigil.model.LogFileConfig;
 import com.bluevigil.model.RowKeyField;
@@ -98,7 +103,7 @@ public class DynamicJsonParser {
 		for (Map.Entry<String, JsonElement> jsonObjectEntry: jsonObjectEntries) {
 			String jsonObjectKey = jsonObjectEntry.getKey();
 			JsonElement jsonElementValue = jsonObject.get(jsonObjectKey);
-			jsonObjectKey = Utils.createBluevigilFieldName(jsonObjectKey, qualMaxLength);
+			jsonObjectKey = BluevigilUtils.createBluevigilFieldName(jsonObjectKey, qualMaxLength);
 			if (jsonElementValue.isJsonObject()) {
 				// Create the field name as 3char_3char_3char
 				columnQual = getColumnQualifierName(columnQual, qualMaxLength, qualConnector, EMPTY_STRING,
@@ -108,7 +113,7 @@ public class DynamicJsonParser {
 				if (backendFieldMap.containsValue(jsonObjectKey)) {
 					columnQual = getColumnQualifierName(columnQual, qualMaxLength, qualConnector, EMPTY_STRING,
 							jsonObjectKey);
-					parsedJsonMap.put(columnQual, jsonElementValue.toString());
+					parsedJsonMap.put(columnQual, BluevigilUtils.formatJsonValue(jsonElementValue.toString()));
 					columnQual = EMPTY_STRING;
 				}
 			}
@@ -152,5 +157,52 @@ public class DynamicJsonParser {
 			put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(entry.getKey()), Bytes.toBytes(entry.getValue()));
 		}
 		return put;
+	}
+	
+	public static Map<String, String> getParsedJsonMapWithDerivedFields(Broadcast<Long[]> broadcastedCountryIpArray,
+			Broadcast<Map<Long, String>> broadcastedCountryMap, Map<String, String> parsedJsonMap,
+			List<DerivedFieldMapping> derivedMappingList) {
+		Iterator<DerivedFieldMapping> derivedFieldListItr = derivedMappingList.iterator();
+		DerivedFieldMapping derField;
+		String jsonElementValue;
+		while (derivedFieldListItr.hasNext()) {
+			try {
+				derField = derivedFieldListItr.next();
+				if (parsedJsonMap.keySet().contains(derField.getBackEndField())) {
+					jsonElementValue = parsedJsonMap.get(derField.getBackEndField());
+					if (derField.getDerivedType().equals("Date")) {
+						Double jsonElementValueDouble = Double.parseDouble(jsonElementValue.toString());
+						DecimalFormat formatter = new DecimalFormat("0.000000");
+						String ts = formatter.format(jsonElementValueDouble);
+						parsedJsonMap.put(derField.getDerivedField(),
+								BluevigilUtils.getDate((long) Double.parseDouble(ts)));
+					} else if (derField.getDerivedType().equals("Time")) {
+						Double a = Double.parseDouble(jsonElementValue.toString());
+						DecimalFormat formatter = new DecimalFormat("0.000000");
+						String ts = formatter.format(a);
+						parsedJsonMap.put(derField.getDerivedField(),
+								BluevigilUtils.getTime((long) Double.parseDouble(ts)));
+					} else if (derField.getDerivedType().equals("City")) {
+						// TODO
+						parsedJsonMap.put(derField.getDerivedField(),
+								"Need to fix this");
+					} else if (derField.getDerivedType().equals("Country")) {
+						int number = Arrays.binarySearch(broadcastedCountryIpArray.value(), BluevigilUtils.ipToLong(jsonElementValue.toString()));
+						int index = number;
+						if (number < 0) {
+							index = -(number+2);
+						}
+						parsedJsonMap.put(derField.getDerivedField(),
+								broadcastedCountryMap.getValue().get(broadcastedCountryIpArray.value()[index]));
+					}
+
+				}
+			} catch (Exception ex) {
+				LOGGER.error(ex);
+			}
+
+		}
+
+		return parsedJsonMap;
 	}
 }

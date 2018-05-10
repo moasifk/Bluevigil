@@ -1,32 +1,42 @@
-
 package com.bluevigil.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class FieldMapping {
+public class DerivedFieldMapping implements Serializable{
 
-    @SerializedName("BackEndField")
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@SerializedName("DerivedField")
+    @Expose
+    private String derivedField;
+	@SerializedName("BackEndField")
     @Expose
     private String backEndField;
     @SerializedName("Order")
     @Expose
     private int order;
-    @SerializedName("IsRequired")
-    @Expose
-    private boolean isRequired;
     @SerializedName("Label")
     @Expose
     private String label;
-    @SerializedName("DerivedType")
+	@SerializedName("DerivedType")
     @Expose
     private String derivedType;
-    @SerializedName("IsDerived")
-    @Expose
-    private boolean isDerived;
 
-    public String getBackEndField() {
+	public String getDerivedField() {
+        return derivedField;
+    }
+
+    public void setDerivedField(String derivedField) {
+        this.derivedField = derivedField;
+    }
+	public String getBackEndField() {
         return backEndField;
     }
 
@@ -41,15 +51,6 @@ public class FieldMapping {
 	public void setOrder(int order) {
 		this.order = order;
 	}
-
-    public boolean isRequired() {
-		return isRequired;
-	}
-
-	public void setIsRequired(boolean isRequired) {
-		this.isRequired = isRequired;
-	}
-
 	public String getLabel() {
         return label;
     }
@@ -64,17 +65,10 @@ public class FieldMapping {
     public void setDerivedType(String derivedType) {
         this.derivedType = derivedType;
     }
-    public boolean isDerived() {
-		return isDerived;
-	}
 
-	public void setRequired(boolean isDerived) {
-		this.isDerived = isDerived;
-	}
-
-    @Override
+	@Override
     public String toString() {
-        return new ToStringBuilder(this).append("backEndField", backEndField).append("order", order).append("isRequired", isRequired).append("label", label).append("derivedType", derivedType).append("isDerived", isDerived).toString();
+        return new ToStringBuilder(this).append("derivedField", derivedField).append("backEndField", backEndField).append("order", order).append("label", label).append("derivedType", derivedType).toString();
     }
 
 }
