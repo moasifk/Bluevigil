@@ -23,8 +23,7 @@ public class DynamicJsonProcessor {
 	public static List<JsonParsedfields> parseJsonInputLine(String line,String columnQual,String origFields, List<JsonParsedfields> parsedJsonList) {
 		JsonObject jsonObject = parser.parse(line).getAsJsonObject();
 //		Iterator<String> jsonObjectItr = jsonObject.keySet().iterator();
-		Set<Map.Entry<String, JsonElement>> jsonObjectEntries = jsonObject.entrySet();
-		JsonParsedfields jpFields=new JsonParsedfields();
+		Set<Map.Entry<String, JsonElement>> jsonObjectEntries = jsonObject.entrySet();		
 		// Getting the max length of the column qualifier
 		int qualMaxLength = Integer.parseInt(props.getProperty("bluevigil.hbase.column.qualifier.maxlength"));
 		// Get the connector string for connecting different hbase field name..
@@ -45,11 +44,19 @@ public class DynamicJsonProcessor {
 							modifiedJsonObjectKey); 
 					//System.out.println("nested columnQual="+columnQual);
 					parseJsonInputLine(jsonElementValue.toString(), columnQual,origFields, parsedJsonList);
+					//System.out.println("Original field="+origFields);
+					if(origFields.contains(",")) {
+						origFields=origFields.substring(0, origFields.lastIndexOf(","));
+					}else {
+						origFields= "";
+					}				
+					
 				} else {
-				
+						//origFields	= EMPTY_STRING;			
 						columnQual = getColumnQualifierName(columnQual, qualMaxLength, qualConnector, EMPTY_STRING,
 								modifiedJsonObjectKey);
 						//System.out.println("columnQual="+columnQual);
+						JsonParsedfields jpFields=new JsonParsedfields();
 						jpFields.setFieldName(getOrigStringConcat(origFields,jsonObjectKey,EMPTY_STRING));
 						jpFields.setBackEndField(columnQual);
 						parsedJsonList.add(jpFields);
@@ -83,5 +90,12 @@ public class DynamicJsonProcessor {
 			return keyField;
 		}
 	}
+	private static String removeOrigString(String orig,final String EMPTY_STRING) {
+		if(orig.contains(",")) {
+			return orig.substring(0, orig.lastIndexOf(",")-1);
+		}else {
+			return "";
+		}
+	}	
 	
 }

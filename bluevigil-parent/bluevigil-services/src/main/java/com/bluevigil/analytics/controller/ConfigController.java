@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +30,13 @@ import com.bluevigil.analytics.config.DynamicJsonProcessor;
 import com.bluevigil.analytics.config.ProcessJsonConfig;
 import com.bluevigil.analytics.model.JsonParsedfields;
 
-
+@CrossOrigin
 @RestController
 
 @RequestMapping("/config")
 public class ConfigController {
-	 private static final String SUCCESS_STATUS = "success";
-	 private static final String ERROR_STATUS = "error";
+	 private static final String SUCCESS_STATUS = "{\"status\":\"success\"}";
+	 private static final String ERROR_STATUS = "{\"status\":\"failure\"}";
 	Logger LOGGER = Logger.getLogger(BluevigilController.class);
 
 //	@RequestMapping(value = "/getJsonFields", method = RequestMethod.POST)
@@ -65,6 +66,7 @@ public class ConfigController {
 			}catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return null;
 				//return Map<String, String>;
 			}
 		List<JsonParsedfields> jsonFieldsList= DynamicJsonProcessor.parseJsonInputLine(line, "","", new ArrayList<JsonParsedfields>());
@@ -72,6 +74,34 @@ public class ConfigController {
 		}
 		else
 			return null;
+		
+	}
+	@RequestMapping(value = "/getJsonConfigTypes", method = RequestMethod.GET)
+	public @ResponseBody List<String> getJsonConfigTypes() {
+		//System.out.println("File Type="+fileType);	
+		List<String> lstConfigTypes=ProcessJsonConfig.getJsonConfigTypes();
+		if(!lstConfigTypes.isEmpty())	
+			return lstConfigTypes;
+		else
+			return  Collections.emptyList();
+		
+	}
+	@RequestMapping(value = "/getFileConfigJson", method = RequestMethod.GET)
+	public @ResponseBody String getFileConfigJson(@RequestParam(value = "fileType") String fileType) {
+		String ret=ProcessJsonConfig.getFileConfigJson(fileType);
+		if( ret.isEmpty() || ret.equals(""))
+			return ERROR_STATUS;		
+		else
+			return ret;
+		
+	}
+	@RequestMapping(value = "/deleteConfigJson", method = RequestMethod.POST)
+	public @ResponseBody String deleteConfigJson(@RequestParam(value = "fileType") String fileType) {
+		//System.out.println("File Type="+fileType);		
+		if( ProcessJsonConfig.deleteConfigJson(fileType)>=1)
+			return SUCCESS_STATUS;
+		else
+			return ERROR_STATUS;
 		
 	}
 	@RequestMapping(value = "/getJsonConfig", method = RequestMethod.POST)
