@@ -66,7 +66,7 @@ public class ConfigController {
 	}
 	@RequestMapping(value = "/getJsonConfigTypes", method = RequestMethod.GET)
 	public @ResponseBody List<String> getJsonConfigTypes() {
-		LOGGER.info("File Type="+fileType);	
+		//LOGGER.info("File Type="+fileType);	
 		List<String> lstConfigTypes=ProcessJsonConfig.getJsonConfigTypes();
 		if(!lstConfigTypes.isEmpty())	
 			return lstConfigTypes;
@@ -92,14 +92,7 @@ public class ConfigController {
 			return ERROR_STATUS;
 		
 	}
-	@RequestMapping(value = "/getJsonConfig", method = RequestMethod.POST)
-	public @ResponseBody String getJsonConfig(@RequestParam(value = "fileType") String fileType) {
-		//System.out.println("File Type="+fileType);
-		//String line="{\"server\":\"\",\"bytes_in\":33,\"type\":\"dns\",\"client_prot\":50066,\"beat\":{\"name\":\"AD01\",\"hostname\":\"AD01\",\"version\":\"1.1.1\"}}";
-		//return line;
-		return ProcessJsonConfig.getJsonConfig(fileType);		
-		
-	}
+	
 	@RequestMapping(value = "/saveJsonConfig", method = RequestMethod.POST)
 	public @ResponseBody String saveJsonConfig(@RequestParam(value = "fileType") String fileType,@RequestBody String configJson) {
 		//System.out.println("File Type="+fileType);

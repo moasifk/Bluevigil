@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.bluevigil.analytics.utils.BluevigilProperties;
 import com.bluevigil.analytics.utils.BluevigilUtility;
 
 public class ProcessJsonConfig {
