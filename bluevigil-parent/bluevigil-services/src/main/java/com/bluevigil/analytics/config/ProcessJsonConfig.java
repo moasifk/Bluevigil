@@ -26,7 +26,7 @@ public class ProcessJsonConfig {
 		List<String> fileTypeList = new ArrayList<String>();
 		String json=null;
 		try { 			
-			PreparedStatement stmt=conn.prepareStatement("select filename from configjson");			
+			PreparedStatement stmt=conn.prepareStatement(props.getProperty("bluevigil.postgresql.query.select.filename"));			
 			ResultSet rs=stmt.executeQuery();
 			
 			while(rs.next())
@@ -43,7 +43,7 @@ public static String getFileConfigJson(String fileType){
 		
 		String json=null;
 		try { 			
-			PreparedStatement stmt=conn.prepareStatement("select config from configjson where filename=?");	
+			PreparedStatement stmt=conn.prepareStatement(props.getProperty("bluevigil.postgresql.query.select.config"));	
 			stmt.setString(1, fileType);
 			ResultSet rs=stmt.executeQuery();
 			if(rs.isBeforeFirst())
@@ -65,7 +65,7 @@ public static int deleteConfigJson(String fileType){
 	
 	int  res=0;
 	try { 			
-		PreparedStatement stmt=conn.prepareStatement("delete  from configjson where filename=?");	
+		PreparedStatement stmt=conn.prepareStatement(props.getProperty("bluevigil.postgresql.query.delete.config"));	
 		stmt.setString(1, fileType);
 		res=stmt.executeUpdate();		
 		
@@ -75,13 +75,12 @@ public static int deleteConfigJson(String fileType){
 	return res;		
 }
 	public static boolean saveJsonConfig(String fileType,String jsonData) {	
-
 			try { 
 				if(conn!=null)
-					System.out.println("Connection is not null");
+					LOGGER.info("Connection is not null");
 				else
-					System.out.println("Connection obje is null");
-				PreparedStatement stmt = conn.prepareStatement("insert into configjson (filename, config) values (?, to_json(?::json))");
+					LOGGER.info("Connection object is null");
+				PreparedStatement stmt = conn.prepareStatement(props.getProperty("bluevigil.postgresql.query.insert.config"));
 				stmt.setString(1, fileType);
 				stmt.setString(2, jsonData); 
 				stmt.executeUpdate(); 
@@ -96,7 +95,7 @@ public static int deleteConfigJson(String fileType){
 	public static boolean updateJsonConfig(String fileType,String jsonData) {
 		
 		try { 
-			PreparedStatement stmt = conn.prepareStatement("update configjson set config=(to_json(?::json)) where filename=?");			
+			PreparedStatement stmt = conn.prepareStatement(props.getProperty("bluevigil.postgresql.query.update.config"));			
 			stmt.setString(1, jsonData);
 			stmt.setString(2, fileType); 
 			stmt.executeUpdate(); 

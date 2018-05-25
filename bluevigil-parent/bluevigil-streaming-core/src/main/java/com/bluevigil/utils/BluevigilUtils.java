@@ -71,7 +71,7 @@ public class BluevigilUtils implements Serializable {
         return dateFormat.format(cal);
     }
 	
-	public static String getIpResolveCountry(String  ipAddress) throws IOException {
+	/*public static String getIpResolveCountry(String  ipAddress) throws IOException {
 		props = BluevigilProperties.getInstance();
 		IpResolveCountry ipc=new IpResolveCountry(props.getProperty("mmdb.geoLocation.Country"));
 		Tuple tuple= TupleFactory.getInstance().newTuple();//("162.168.1.1");
@@ -86,7 +86,7 @@ public class BluevigilUtils implements Serializable {
 		Tuple cityTuple= TupleFactory.getInstance().newTuple();//("162.168.1.1");
 		cityTuple.append(ipAddress);
 		return ipCity.exec(cityTuple);
-	}
+	}*/
 
 	/**
 	 * Method for creating a standard column filed name from the json key
