@@ -106,9 +106,10 @@ public class BluevigilConsumer implements Serializable {
 			backendFieldMap.put(derivedFieldMapping.getOrder(), derivedFieldMapping.getDerivedField());
 		}
 		
-		// Broadcasting country details for GeoIp enrichment
-		// Reading coutry details from the HDFS location
-		JavaRDD<String> maxmindCountryDetails = jsc.textFile(props.getProperty("mmdb.geoLocation.Country"));
+		//******************Broadcasting country and city details for GeoIp enrichment******************************
+		
+		// Reading country details from the HDFS location
+		JavaRDD<String>  maxmindCountryDetails= jsc.textFile(props.getProperty("mmdb.geoLocation.Country"));	
 		JavaPairRDD<Long, String> countryDataPairRDD = maxmindCountryDetails.mapToPair(new PairFunction<String, Long, String>() {
 			// Iterating over each line
 			// "1.0.0.0","1.0.0.255","16777216","16777471","AU","Australia"
@@ -124,14 +125,74 @@ public class BluevigilConsumer implements Serializable {
 				return new Tuple2<Long, String>(longIpVal, country);
 			}
 		});
+		
+		// Reading city block details from the HDFS location
+		JavaRDD<String> maxmindCityBlockDetails = jsc.textFile(props.getProperty("mmdb.geoLocation.City.Blocks"));			
+		JavaPairRDD<Long, Long>  cityBlockDataPairRDD= maxmindCityBlockDetails.mapToPair(new PairFunction<String, Long, Long>() {
+			// Iterating over each line
+			// "16777216","16777471","617943"
+			String stringStartIpVal;
+			long longStartIpVal;
+			String locationId;
+			long longLocationId;
+			public Tuple2<Long, Long> call(String line) throws Exception {
+				String[] lineValues = line.split(BluevigilConstant.COMMA);
+				stringStartIpVal = lineValues[0];
+				locationId = lineValues[2];
+				longStartIpVal = Long.parseLong(stringStartIpVal.substring(1, stringStartIpVal.length()-1));
+				longLocationId = Long.parseLong(locationId.substring(1, locationId.length()-1));
+				return new Tuple2<Long, Long>(longStartIpVal, longLocationId);
+			}
+		});
+		
+		// Reading city location details from the HDFS location
+		JavaRDD<String> maxmindCityLocationDetails = jsc.textFile(props.getProperty("mmdb.geoLocation.City.Location"));
+		JavaPairRDD<Long,String>  cityLocationDataPairRDD= maxmindCityLocationDetails.mapToPair(new PairFunction<String, Long, String>() {
+			// Iterating over each line
+			// 606,"US","PA","Pittsburgh","15222",40.4495,-79.9880,508,412
+			
+			String locationId;
+			long LongLocationId;
+			String location;
+			
+			public Tuple2<Long, String> call(String line) throws Exception {
+				String[] lineValues = line.split(BluevigilConstant.COMMA);
+				locationId = lineValues[0];
+				location = lineValues[3];
+				LongLocationId = Long.parseLong(locationId.substring(1, locationId.length()-1));
+				location = location.substring(1, location.length()-1);
+				return new Tuple2<Long, String>(LongLocationId, location);
+			}
+		});
+		
 		// Converting countryDataPairRDD to map
 		Map<Long, String> countryDataMap = countryDataPairRDD.collectAsMap();
 		Long[] countryIpArray = countryDataMap.keySet().toArray(new Long[countryDataMap.keySet().size()]);
+	
 		// Sorting array of country ips for binary search
 		Arrays.sort(countryIpArray);
+		
+		// Converting cityBlockDataPairRDD and cityLocationDataPairRDD to map
+		Map<Long, Long> cityBlockDataMap = cityBlockDataPairRDD.collectAsMap();
+		Map<Long, String> cityLocationDataMap = cityLocationDataPairRDD.collectAsMap();
+		
+		//creating a new cityDataMap for ips and corresponding location
+		Map<Long, String> cityDataMap = new HashMap<Long,String>();
+		for (Map.Entry<Long, Long> entry : cityBlockDataMap.entrySet()) {
+		    cityDataMap.put(entry.getKey(), cityLocationDataMap.get(entry.getValue()));
+		}		
+		Long[] cityIpArray = cityDataMap.keySet().toArray(new Long[cityDataMap.keySet().size()]);
+		
+		// Sorting array of city ips for binary search
+		Arrays.sort(cityIpArray);
+		
 		// Broadcasting country data
 		final Broadcast<Long[]> broadcastedCountryIpArray = jsc.broadcast(countryIpArray);
 		final Broadcast<Map<Long, String>> broadcastedCountryDataMap = jsc.broadcast(countryDataMap);
+		
+		// Broadcasting city data
+		final Broadcast<Long[]> broadcastedCityIpArray = jsc.broadcast(cityIpArray);
+		final Broadcast<Map<Long, String>> broadcastedCityDataMap = jsc.broadcast(cityDataMap);
 		// Broadcasting completed
 		
 		// Consume data from Kafka
@@ -170,7 +231,7 @@ public class BluevigilConsumer implements Serializable {
 						backendFieldMap, BluevigilConstant.EMPTY_STRING, new HashMap<String, String>());
 				// Initial Parsing of json data - Done
 				Map<String, String> finalParsedJsonMap  = DynamicJsonParser.getParsedJsonMapWithDerivedFields(broadcastedCountryIpArray, broadcastedCountryDataMap,
-						parsedJsonMap, derivedFieldMappingList);
+						broadcastedCityIpArray,broadcastedCityDataMap,parsedJsonMap, derivedFieldMappingList);
 				// Derived fields data added ParsedJsonMap
 				return parsedJsonMap;
 			}

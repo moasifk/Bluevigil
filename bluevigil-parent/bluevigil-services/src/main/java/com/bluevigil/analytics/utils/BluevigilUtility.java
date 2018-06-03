@@ -11,15 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
-
+import com.bluevigil.analytics.utils.BluevigilProperties;
 import org.apache.log4j.Logger;
 
 public class BluevigilUtility {
 	static Logger LOGGER = Logger.getLogger(BluevigilUtility.class);
-	private static Properties props=new Properties();
+	private static BluevigilProperties props;
 	public static Connection getHbaseConnection() 
 	{
-		props=getProperties();
+		props = BluevigilProperties.getInstance();
 		try 
 		{
 			Class.forName(props.getProperty("phoenix.jdbc.driver"));
@@ -44,7 +44,8 @@ public class BluevigilUtility {
 		}
 	}
 	
-	public static Connection getPostgresqlConnection(){		
+	public static Connection getPostgresqlConnection(){	
+		props = BluevigilProperties.getInstance();	
 		System.out.println(""+props.getProperty("bluevigil.postgresql.jdbc.driver"));
 		LOGGER.info("-------- PostgreSQL JDBC Connection Testing ------------");
 		try {
@@ -58,7 +59,7 @@ public class BluevigilUtility {
 		LOGGER.info("PostgreSQL JDBC Driver Registered!");
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(props.getProperty("bluevigil.postgresql.jdbc.connection"));
+			conn = DriverManager.getConnection(props.getProperty("bluevigil.postgresql.jdbc.connection"),props.getProperty("bluevigil.postgresql.jdbc.username"),props.getProperty("bluevigil.postgresql.jdbc.password"));
 		} catch (SQLException e) {
 			LOGGER.error("Connection Failed! Check output console");
 			e.printStackTrace();
@@ -72,33 +73,7 @@ public class BluevigilUtility {
 		return conn;
 	}
 	
-	public static Properties getProperties() {
-		Properties prop = new Properties();
-		InputStream input = null;
-		try {
-
-			input = new FileInputStream("./properties/config.properties");
-
-			// load a properties file
-			prop.load(input);
-
-			return prop;
-
-		} catch (IOException ex) {
-			LOGGER.info(ex.getMessage());
-			LOGGER.error(ex.getMessage());
-			return null;
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					LOGGER.info(e.getMessage());
-					LOGGER.error(e.getMessage());
-				}
-			}
-		}
-	}
+	
 	/**
 	 * Method for creating a standard column filed name from the json key
 	 * @param fieldName json key name

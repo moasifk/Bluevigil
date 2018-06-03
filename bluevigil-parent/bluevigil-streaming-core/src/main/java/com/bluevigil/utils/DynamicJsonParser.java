@@ -160,7 +160,8 @@ public class DynamicJsonParser {
 	}
 	
 	public static Map<String, String> getParsedJsonMapWithDerivedFields(Broadcast<Long[]> broadcastedCountryIpArray,
-			Broadcast<Map<Long, String>> broadcastedCountryMap, Map<String, String> parsedJsonMap,
+			Broadcast<Map<Long, String>> broadcastedCountryMap,Broadcast<Long[]> broadcastedCityIpArray,
+			Broadcast<Map<Long, String>> broadcastedCityMap, Map<String, String> parsedJsonMap,
 			List<DerivedFieldMapping> derivedMappingList) {
 		Iterator<DerivedFieldMapping> derivedFieldListItr = derivedMappingList.iterator();
 		DerivedFieldMapping derField;
@@ -183,9 +184,13 @@ public class DynamicJsonParser {
 						parsedJsonMap.put(derField.getDerivedField(),
 								BluevigilUtils.getTime((long) Double.parseDouble(ts)));
 					} else if (derField.getDerivedType().equals("City")) {
-						// TODO
+						int number = Arrays.binarySearch(broadcastedCityIpArray.value(), BluevigilUtils.ipToLong(jsonElementValue.toString()));
+						int index = number;
+						if (number < 0) {
+							index = -(number+2);
+						}
 						parsedJsonMap.put(derField.getDerivedField(),
-								"Need to fix this");
+								broadcastedCityMap.getValue().get(broadcastedCityIpArray.value()[index]));						
 					} else if (derField.getDerivedType().equals("Country")) {
 						int number = Arrays.binarySearch(broadcastedCountryIpArray.value(), BluevigilUtils.ipToLong(jsonElementValue.toString()));
 						int index = number;

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,27 +30,15 @@ import com.bluevigil.analytics.config.DynamicJsonProcessor;
 import com.bluevigil.analytics.config.ProcessJsonConfig;
 import com.bluevigil.analytics.model.JsonParsedfields;
 
-
+@CrossOrigin
 @RestController
 
 @RequestMapping("/config")
 public class ConfigController {
-	 private static final String SUCCESS_STATUS = "success";
-	 private static final String ERROR_STATUS = "error";
+	 private static final String SUCCESS_STATUS = "{\"status\":\"success\"}";
+	 private static final String ERROR_STATUS = "{\"status\":\"failure\"}";
 	Logger LOGGER = Logger.getLogger(BluevigilController.class);
 
-//	@RequestMapping(value = "/getJsonFields", method = RequestMethod.POST)
-//	public String getJsonFields(@RequestParam("file") MultipartFile inputFile) {
-//		return "Hello";
-//		
-//	}
-//	
-//	@RequestMapping(value = "/hello", method = RequestMethod.POST)
-//	public String sayHello() {
-//		return "Hello";
-//		
-//	}
-//	@CrossOrigin
 	@RequestMapping(value = "/getJsonFields", method = RequestMethod.POST)
 	public @ResponseBody List<JsonParsedfields> getJsonFields(@RequestParam("file") MultipartFile inputFile) {
 		//System.out.println("In getJsonFields");
@@ -61,10 +50,11 @@ public class ConfigController {
 				is = inputFile.getInputStream();			
 				br = new BufferedReader(new InputStreamReader(is));
 				line=br.readLine();
-				//System.out.println("Line ="+line);
+				LOGGER.info("Line ="+line);
 			}catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.error(e.getMessage());
+				return null;
 				//return Map<String, String>;
 			}
 		List<JsonParsedfields> jsonFieldsList= DynamicJsonProcessor.parseJsonInputLine(line, "","", new ArrayList<JsonParsedfields>());
@@ -74,14 +64,35 @@ public class ConfigController {
 			return null;
 		
 	}
-	@RequestMapping(value = "/getJsonConfig", method = RequestMethod.POST)
-	public @ResponseBody String getJsonConfig(@RequestParam(value = "fileType") String fileType) {
-		//System.out.println("File Type="+fileType);
-		String line="{\"server\":\"\",\"bytes_in\":33,\"type\":\"dns\",\"client_prot\":50066,\"beat\":{\"name\":\"AD01\",\"hostname\":\"AD01\",\"version\":\"1.1.1\"}}";
-		//return line;
-		return ProcessJsonConfig.getJsonConfig(fileType);		
+	@RequestMapping(value = "/getJsonConfigTypes", method = RequestMethod.GET)
+	public @ResponseBody List<String> getJsonConfigTypes() {
+		//LOGGER.info("File Type="+fileType);	
+		List<String> lstConfigTypes=ProcessJsonConfig.getJsonConfigTypes();
+		if(!lstConfigTypes.isEmpty())	
+			return lstConfigTypes;
+		else
+			return  Collections.emptyList();
 		
 	}
+	@RequestMapping(value = "/getFileConfigJson", method = RequestMethod.GET)
+	public @ResponseBody String getFileConfigJson(@RequestParam(value = "fileType") String fileType) {
+		String ret=ProcessJsonConfig.getFileConfigJson(fileType);
+		if( ret.isEmpty() || ret.equals(""))
+			return ERROR_STATUS;		
+		else
+			return ret;
+		
+	}
+	@RequestMapping(value = "/deleteConfigJson", method = RequestMethod.POST)
+	public @ResponseBody String deleteConfigJson(@RequestParam(value = "fileType") String fileType) {
+		LOGGER.info("File Type="+fileType);		
+		if( ProcessJsonConfig.deleteConfigJson(fileType)>=1)
+			return SUCCESS_STATUS;
+		else
+			return ERROR_STATUS;
+		
+	}
+	
 	@RequestMapping(value = "/saveJsonConfig", method = RequestMethod.POST)
 	public @ResponseBody String saveJsonConfig(@RequestParam(value = "fileType") String fileType,@RequestBody String configJson) {
 		//System.out.println("File Type="+fileType);
@@ -96,7 +107,7 @@ public class ConfigController {
 	public @ResponseBody String updateJsonConfig(@RequestParam(value = "fileType") String fileType,@RequestBody String configJson) {
 		
 		//System.out.println("File Type="+fileType);
-		//System.out.println("Json="+configJson);
+		LOGGER.info("Json="+configJson);
 		if(ProcessJsonConfig.updateJsonConfig(fileType, configJson))
 			return SUCCESS_STATUS;
 		else
